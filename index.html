@@ -1,267 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIDHROHAN NETWORK</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+*{box-sizing:border-box}
 
 body{
+  margin:0;
   background:#07111f;
-  color:white;
+  color:#fff;
+  font-family:Arial,sans-serif
 }
 
-.login{
+#login{
   min-height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
-  padding:20px;
+  justify-content:center;
+  padding:20px
 }
 
-.login-box{
+.box{
   width:100%;
   max-width:390px;
-  background:#101c2c;
-  padding:30px 25px;
-  border-radius:20px;
-  box-shadow:0 10px 40px rgba(0,0,0,.5);
-  text-align:center;
+  background:#101e30;
+  border:1px solid #24364b;
+  border-radius:22px;
+  padding:30px 22px;
+  text-align:center
 }
 
 .logo{
-  width:75px;
-  height:75px;
+  width:82px;
+  height:82px;
   margin:auto;
-  border-radius:20px;
-  background:#087cff;
+  background:#087cf5;
+  border-radius:22px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  font-weight:bold;
+  font-size:30px;
+  font-weight:bold
 }
 
 h1{
-  margin-top:18px;
-  font-size:25px;
+  font-size:24px;
+  margin:18px 0 8px
 }
 
-.subtitle{
-  color:#9eacbd;
-  margin:8px 0 25px;
+.sub{
+  color:#a8b5c7;
+  margin-bottom:25px;
+  font-size:16px
 }
 
 input{
-  width:100%;
-  padding:14px;
-  margin:7px 0;
-  border:1px solid #2c3d52;
-  border-radius:10px;
-  background:#081321;
-  color:white;
-  font-size:15px;
-  outline:none;
+  display:block!important;
+  width:100%!important;
+  height:56px!important;
+  margin:0 0 13px!important;
+  padding:0 16px!important;
+  background:#071422!important;
+  color:#fff!important;
+  border:1px solid #33465d!important;
+  border-radius:12px!important;
+  font-size:16px!important;
+  opacity:1!important;
+  visibility:visible!important
+}
+
+input::placeholder{
+  color:#8290a3
 }
 
 button{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
+  display:block!important;
+  width:100%!important;
+  height:56px!important;
   border:0;
-  border-radius:10px;
-  background:#087cff;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+  border-radius:12px;
+  background:#087cf5;
+  color:#fff;
+  font-size:17px;
+  font-weight:bold
 }
 
-button:active{
-  transform:scale(.98);
-}
-
-.error{
-  color:#ff6675;
-  margin-top:12px;
+#error{
   display:none;
+  color:#ff7180;
+  margin-top:13px
 }
 
-.dashboard{
+#dash{
   display:none;
-  min-height:100vh;
+  min-height:100vh
 }
 
-.header{
-  height:65px;
-  background:#101c2c;
+.top{
+  height:64px;
+  background:#101e30;
+  padding:0 18px;
   display:flex;
   align-items:center;
-  padding:0 20px;
-  border-bottom:1px solid #243448;
+  font-weight:bold
 }
 
-.header strong{
-  font-size:19px;
-}
-
-.menu{
-  width:240px;
-  background:#0d1827;
+.side{
   position:fixed;
-  top:65px;
+  top:64px;
   bottom:0;
-  left:0;
-  padding:20px 12px;
+  width:235px;
+  background:#0c1827;
+  padding:14px
 }
 
-.menu div{
-  padding:14px;
-  margin-bottom:5px;
-  border-radius:8px;
-  color:#bdc8d6;
+.item{
+  padding:13px;
+  border-radius:9px;
+  color:#b9c5d4;
+  margin:3px 0
 }
 
-.menu div.active,
-.menu div:hover{
-  background:#087cff;
-  color:white;
+.active{
+  background:#087cf5;
+  color:#fff
 }
 
-.content{
-  margin-left:240px;
-  padding:25px;
+.main{
+  margin-left:235px;
+  padding:25px
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:15px;
+  gap:15px
 }
 
 .card{
-  background:#101c2c;
-  padding:20px;
+  background:#101e30;
+  border:1px solid #24364b;
   border-radius:14px;
-  border:1px solid #233449;
-}
-
-.card small{
-  color:#9eacbd;
-}
-
-.card h2{
-  margin-top:10px;
-}
-
-.welcome{
-  margin-bottom:20px;
-}
-
-.logout{
-  margin-top:20px;
-  background:#e5394f;
-  max-width:200px;
+  padding:20px
 }
 
 @media(max-width:700px){
-  .menu{
+  .side{
     position:static;
     width:100%;
+    height:auto
   }
 
-  .content{
-    margin-left:0;
-  }
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:450px){
-  .cards{
-    grid-template-columns:1fr;
-  }
-}
-  #password{
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  width:100% !important;
-  height:56px !important;
-  margin:12px 0 !important;
-  position:relative !important;
-  z-index:999 !important;
-}
-
-.login-box button{
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  width:100% !important;
-  height:56px !important;
-  position:relative !important;
-  z-index:999 !important;
-}
-  .login{
-  min-height:100vh;
-  height:auto;
-  overflow:visible;
-  padding:30px 20px;
-}
-
-.login-box{
-  height:auto;
-  min-height:0;
-  max-height:none;
-  overflow:visible;
-}
-
-.login-box input{
-  display:block;
-  visibility:visible;
-  opacity:1;
-}
-
-.login-box button{
-  display:block;
-  visibility:visible;
-  opacity:1;
-    }
-</style>
-</head>
-
-<body>
-
-<!-- LOGIN -->
-<div class="login" id="loginPage">
-
-  <div class="login-box">
-
-    <div class="logo">RN</div>
-
-    <h1>RIDHROHAN NETWORK</h1>
-
-    <div class="subtitle">
-      Network Management System
-    </div>
-
-    <input
-      type="text"
-      id="username"
-      placeholder="Username"
-      autocomplete="username"
-    >
-
-    <input
-      type="password"
-      id="password"
-      placeholder
+  .main{
+   
