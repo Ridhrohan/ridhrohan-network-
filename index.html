@@ -2,138 +2,194 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIDHROHAN NETWORK</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#172033}
-button,input{font:inherit}
-button{cursor:pointer;border:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#07111f;
+  color:white;
+}
 
 .login{
- min-height:100vh;background:linear-gradient(135deg,#071b4d,#1769e8);
- display:flex;align-items:center;justify-content:center;padding:20px
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
+
 .login-box{
- width:100%;max-width:430px;background:white;border-radius:28px;
- padding:35px 28px;box-shadow:0 25px 70px #0005
+  width:100%;
+  max-width:390px;
+  background:#101c2c;
+  padding:30px 25px;
+  border-radius:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  text-align:center;
 }
+
 .logo{
- width:82px;height:82px;border-radius:24px;background:#1769e8;
- color:white;display:flex;align-items:center;justify-content:center;
- font-size:30px;font-weight:800;margin:0 auto 22px
+  width:75px;
+  height:75px;
+  margin:auto;
+  border-radius:20px;
+  background:#087cff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  font-weight:bold;
 }
-.login h1{text-align:center;font-size:27px}
-.login .sub{text-align:center;color:#718096;margin:8px 0 30px}
-.field{margin-bottom:18px}
-.field label{display:block;font-weight:700;margin-bottom:8px}
-.field input{
- width:100%;padding:15px;border:1px solid #dce2ea;border-radius:14px;
- outline:none;background:#f9fafc
-}
-.login-btn{
- width:100%;padding:16px;border-radius:14px;background:#1769e8;
- color:white;font-weight:700;font-size:16px
-}
-.login-foot{text-align:center;color:#8a94a6;margin-top:25px;font-size:13px}
 
-.app{display:none;min-height:100vh}
-
-.sidebar{
- position:fixed;left:0;top:0;bottom:0;width:255px;background:#101827;
- color:white;padding:20px 14px;z-index:20;overflow:auto
+h1{
+  margin-top:18px;
+  font-size:25px;
 }
-.brand{padding:10px 12px 25px}
-.brand b{font-size:21px}
-.brand span{display:block;color:#94a3b8;font-size:12px;margin-top:5px}
 
-.nav button{
- width:100%;background:transparent;color:#cbd5e1;text-align:left;
- padding:12px;border-radius:10px;margin:2px 0;font-size:14px
+.subtitle{
+  color:#9eacbd;
+  margin:8px 0 25px;
 }
-.nav button:hover,.nav button.active{background:#1d4ed8;color:white}
-.section-title{
- color:#64748b;font-size:11px;text-transform:uppercase;
- padding:18px 12px 7px
-}
-.subnav{display:none;padding-left:12px}
-.subnav button{font-size:13px;padding:9px 12px}
-.logout{margin-top:20px!important;color:#fca5a5!important}
 
-.main{margin-left:255px;padding:25px}
-.top{
- display:flex;justify-content:space-between;align-items:center;
- margin-bottom:25px
+input{
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border:1px solid #2c3d52;
+  border-radius:10px;
+  background:#081321;
+  color:white;
+  font-size:15px;
+  outline:none;
 }
-.top h2{font-size:25px}
-.user{color:#64748b;font-size:14px}
 
-.page{display:none}
-.page.active{display:block}
+button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:0;
+  border-radius:10px;
+  background:#087cff;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.error{
+  color:#ff6675;
+  margin-top:12px;
+  display:none;
+}
+
+.dashboard{
+  display:none;
+  min-height:100vh;
+}
+
+.header{
+  height:65px;
+  background:#101c2c;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  border-bottom:1px solid #243448;
+}
+
+.header strong{
+  font-size:19px;
+}
+
+.menu{
+  width:240px;
+  background:#0d1827;
+  position:fixed;
+  top:65px;
+  bottom:0;
+  left:0;
+  padding:20px 12px;
+}
+
+.menu div{
+  padding:14px;
+  margin-bottom:5px;
+  border-radius:8px;
+  color:#bdc8d6;
+}
+
+.menu div.active,
+.menu div:hover{
+  background:#087cff;
+  color:white;
+}
+
+.content{
+  margin-left:240px;
+  padding:25px;
+}
 
 .cards{
- display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
 }
+
 .card{
- background:white;border-radius:17px;padding:20px;
- box-shadow:0 5px 20px #18263b0b;border:1px solid #edf0f5
-}
-.card span{display:block;color:#718096;font-size:14px;margin-bottom:10px}
-.card b{font-size:28px}
-.blue{color:#1769e8}
-.green{color:#159447}
-.orange{color:#e28b19}
-.red{color:#dc3545}
-
-.grid2{display:grid;grid-template-columns:2fr 1fr;gap:18px}
-.panel{
- background:white;border-radius:17px;padding:20px;
- border:1px solid #edf0f5;margin-bottom:18px
-}
-.panel h3{margin-bottom:17px}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:12px;border-bottom:1px solid #edf0f5;font-size:13px}
-th{color:#64748b}
-.badge{
- display:inline-block;padding:5px 9px;border-radius:20px;
- background:#dcfce7;color:#15803d;font-size:11px;font-weight:bold
-}
-.badge.off{background:#fee2e2;color:#b91c1c}
-
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{
- padding:10px 14px;border-radius:9px;background:#1769e8;color:white
-}
-.btn.gray{background:#e8edf4;color:#334155}
-.btn.red{background:#dc3545}
-
-.form-grid{
- display:grid;grid-template-columns:repeat(2,1fr);gap:15px
-}
-.form-grid input,.form-grid select{
- padding:12px;border:1px solid #dce2ea;border-radius:10px;width:100%
+  background:#101c2c;
+  padding:20px;
+  border-radius:14px;
+  border:1px solid #233449;
 }
 
-.mobile-head{display:none}
+.card small{
+  color:#9eacbd;
+}
 
-@media(max-width:850px){
- .sidebar{
-  transform:translateX(-100%);transition:.25s;width:275px
- }
- .sidebar.open{transform:translateX(0)}
- .main{margin-left:0;padding:16px;padding-top:70px}
- .mobile-head{
-  display:flex;position:fixed;top:0;left:0;right:0;height:58px;
-  background:#101827;color:white;z-index:15;
-  align-items:center;padding:0 15px;gap:15px
- }
- .mobile-head button{background:#1d4ed8;color:white;padding:8px 11px;border-radius:8px}
- .cards{grid-template-columns:repeat(2,1fr)}
- .grid2{grid-template-columns:1fr}
- table{min-width:650px}
- .panel{overflow:auto}
- .form-grid{grid-template-columns:1fr}
+.card h2{
+  margin-top:10px;
+}
+
+.welcome{
+  margin-bottom:20px;
+}
+
+.logout{
+  margin-top:20px;
+  background:#e5394f;
+  max-width:200px;
+}
+
+@media(max-width:700px){
+  .menu{
+    position:static;
+    width:100%;
+  }
+
+  .content{
+    margin-left:0;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:450px){
+  .cards{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -141,120 +197,26 @@ th{color:#64748b}
 <body>
 
 <!-- LOGIN -->
-<section class="login" id="login">
- <div class="login-box">
-  <div class="logo">RN</div>
-  <h1>RIDHROHAN NETWORK</h1>
-  <p class="sub">Network Management System</p>
+<div class="login" id="loginPage">
 
-  <div class="field">
-   <label>Username</label>
-   <input id="username" placeholder="Enter username">
-  </div>
+  <div class="login-box">
 
-  <div class="field">
-   <label>Password</label>
-   <input id="password" type="password" placeholder="Enter password">
-  </div>
+    <div class="logo">RN</div>
 
-  <button class="login-btn" onclick="login()">Sign In</button>
+    <h1>RIDHROHAN NETWORK</h1>
 
-  <div class="login-foot">
-   © 2026 RIDHROHAN NETWORK<br>
-   🔒 Secure Network Management
-  </div>
- </div>
-</section>
-
-<!-- APP -->
-<div class="app" id="app">
-
- <div class="mobile-head">
-  <button onclick="toggleMenu()">☰</button>
-  <b>RIDHROHAN NETWORK</b>
- </div>
-
- <aside class="sidebar" id="sidebar">
-  <div class="brand">
-   <b>RIDHROHAN NETWORK</b>
-   <span>Network Management System</span>
-  </div>
-
-  <nav class="nav">
-
-   <button class="active" onclick="page('dashboard',this)">🏠 Dashboard</button>
-
-   <button onclick="page('ecash',this)">💰 ECash</button>
-
-   <div class="section-title">PPPoE</div>
-
-   <button onclick="togglePPPoE()">🌐 PPPoE ▾</button>
-
-   <div class="subnav" id="pppoeMenu">
-    <button onclick="page('servers',this)">Servers</button>
-    <button onclick="page('plans',this)">Plans</button>
-    <button onclick="page('clients',this)">Clients</button>
-    <button onclick="page('transactions',this)">Transactions</button>
-    <button onclick="page('active',this)">Active Connections</button>
-    <button onclick="page('cron',this)">Cron Logs</button>
-   </div>
-
-   <button onclick="page('pppoev2',this)">🌐 PPPoE V2</button>
-   <button onclick="page('ipoe',this)">📡 IPoE</button>
-
-   <div class="section-title">NETWORK</div>
-
-   <button onclick="page('mikrotik',this)">🖥️ MikroTik</button>
-   <button onclick="page('hotspot',this)">🎟️ Hotspot / Vouchers</button>
-   <button onclick="page('bandwidth',this)">⚡ Bandwidth</button>
-   <button onclick="page('firewall',this)">🛡️ Firewall</button>
-
-   <button onclick="page('payments',this)">💳 Payments</button>
-   <button onclick="page('support',this)">🎧 Support Center</button>
-
-   <div class="section-title">SETTINGS</div>
-
-   <button onclick="page('account',this)">👤 Account</button>
-   <button onclick="page('disbursement',this)">💸 Disbursement</button>
-   <button onclick="page('telegram',this)">✈️ Telegram Notification</button>
-
-   <button class="logout" onclick="logout()">🚪 Sign out</button>
-  </nav>
- </aside>
-
- <main class="main">
-
-  <div class="top">
-   <div>
-    <h2 id="title">Dashboard</h2>
-    <div class="user">RIDHROHAN NETWORK • Admin</div>
-   </div>
-  </div>
-
-  <!-- DASHBOARD -->
-  <section class="page active" id="dashboard">
-
-   <div class="cards">
-    <div class="card"><span>PPPoE Clients</span><b class="blue">24</b></div>
-    <div class="card"><span>Active Connections</span><b class="green">18</b></div>
-    <div class="card"><span>Hotspot Vouchers</span><b class="orange">156</b></div>
-    <div class="card"><span>Pending Payments</span><b class="red">6</b></div>
-   </div>
-
-   <div class="grid2">
-
-    <div class="panel">
-     <h3>Recent PPPoE Clients</h3>
-     <table>
-      <tr><th>Client</th><th>Plan</th><th>Status</th></tr>
-      <tr><td>Ridhrohan</td><td>25 Mbps</td><td><span class="badge">Online</span></td></tr>
-      <tr><td>Client 002</td><td>15 Mbps</td><td><span class="badge">Online</span></td></tr>
-      <tr><td>Client 003</td><td>10 Mbps</td><td><span class="badge off">Offline</span></td></tr>
-      <tr><td>Client 004</td><td>20 Mbps</td><td><span class="badge">Online</span></td></tr>
-     </table>
+    <div class="subtitle">
+      Network Management System
     </div>
 
-    <div class="panel">
-     <h3>Network Status</h3>
-     <p>🟢 MikroTik Router <b>Online</b></p><br>
-     <p>🟢 Internet <
+    <input
+      type="text"
+      id="username"
+      placeholder="Username"
+      autocomplete="username"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder
