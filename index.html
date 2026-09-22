@@ -1,21 +1,424 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIDHROHAN NETWORK</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
-header{padding:28px 22px;color:white;background:linear-gradient(135deg,#101936,#2563eb)}
-.brand{font-size:25px;font-weight:800}.tag{margin-top:6px;opacity:.85}
-main{max-width:1100px;margin:auto;padding:22px}.hero,.card{background:white;border-radius:18px;padding:24px;box-shadow:0 7px 25px #0001}
-h1{margin:0 0 10px;font-size:30px}.hero p{color:#667085;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:18px}
-.card span{color:#667085}.card b{display:block;font-size:26px;margin:8px 0}
-footer{text-align:center;padding:30px;color:#667085}
-</style></head>
-<body><header><div class="brand">RIDHROHAN NETWORK</div><div class="tag">Network Management System</div></header>
-<main><section class="hero"><h1>Welcome to RIDHROHAN NETWORK</h1>
-<p>Network management dashboard prototype for PPPoE, hotspot vouchers, payments and MikroTik monitoring.</p></section>
-<section class="grid"><div class="card"><span>PPPoE Clients</span><b>0</b></div>
-<div class="card"><span>Active Connections</span><b>0</b></div>
-<div class="card"><span>Hotspot Vouchers</span><b>0</b></div>
-<div class="card"><span>Payments</span><b>₱0</b></div></section></main>
-<footer>RIDHROHAN NETWORK • Network Management System</footer></body></html>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:#eef3f9;
+  color:#172033;
+}
+
+/* LOGIN */
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#071a4d,#0b4dbb,#1976ff);
+}
+
+.login-box{
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:25px;
+  padding:35px 28px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.logo-icon{
+  width:65px;
+  height:65px;
+  margin:auto;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1457d9,#287cff);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  font-weight:bold;
+}
+
+.logo h1{
+  margin-top:15px;
+  font-size:25px;
+  color:#14213d;
+}
+
+.logo p{
+  margin-top:7px;
+  color:#718096;
+  font-size:14px;
+}
+
+.input-group{
+  margin-bottom:18px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.input-box{
+  position:relative;
+}
+
+.input-box input{
+  width:100%;
+  padding:15px 45px 15px 15px;
+  border:1px solid #d7deea;
+  border-radius:13px;
+  outline:none;
+  font-size:15px;
+}
+
+.input-box input:focus{
+  border-color:#1769e0;
+  box-shadow:0 0 0 3px rgba(23,105,224,.12);
+}
+
+.show-pass{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#65748b;
+}
+
+.login-btn{
+  width:100%;
+  border:0;
+  padding:15px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#1259dc,#287cff);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+.login-btn:active{
+  transform:scale(.98);
+}
+
+.error{
+  display:none;
+  background:#fff0f0;
+  color:#d93025;
+  padding:11px;
+  border-radius:10px;
+  margin-bottom:15px;
+  text-align:center;
+  font-size:14px;
+}
+
+.login-footer{
+  text-align:center;
+  margin-top:22px;
+  color:#8995a7;
+  font-size:12px;
+}
+
+/* DASHBOARD */
+.dashboard{
+  display:none;
+  min-height:100vh;
+}
+
+.header{
+  background:linear-gradient(135deg,#102b75,#1769df);
+  color:white;
+  padding:28px 22px;
+}
+
+.header h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.header p{
+  opacity:.9;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 18px;
+}
+
+.welcome{
+  background:white;
+  border-radius:22px;
+  padding:28px;
+  margin-bottom:20px;
+  box-shadow:0 8px 25px rgba(20,40,80,.07);
+}
+
+.welcome h2{
+  font-size:27px;
+  margin-bottom:10px;
+}
+
+.welcome p{
+  color:#68758a;
+  line-height:1.7;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:23px;
+  box-shadow:0 8px 25px rgba(20,40,80,.07);
+}
+
+.card span{
+  display:block;
+  color:#68758a;
+  margin-bottom:10px;
+}
+
+.card b{
+  font-size:30px;
+}
+
+.logout{
+  margin-top:22px;
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:12px;
+  background:#172033;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .header h1{
+    font-size:23px;
+  }
+
+  .welcome h2{
+    font-size:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div class="login-page" id="loginPage">
+
+  <div class="login-box">
+
+    <div class="logo">
+      <div class="logo-icon">RN</div>
+      <h1>RIDHROHAN NETWORK</h1>
+      <p>Network Management System</p>
+    </div>
+
+    <div class="error" id="error">
+      Username or password is incorrect.
+    </div>
+
+    <div class="input-group">
+      <label>Username</label>
+      <div class="input-box">
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username"
+          autocomplete="username">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <div class="input-box">
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter password"
+          autocomplete="current-password">
+        <span class="show-pass" onclick="togglePassword()">👁</span>
+      </div>
+    </div>
+
+    <button class="login-btn" onclick="login()">
+      LOGIN
+    </button>
+
+    <div class="login-footer">
+      © 2026 RIDHROHAN NETWORK
+    </div>
+
+  </div>
+</div>
+
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+  <div class="header">
+    <h1>RIDHROHAN NETWORK</h1>
+    <p>Network Management System</p>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>Welcome to RIDHROHAN NETWORK</h2>
+      <p>
+        Network management dashboard for PPPoE,
+        hotspot vouchers, payments and MikroTik monitoring.
+      </p>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <span>PPPoE Clients</span>
+        <b>0</b>
+      </div>
+
+      <div class="card">
+        <span>Active Connections</span>
+        <b>0</b>
+      </div>
+
+      <div class="card">
+        <span>Hotspot Vouchers</span>
+        <b>0</b>
+      </div>
+
+      <div class="card">
+        <span>Payments</span>
+        <b>₱0</b>
+      </div>
+
+    </div>
+
+    <button class="logout" onclick="logout()">
+      SIGN OUT
+    </button>
+
+  </div>
+</div>
+
+
+<script>
+
+function togglePassword(){
+
+  const password =
+    document.getElementById("password");
+
+  password.type =
+    password.type === "password"
+    ? "text"
+    : "password";
+}
+
+
+function login(){
+
+  const username =
+    document.getElementById("username").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const error =
+    document.getElementById("error");
+
+  /*
+   Prototype login only.
+   Production version will use
+   secure server-side authentication.
+  */
+
+  if(username === "admin" && password === "ridhrohan"){
+
+    sessionStorage.setItem(
+      "ridhrohan_logged_in",
+      "true"
+    );
+
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("dashboard").style.display="block";
+
+  }else{
+
+    error.style.display="block";
+
+  }
+}
+
+
+function logout(){
+
+  sessionStorage.removeItem(
+    "ridhrohan_logged_in"
+  );
+
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("loginPage").style.display="flex";
+
+  document.getElementById("username").value="";
+  document.getElementById("password").value="";
+}
+
+
+window.onload=function(){
+
+  if(
+    sessionStorage.getItem(
+      "ridhrohan_logged_in"
+    ) === "true"
+  ){
+
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("dashboard").style.display="block";
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
