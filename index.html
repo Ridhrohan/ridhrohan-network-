@@ -485,11 +485,118 @@ clientsPage();
 
 function pay(i){
 
-var c=clients[i];
+    var c = clients[i];
 
-if(c.disabled){
-alert("Enable muna ang client.");
-return;
+    if(!c){
+        alert("Client not found.");
+        return;
+    }
+
+    if(c.disabled){
+        alert("Disabled ang client. I-enable muna bago mag-record ng payment.");
+        return;
+    }
+
+    var amount = Number(c.fee || 0);
+
+    if(amount <= 0){
+        alert("Invalid ang payment amount.");
+        return;
+    }
+
+    var method = prompt(
+        "PAYMENT METHOD\n\n" +
+        "I-type: GCash, Maya o Cash",
+        "Cash"
+    );
+
+    if(!method){
+        return;
+    }
+
+    method = method.trim();
+
+    if(
+        method.toLowerCase() !== "gcash" &&
+        method.toLowerCase() !== "maya" &&
+        method.toLowerCase() !== "cash"
+    ){
+        alert("Payment method: GCash, Maya o Cash lamang.");
+        return;
+    }
+
+    var confirmPay = confirm(
+        "CONFIRM PAYMENT\n\n" +
+        "Client: " + c.name + "\n" +
+        "Username: " + c.user + "\n" +
+        "Plan: " + c.plan + "\n" +
+        "Amount: " + money(amount) + "\n" +
+        "Method: " + method + "\n\n" +
+        "Record payment?"
+    );
+
+    if(!confirmPay){
+        return;
+    }
+
+    var oldDue = c.due;
+
+    var d;
+
+    if(oldDue){
+        d = new Date(oldDue + "T00:00:00");
+    }else{
+        d = new Date();
+    }
+
+    if(isNaN(d.getTime())){
+        d = new Date();
+    }
+
+    /*
+      Kapag overdue na ang client,
+      magsisimula ang bagong month mula ngayon.
+    */
+    var today = new Date();
+    today.setHours(0,0,0,0);
+
+    if(d < today){
+        d = new Date();
+    }
+
+    d.setMonth(d.getMonth() + 1);
+
+    var newDue = d.toISOString().slice(0,10);
+
+    c.due = newDue;
+    c.disabled = false;
+
+    var transaction = {
+        transactionId: "RN-" + Date.now(),
+        client: c.name,
+        username: c.user,
+        plan: c.plan,
+        amount: amount,
+        method: method,
+        oldDue: oldDue || "",
+        newDue: newDue,
+        date: new Date().toISOString().slice(0,10),
+        time: new Date().toLocaleTimeString()
+    };
+
+    payments.push(transaction);
+
+    save();
+
+    alert(
+        "PAYMENT SUCCESSFUL!\n\n" +
+        "Client: " + c.name + "\n" +
+        "Amount: " + money(amount) + "\n" +
+        "Method: " + method + "\n" +
+        "New Due Date: " + newDue
+    );
+
+    clientsPage();
 }
 
 if(!confirm(
