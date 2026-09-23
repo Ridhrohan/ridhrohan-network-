@@ -1,36 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIDHROHAN NETWORK</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:#07111f;
   color:#fff;
-  font-family:Arial,sans-serif
+  font-family:Arial,Helvetica,sans-serif;
 }
+
+button,input{
+  font:inherit;
+}
+
+/* LOGIN */
 
 #login{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:20px
+  padding:20px;
 }
 
-.box{
+.login-box{
   width:100%;
   max-width:390px;
   background:#101e30;
   border:1px solid #24364b;
   border-radius:22px;
   padding:30px 22px;
-  text-align:center
+  text-align:center;
+  box-shadow:0 18px 50px rgba(0,0,0,.3);
 }
 
 .logo{
@@ -43,129 +52,266 @@ body{
   align-items:center;
   justify-content:center;
   font-size:30px;
-  font-weight:bold
+  font-weight:bold;
 }
 
-h1{
+.login-box h1{
   font-size:24px;
-  margin:18px 0 8px
+  margin:18px 0 8px;
 }
 
 .sub{
   color:#a8b5c7;
   margin-bottom:25px;
-  font-size:16px
 }
 
-input{
-  display:block!important;
-  width:100%!important;
-  height:56px!important;
-  margin:0 0 13px!important;
-  padding:0 16px!important;
-  background:#071422!important;
-  color:#fff!important;
-  border:1px solid #33465d!important;
-  border-radius:12px!important;
-  font-size:16px!important;
-  opacity:1!important;
-  visibility:visible!important
+.login-box input{
+  display:block;
+  width:100%;
+  height:54px;
+  margin:0 0 13px;
+  padding:0 16px;
+  background:#071422;
+  color:#fff;
+  border:1px solid #33465d;
+  border-radius:12px;
+  outline:none;
 }
 
-input::placeholder{
-  color:#8290a3
-}
-
-button{
-  display:block!important;
-  width:100%!important;
-  height:56px!important;
+.login-box button{
+  width:100%;
+  height:54px;
   border:0;
   border-radius:12px;
   background:#087cf5;
   color:#fff;
-  font-size:17px;
-  font-weight:bold
+  font-weight:bold;
+  cursor:pointer;
 }
 
 #error{
   display:none;
   color:#ff7180;
-  margin-top:13px
+  margin-top:13px;
 }
 
-#dash{
+/* APP */
+
+#app{
   display:none;
-  min-height:100vh
+  min-height:100vh;
 }
 
-.top{
+.topbar{
   height:64px;
   background:#101e30;
-  padding:0 18px;
+  border-bottom:1px solid #24364b;
   display:flex;
   align-items:center;
-  font-weight:bold
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
-.side{
+.brand{
+  font-weight:800;
+  font-size:19px;
+}
+
+.menu-btn{
+  display:none;
+  background:none;
+  border:0;
+  color:#fff;
+  font-size:25px;
+  margin-right:12px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
   position:fixed;
   top:64px;
   bottom:0;
-  width:235px;
+  left:0;
+  width:250px;
   background:#0c1827;
-  padding:14px
+  padding:14px 12px;
+  overflow:auto;
 }
 
-.item{
-  padding:13px;
-  border-radius:9px;
+.nav{
+  display:block;
+  width:100%;
+  padding:13px 14px;
+  border:0;
+  background:none;
   color:#b9c5d4;
-  margin:3px 0
+  text-align:left;
+  border-radius:9px;
+  margin:3px 0;
+  cursor:pointer;
 }
 
-.active{
+.nav:hover,
+.nav.active{
   background:#087cf5;
-  color:#fff
+  color:#fff;
 }
+
+.group-btn:after{
+  content:"▸";
+  float:right;
+}
+
+.group.open .group-btn:after{
+  content:"▾";
+}
+
+.subnav{
+  display:none;
+  padding-left:12px;
+}
+
+.group.open .subnav{
+  display:block;
+}
+
+.subnav .nav{
+  font-size:14px;
+  padding:11px 14px;
+}
+
+.logout{
+  background:#df4356 !important;
+  color:#fff !important;
+  margin-top:14px;
+}
+
+/* MAIN */
 
 .main{
-  margin-left:235px;
-  padding:25px
+  margin-left:250px;
+  padding:24px;
 }
+
+.page-title{
+  margin:0 0 6px;
+  font-size:28px;
+}
+
+.muted{
+  color:#9eacbd;
+}
+
+/* CARDS */
 
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:15px
+  gap:15px;
+  margin-top:22px;
 }
 
 .card{
   background:#101e30;
   border:1px solid #24364b;
-  border-radius:14px;
-  padding:20px
+  border-radius:15px;
+  padding:20px;
 }
 
-@media(max-width:700px){
-  .side{
-    position:static;
-    width:100%;
-    height:auto
+.label{
+  color:#9eacbd;
+  font-size:14px;
+}
+
+.value{
+  font-size:28px;
+  font-weight:800;
+  margin-top:9px;
+}
+
+.status{
+  display:inline-block;
+  padding:7px 11px;
+  border-radius:999px;
+  background:#123a2a;
+  color:#6ee7a4;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* SECTION */
+
+.section{
+  margin-top:22px;
+  background:#101e30;
+  border:1px solid #24364b;
+  border-radius:15px;
+  padding:20px;
+}
+
+.quick{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.quick button{
+  padding:15px;
+  border:1px solid #29425d;
+  border-radius:10px;
+  background:#0b1726;
+  color:#d9e2ee;
+  text-align:left;
+  cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .menu-btn{
+    display:block;
+  }
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.2s;
+    width:270px;
+    z-index:30;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
   }
 
   .main{
-    margin-left:0
+    margin-left:0;
   }
 
   .cards{
-    grid-template-columns:1fr 1fr
+    grid-template-columns:1fr 1fr;
+  }
+
+  .quick{
+    grid-template-columns:1fr;
   }
 }
 
-@media(max-width:430px){
+@media(max-width:450px){
+
   .cards{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+  }
+
+  .main{
+    padding:18px;
+  }
+
+  .login-box{
+    padding:26px 18px;
   }
 }
 </style>
@@ -173,33 +319,39 @@ button{
 
 <body>
 
-<div id="login">
+<!-- LOGIN -->
 
-  <div class="box">
+<section id="login">
 
-    <div class="logo">RN</div>
+  <div class="login-box">
 
-    <h1>RIDHROHAN NETWORK</h1>
+    <div class="logo">
+      RN
+    </div>
+
+    <h1>
+      RIDHROHAN NETWORK
+    </h1>
 
     <div class="sub">
       Network Management System
     </div>
 
     <input
-      id="user"
+      id="username"
       type="text"
       placeholder="Username"
       autocomplete="username"
     >
 
     <input
-      id="pass"
+      id="password"
       type="password"
       placeholder="Password"
       autocomplete="current-password"
     >
 
-    <button id="sign" type="button">
+    <button id="loginBtn">
       Sign In
     </button>
 
@@ -209,133 +361,471 @@ button{
 
   </div>
 
-</div>
+</section>
 
 
-<div id="dash">
+<!-- APPLICATION -->
 
-  <div class="top">
-    RIDHROHAN NETWORK
-  </div>
+<section id="app">
 
-  <div class="side">
+  <header class="topbar">
 
-    <div class="item active">Dashboard</div>
-    <div class="item">ECash</div>
-    <div class="item">PPPoE</div>
-    <div class="item">Servers</div>
-    <div class="item">Plans</div>
-    <div class="item">Clients</div>
-    <div class="item">Transactions</div>
-    <div class="item">Active Connections</div>
-    <div class="item">Payments</div>
+    <button
+      class="menu-btn"
+      id="menuBtn">
+      ☰
+    </button>
 
-  </div>
+    <div class="brand">
+      RIDHROHAN NETWORK
+    </div>
 
-  <div class="main">
+  </header>
 
-    <h2>Dashboard</h2>
 
-    <p>
-      Welcome to RIDHROHAN NETWORK Management System.
-    </p>
+  <!-- SIDEBAR -->
 
-    <div class="cards">
+  <aside
+    class="sidebar"
+    id="sidebar">
 
-      <div class="card">
-        Total Clients
-        <h2>0</h2>
-      </div>
+    <button
+      class="nav active"
+      data-page="Dashboard">
+      Dashboard
+    </button>
 
-      <div class="card">
-        Active Connections
-        <h2>0</h2>
-      </div>
 
-      <div class="card">
-        Payments
-        <h2>₱0</h2>
-      </div>
+    <button
+      class="nav"
+      data-page="ECash">
+      ECash
+    </button>
 
-      <div class="card">
-        System Status
-        <h2>Online</h2>
+
+    <!-- PPPOE -->
+
+    <div class="group">
+
+      <button
+        class="nav group-btn">
+        PPPoE
+      </button>
+
+      <div class="subnav">
+
+        <button
+          class="nav"
+          data-page="PPPoE Servers">
+          Servers
+        </button>
+
+        <button
+          class="nav"
+          data-page="PPPoE Plans">
+          Plans
+        </button>
+
+        <button
+          class="nav"
+          data-page="PPPoE Clients">
+          Clients
+        </button>
+
+        <button
+          class="nav"
+          data-page="Transactions">
+          Transactions
+        </button>
+
+        <button
+          class="nav"
+          data-page="Active Connections">
+          Active Connections
+        </button>
+
+        <button
+          class="nav"
+          data-page="Cron Logs">
+          Cron Logs
+        </button>
+
       </div>
 
     </div>
 
-  </div>
 
-</div>
+    <button
+      class="nav"
+      data-page="PPPoE V2">
+      PPPoE V2
+    </button>
+
+
+    <button
+      class="nav"
+      data-page="IPoE">
+      IPoE
+    </button>
+
+
+    <button
+      class="nav"
+      data-page="Mikrotik">
+      Mikrotik
+    </button>
+
+
+    <button
+      class="nav"
+      data-page="Payments">
+      Payments
+    </button>
+
+
+    <button
+      class="nav"
+      data-page="Support Center">
+      Support Center
+    </button>
+
+
+    <!-- SETTINGS -->
+
+    <div class="group">
+
+      <button
+        class="nav group-btn">
+        Settings
+      </button>
+
+      <div class="subnav">
+
+        <button
+          class="nav"
+          data-page="Account">
+          Account
+        </button>
+
+        <button
+          class="nav"
+          data-page="Disbursement">
+          Disbursement
+        </button>
+
+        <button
+          class="nav"
+          data-page="Telegram Notification">
+          Telegram Notification
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="nav logout"
+      id="logoutBtn">
+      Sign Out
+    </button>
+
+  </aside>
+
+
+  <!-- MAIN DASHBOARD -->
+
+  <main
+    class="main"
+    id="content">
+
+    <h1 class="page-title">
+      Dashboard
+    </h1>
+
+    <div class="muted">
+      Network Management System
+    </div>
+
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="label">
+          Total Clients
+        </div>
+
+        <div class="value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="label">
+          Active Connections
+        </div>
+
+        <div class="value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="label">
+          Payments
+        </div>
+
+        <div class="value">
+          ₱0
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="label">
+          System Status
+        </div>
+
+        <div class="value">
+
+          <span class="status">
+            ONLINE
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="section">
+
+      <h2>
+        Quick Actions
+      </h2>
+
+      <div class="quick">
+
+        <button>
+          ＋ Add PPPoE Client
+        </button>
+
+        <button>
+          ＋ Create Plan
+        </button>
+
+        <button>
+          ₱ View Payments
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
 
 
 <script>
 
 const login =
-  document.getElementById('login');
+document.getElementById("login");
 
-const dash =
-  document.getElementById('dash');
+const app =
+document.getElementById("app");
 
 const error =
-  document.getElementById('error');
+document.getElementById("error");
 
 
-function go(){
+function showApp(){
 
-  login.style.display='none';
+  login.style.display="none";
 
-  dash.style.display='block';
+  app.style.display="block";
 
 }
 
 
-document.getElementById('sign').onclick=function(){
+function showLogin(){
+
+  app.style.display="none";
+
+  login.style.display="flex";
+
+}
+
+
+document.getElementById("loginBtn").onclick=function(){
 
   const username =
-    document.getElementById('user').value.trim();
+  document.getElementById("username").value.trim();
 
   const password =
-    document.getElementById('pass').value;
+  document.getElementById("password").value;
+
 
   if(
-    username === 'admin' &&
-    password === 'ridhrohan'
+    username==="admin" &&
+    password==="ridhrohan"
   ){
 
     sessionStorage.setItem(
-      'rn',
-      '1'
+      "rn_login",
+      "1"
     );
 
-    error.style.display='none';
+    error.style.display="none";
 
-    go();
+    showApp();
 
   }else{
 
-    error.style.display='block';
+    error.style.display="block";
 
   }
 
 };
 
 
-document.getElementById('pass')
-.addEventListener('keydown',function(e){
+document.getElementById("password")
+.addEventListener(
+  "keydown",
+  function(e){
 
-  if(e.key==='Enter'){
+    if(e.key==="Enter"){
 
-    document.getElementById('sign').click();
+      document
+      .getElementById("loginBtn")
+      .click();
+
+    }
 
   }
+);
+
+
+document.getElementById("logoutBtn")
+.onclick=function(){
+
+  sessionStorage.removeItem(
+    "rn_login"
+  );
+
+  showLogin();
+
+};
+
+
+document.getElementById("menuBtn")
+.onclick=function(){
+
+  document
+  .getElementById("sidebar")
+  .classList.toggle("open");
+
+};
+
+
+document
+.querySelectorAll(".group-btn")
+.forEach(function(button){
+
+  button.onclick=function(){
+
+    button
+    .parentElement
+    .classList
+    .toggle("open");
+
+  };
 
 });
 
 
-if(sessionStorage.getItem('rn')==='1'){
+document
+.querySelectorAll("[data-page]")
+.forEach(function(button){
 
-  go();
+  button.onclick=function(){
+
+    document
+    .querySelectorAll(".nav")
+    .forEach(function(item){
+
+      item.classList.remove("active");
+
+    });
+
+
+    button.classList.add("active");
+
+
+    const page =
+    button.dataset.page;
+
+
+    document
+    .getElementById("content")
+    .innerHTML=
+
+      '<h1 class="page-title">'
+      + page +
+      '</h1>' +
+
+      '<div class="muted">'
+      + 'Network Management System' +
+      '</div>' +
+
+      '<div class="section">' +
+
+      '<span class="status">'
+      + 'UI READY' +
+      '</span>' +
+
+      '<h2>'
+      + page +
+      '</h2>' +
+
+      '<p class="muted">'
+      + 'Design muna. Hindi pa konektado sa MikroTik.' +
+      '</p>' +
+
+      '</div>';
+
+
+    if(window.innerWidth<=800){
+
+      document
+      .getElementById("sidebar")
+      .classList
+      .remove("open");
+
+    }
+
+  };
+
+});
+
+
+if(
+  sessionStorage.getItem("rn_login")==="1"
+){
+
+  showApp();
 
 }
 
