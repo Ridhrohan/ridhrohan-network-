@@ -2,834 +2,212 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RIDHROHAN NETWORK</title>
-
 <style>
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#07111f;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-button,input{
-  font:inherit;
-}
-
-/* LOGIN */
-
-#login{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-box{
-  width:100%;
-  max-width:390px;
-  background:#101e30;
-  border:1px solid #24364b;
-  border-radius:22px;
-  padding:30px 22px;
-  text-align:center;
-  box-shadow:0 18px 50px rgba(0,0,0,.3);
-}
-
-.logo{
-  width:82px;
-  height:82px;
-  margin:auto;
-  background:#087cf5;
-  border-radius:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:bold;
-}
-
-.login-box h1{
-  font-size:24px;
-  margin:18px 0 8px;
-}
-
-.sub{
-  color:#a8b5c7;
-  margin-bottom:25px;
-}
-
-.login-box input{
-  display:block;
-  width:100%;
-  height:54px;
-  margin:0 0 13px;
-  padding:0 16px;
-  background:#071422;
-  color:#fff;
-  border:1px solid #33465d;
-  border-radius:12px;
-  outline:none;
-}
-
-.login-box button{
-  width:100%;
-  height:54px;
-  border:0;
-  border-radius:12px;
-  background:#087cf5;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-#error{
-  display:none;
-  color:#ff7180;
-  margin-top:13px;
-}
-
-/* APP */
-
-#app{
-  display:none;
-  min-height:100vh;
-}
-
-.topbar{
-  height:64px;
-  background:#101e30;
-  border-bottom:1px solid #24364b;
-  display:flex;
-  align-items:center;
-  padding:0 18px;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-
-.brand{
-  font-weight:800;
-  font-size:19px;
-}
-
-.menu-btn{
-  display:none;
-  background:none;
-  border:0;
-  color:#fff;
-  font-size:25px;
-  margin-right:12px;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-  position:fixed;
-  top:64px;
-  bottom:0;
-  left:0;
-  width:250px;
-  background:#0c1827;
-  padding:14px 12px;
-  overflow:auto;
-}
-
-.nav{
-  display:block;
-  width:100%;
-  padding:13px 14px;
-  border:0;
-  background:none;
-  color:#b9c5d4;
-  text-align:left;
-  border-radius:9px;
-  margin:3px 0;
-  cursor:pointer;
-}
-
-.nav:hover,
-.nav.active{
-  background:#087cf5;
-  color:#fff;
-}
-
-.group-btn:after{
-  content:"▸";
-  float:right;
-}
-
-.group.open .group-btn:after{
-  content:"▾";
-}
-
-.subnav{
-  display:none;
-  padding-left:12px;
-}
-
-.group.open .subnav{
-  display:block;
-}
-
-.subnav .nav{
-  font-size:14px;
-  padding:11px 14px;
-}
-
-.logout{
-  background:#df4356 !important;
-  color:#fff !important;
-  margin-top:14px;
-}
-
-/* MAIN */
-
-.main{
-  margin-left:250px;
-  padding:24px;
-}
-
-.page-title{
-  margin:0 0 6px;
-  font-size:28px;
-}
-
-.muted{
-  color:#9eacbd;
-}
-
-/* CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-top:22px;
-}
-
-.card{
-  background:#101e30;
-  border:1px solid #24364b;
-  border-radius:15px;
-  padding:20px;
-}
-
-.label{
-  color:#9eacbd;
-  font-size:14px;
-}
-
-.value{
-  font-size:28px;
-  font-weight:800;
-  margin-top:9px;
-}
-
-.status{
-  display:inline-block;
-  padding:7px 11px;
-  border-radius:999px;
-  background:#123a2a;
-  color:#6ee7a4;
-  font-size:12px;
-  font-weight:bold;
-}
-
-/* SECTION */
-
-.section{
-  margin-top:22px;
-  background:#101e30;
-  border:1px solid #24364b;
-  border-radius:15px;
-  padding:20px;
-}
-
-.quick{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.quick button{
-  padding:15px;
-  border:1px solid #29425d;
-  border-radius:10px;
-  background:#0b1726;
-  color:#d9e2ee;
-  text-align:left;
-  cursor:pointer;
-}
-
-/* MOBILE */
-
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#fff;font-family:Arial,sans-serif}
+button,input{font:inherit}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{width:100%;max-width:390px;background:#101e30;border:1px solid #24364b;border-radius:22px;padding:30px 22px;text-align:center}
+.logo{width:82px;height:82px;margin:auto;background:#087cf5;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold}
+h1{font-size:25px}.sub,.muted{color:#9eacbd}
+.login-box input{width:100%;height:54px;margin:7px 0;padding:0 15px;background:#071422;color:white;border:1px solid #33465d;border-radius:12px}
+.login-box button,.btn{width:100%;height:52px;border:0;border-radius:10px;background:#087cf5;color:white;font-weight:bold;margin-top:8px}
+#error{display:none;color:#ff7180;margin-top:12px}
+#app{display:none}
+.topbar{height:64px;background:#101e30;border-bottom:1px solid #24364b;display:flex;align-items:center;padding:0 18px;position:sticky;top:0;z-index:20}
+.brand{font-weight:bold;font-size:19px}.menu{display:none;background:none;border:0;color:white;font-size:27px;margin-right:12px}
+.sidebar{position:fixed;top:64px;bottom:0;left:0;width:250px;background:#0c1827;padding:12px;overflow:auto}
+.nav{display:block;width:100%;padding:13px;border:0;background:none;color:#b9c5d4;text-align:left;border-radius:9px;margin:3px 0}
+.nav:hover,.active{background:#087cf5!important;color:white!important}
+.sub{display:none;padding-left:10px}.open .sub{display:block}
+.arrow:after{content:"▸";float:right}.open>.arrow:after{content:"▾"}
+.logout{background:#df4356!important;color:white!important;margin-top:15px}
+main{margin-left:250px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:22px}
+.card,.section{background:#101e30;border:1px solid #24364b;border-radius:15px;padding:20px}
+.label{color:#9eacbd}.value{font-size:28px;font-weight:bold;margin-top:8px}
+.status{display:inline-block;padding:7px 11px;border-radius:20px;background:#123a2a;color:#6ee7a4}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.quick button{padding:15px;background:#0b1726;color:#fff;border:1px solid #29425d;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin-top:15px;min-width:600px}
+th,td{text-align:left;padding:12px;border-bottom:1px solid #26384c}
+th{color:#9eacbd}.table{overflow:auto}
+.badge{padding:5px 9px;border-radius:20px;background:#123a2a;color:#6ee7a4}
 @media(max-width:800px){
-
-  .menu-btn{
-    display:block;
-  }
-
-  .sidebar{
-    transform:translateX(-100%);
-    transition:.2s;
-    width:270px;
-    z-index:30;
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .main{
-    margin-left:0;
-  }
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .quick{
-    grid-template-columns:1fr;
-  }
+.menu{display:block}.sidebar{transform:translateX(-100%);transition:.2s;width:270px;z-index:30}
+.sidebar.show{transform:translateX(0)}main{margin-left:0}.cards{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr}
 }
-
-@media(max-width:450px){
-
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .main{
-    padding:18px;
-  }
-
-  .login-box{
-    padding:26px 18px;
-  }
-}
+@media(max-width:450px){.cards{grid-template-columns:1fr}main{padding:18px}}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-
-<section id="login">
-
-  <div class="login-box">
-
-    <div class="logo">
-      RN
-    </div>
-
-    <h1>
-      RIDHROHAN NETWORK
-    </h1>
-
-    <div class="sub">
-      Network Management System
-    </div>
-
-    <input
-      id="username"
-      type="text"
-      placeholder="Username"
-      autocomplete="username"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
-
-    <button id="loginBtn">
-      Sign In
-    </button>
-
-    <div id="error">
-      Invalid username or password
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- APPLICATION -->
-
-<section id="app">
-
-  <header class="topbar">
-
-    <button
-      class="menu-btn"
-      id="menuBtn">
-      ☰
-    </button>
-
-    <div class="brand">
-      RIDHROHAN NETWORK
-    </div>
-
-  </header>
-
-
-  <!-- SIDEBAR -->
-
-  <aside
-    class="sidebar"
-    id="sidebar">
-
-    <button
-      class="nav active"
-      data-page="Dashboard">
-      Dashboard
-    </button>
-
-
-    <button
-      class="nav"
-      data-page="ECash">
-      ECash
-    </button>
-
-
-    <!-- PPPOE -->
-
-    <div class="group">
-
-      <button
-        class="nav group-btn">
-        PPPoE
-      </button>
-
-      <div class="subnav">
-
-        <button
-          class="nav"
-          data-page="PPPoE Servers">
-          Servers
-        </button>
-
-        <button
-          class="nav"
-          data-page="PPPoE Plans">
-          Plans
-        </button>
-
-        <button
-          class="nav"
-          data-page="PPPoE Clients">
-          Clients
-        </button>
-
-        <button
-          class="nav"
-          data-page="Transactions">
-          Transactions
-        </button>
-
-        <button
-          class="nav"
-          data-page="Active Connections">
-          Active Connections
-        </button>
-
-        <button
-          class="nav"
-          data-page="Cron Logs">
-          Cron Logs
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="nav"
-      data-page="PPPoE V2">
-      PPPoE V2
-    </button>
-
-
-    <button
-      class="nav"
-      data-page="IPoE">
-      IPoE
-    </button>
-
-
-    <button
-      class="nav"
-      data-page="Mikrotik">
-      Mikrotik
-    </button>
-
-
-    <button
-      class="nav"
-      data-page="Payments">
-      Payments
-    </button>
-
-
-    <button
-      class="nav"
-      data-page="Support Center">
-      Support Center
-    </button>
-
-
-    <!-- SETTINGS -->
-
-    <div class="group">
-
-      <button
-        class="nav group-btn">
-        Settings
-      </button>
-
-      <div class="subnav">
-
-        <button
-          class="nav"
-          data-page="Account">
-          Account
-        </button>
-
-        <button
-          class="nav"
-          data-page="Disbursement">
-          Disbursement
-        </button>
-
-        <button
-          class="nav"
-          data-page="Telegram Notification">
-          Telegram Notification
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="nav logout"
-      id="logoutBtn">
-      Sign Out
-    </button>
-
-  </aside>
-
-
-  <!-- MAIN DASHBOARD -->
-
-  <main
-    class="main"
-    id="content">
-
-    <h1 class="page-title">
-      Dashboard
-    </h1>
-
-    <div class="muted">
-      Network Management System
-    </div>
-
-
-    <div class="cards">
-
-      <div class="card">
-
-        <div class="label">
-          Total Clients
-        </div>
-
-        <div class="value">
-          0
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="label">
-          Active Connections
-        </div>
-
-        <div class="value">
-          0
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="label">
-          Payments
-        </div>
-
-        <div class="value">
-          ₱0
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="label">
-          System Status
-        </div>
-
-        <div class="value">
-
-          <span class="status">
-            ONLINE
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- QUICK ACTIONS -->
-
-    <div class="section">
-
-      <h2>
-        Quick Actions
-      </h2>
-
-      <div class="quick">
-
-        <button>
-          ＋ Add PPPoE Client
-        </button>
-
-        <button>
-          ＋ Create Plan
-        </button>
-
-        <button>
-          ₱ View Payments
-        </button>
-
-      </div>
-
-    </div>
-
-  </main>
-
-</section>
-
+<div id="login">
+<div class="login-box">
+<div class="logo">RN</div>
+<h1>RIDHROHAN NETWORK</h1>
+<div class="sub">Network Management System</div>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Sign In</button>
+<div id="error">Invalid username or password</div>
+</div>
+</div>
+
+<div id="app">
+<header class="topbar">
+<button class="menu" onclick="toggleMenu()">☰</button>
+<div class="brand">RIDHROHAN NETWORK</div>
+</header>
+
+<aside class="sidebar" id="side">
+
+<button class="nav active" onclick="page('Dashboard',this)">Dashboard</button>
+<button class="nav" onclick="page('ECash',this)">ECash</button>
+
+<div class="group">
+<button class="nav arrow" onclick="group(this)">PPPoE</button>
+<div class="sub">
+<button class="nav" onclick="page('Servers',this)">Servers</button>
+<button class="nav" onclick="page('Plans',this)">Plans</button>
+<button class="nav" onclick="page('Clients',this)">Clients</button>
+<button class="nav" onclick="page('Transactions',this)">Transactions</button>
+<button class="nav" onclick="page('Active Connections',this)">Active Connections</button>
+<button class="nav" onclick="page('Cron Logs',this)">Cron Logs</button>
+</div>
+</div>
+
+<button class="nav" onclick="page('PPPoE V2',this)">PPPoE V2</button>
+<button class="nav" onclick="page('IPoE',this)">IPoE</button>
+<button class="nav" onclick="page('Mikrotik',this)">Mikrotik</button>
+<button class="nav" onclick="page('Payments',this)">Payments</button>
+<button class="nav" onclick="page('Support Center',this)">Support Center</button>
+
+<div class="group">
+<button class="nav arrow" onclick="group(this)">Settings</button>
+<div class="sub">
+<button class="nav" onclick="page('Account',this)">Account</button>
+<button class="nav" onclick="page('Disbursement',this)">Disbursement</button>
+<button class="nav" onclick="page('Telegram Notification',this)">Telegram Notification</button>
+</div>
+</div>
+
+<button class="nav logout" onclick="logout()">Sign Out</button>
+</aside>
+
+<main id="main"></main>
+</div>
 
 <script>
+const main=document.getElementById("main");
 
-const login =
-document.getElementById("login");
-
-const app =
-document.getElementById("app");
-
-const error =
-document.getElementById("error");
-
-
-function showApp(){
-
-  login.style.display="none";
-
-  app.style.display="block";
-
+function login(){
+if(user.value==="admin"&&pass.value==="ridhrohan"){
+sessionStorage.ok=1;
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+page("Dashboard");
+}else error.style.display="block";
 }
 
-
-function showLogin(){
-
-  app.style.display="none";
-
-  login.style.display="flex";
-
+function logout(){
+sessionStorage.removeItem("ok");
+location.reload();
 }
 
-
-document.getElementById("loginBtn").onclick=function(){
-
-  const username =
-  document.getElementById("username").value.trim();
-
-  const password =
-  document.getElementById("password").value;
-
-
-  if(
-    username==="admin" &&
-    password==="ridhrohan"
-  ){
-
-    sessionStorage.setItem(
-      "rn_login",
-      "1"
-    );
-
-    error.style.display="none";
-
-    showApp();
-
-  }else{
-
-    error.style.display="block";
-
-  }
-
-};
-
-
-document.getElementById("password")
-.addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key==="Enter"){
-
-      document
-      .getElementById("loginBtn")
-      .click();
-
-    }
-
-  }
-);
-
-
-document.getElementById("logoutBtn")
-.onclick=function(){
-
-  sessionStorage.removeItem(
-    "rn_login"
-  );
-
-  showLogin();
-
-};
-
-
-document.getElementById("menuBtn")
-.onclick=function(){
-
-  document
-  .getElementById("sidebar")
-  .classList.toggle("open");
-
-};
-
-
-document
-.querySelectorAll(".group-btn")
-.forEach(function(button){
-
-  button.onclick=function(){
-
-    button
-    .parentElement
-    .classList
-    .toggle("open");
-
-  };
-
-});
-
-
-document
-.querySelectorAll("[data-page]")
-.forEach(function(button){
-
-  button.onclick=function(){
-
-    document
-    .querySelectorAll(".nav")
-    .forEach(function(item){
-
-      item.classList.remove("active");
-
-    });
-
-
-    button.classList.add("active");
-
-
-    const page =
-    button.dataset.page;
-
-
-    document
-    .getElementById("content")
-    .innerHTML=
-
-      '<h1 class="page-title">'
-      + page +
-      '</h1>' +
-
-      '<div class="muted">'
-      + 'Network Management System' +
-      '</div>' +
-
-      '<div class="section">' +
-
-      '<span class="status">'
-      + 'UI READY' +
-      '</span>' +
-
-      '<h2>'
-      + page +
-      '</h2>' +
-
-      '<p class="muted">'
-      + 'Design muna. Hindi pa konektado sa MikroTik.' +
-      '</p>' +
-
-      '</div>';
-
-
-    if(window.innerWidth<=800){
-
-      document
-      .getElementById("sidebar")
-      .classList
-      .remove("open");
-
-    }
-
-  };
-
-});
-
-
-if(
-  sessionStorage.getItem("rn_login")==="1"
-){
-
-  showApp();
-
+function toggleMenu(){
+document.getElementById("side").classList.toggle("show");
 }
 
+function group(x){
+x.parentElement.classList.toggle("open");
+}
+
+function page(p,x){
+document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+if(x)x.classList.add("active");
+if(innerWidth<801)side.classList.remove("show");
+
+let content="";
+
+if(p==="Dashboard"){
+content=`
+<h1>Dashboard</h1>
+<div class="muted">Network Management System</div>
+<div class="cards">
+<div class="card"><div class="label">Total Clients</div><div class="value">2</div></div>
+<div class="card"><div class="label">Active Connections</div><div class="value">2</div></div>
+<div class="card"><div class="label">Payments</div><div class="value">₱0</div></div>
+<div class="card"><div class="label">System Status</div><div class="value"><span class="status">ONLINE</span></div></div>
+</div>
+<div class="section"><h2>Quick Actions</h2>
+<div class="quick">
+<button onclick="page('Clients')">＋ Add PPPoE Client</button>
+<button onclick="page('Plans')">＋ Create Plan</button>
+<button onclick="page('Payments')">₱ View Payments</button>
+</div></div>`;
+}
+
+else if(p==="Clients"){
+content=`
+<h1>PPPoE Clients</h1><div class="muted">Manage subscriber accounts</div>
+<div class="section"><h2>Clients</h2>
+<div class="table"><table>
+<tr><th>Name</th><th>Username</th><th>Plan</th><th>Status</th><th>Due</th></tr>
+<tr><td>Ridhrohan</td><td>ridhrohan</td><td>25 Mbps</td><td><span class="badge">Active</span></td><td>2026-10-01</td></tr>
+<tr><td>Client 02</td><td>client02</td><td>15 Mbps</td><td><span class="badge">Active</span></td><td>2026-10-05</td></tr>
+</table></div></div>`;
+}
+
+else if(p==="Plans"){
+content=`
+<h1>PPPoE Plans</h1><div class="muted">Internet service plans</div>
+<div class="section"><div class="table"><table>
+<tr><th>Plan</th><th>Speed</th><th>Monthly</th><th>Status</th></tr>
+<tr><td>Basic</td><td>10 Mbps</td><td>₱500</td><td><span class="badge">Active</span></td></tr>
+<tr><td>Standard</td><td>25 Mbps</td><td>₱1000</td><td><span class="badge">Active</span></td></tr>
+<tr><td>Premium</td><td>50 Mbps</td><td>₱1500</td><td><span class="badge">Active</span></td></tr>
+</table></div></div>`;
+}
+
+else if(p==="Servers"){
+content=`<h1>PPPoE Servers</h1><div class="section"><h2>RIDHROHAN-PPPOE</h2><p class="muted">Server is ready for MikroTik integration.</p><span class="badge">READY</span></div>`;
+}
+
+else if(p==="Transactions"){
+content=`<h1>Transactions</h1><div class="section"><h2>Transaction History</h2><p class="muted">No transactions yet.</p></div>`;
+}
+
+else if(p==="Active Connections"){
+content=`<h1>Active Connections</h1><div class="section"><h2>Current Sessions</h2><p class="muted">MikroTik connection will be added later.</p><span class="badge">WAITING</span></div>`;
+}
+
+else if(p==="Cron Logs"){
+content=`<h1>Cron Logs</h1><div class="section"><p class="muted">No automated jobs yet.</p></div>`;
+}
+
+else if(p==="Mikrotik"){
+content=`<h1>Mikrotik</h1><div class="section"><h2>Router Connection</h2><p class="muted">MikroTik API integration will be added through a secure backend.</p><button class="btn">Test Connection</button></div>`;
+}
+
+else if(p==="Payments"){
+content=`<h1>Payments</h1><div class="cards"><div class="card"><div class="label">Collected</div><div class="value">₱0</div></div><div class="card"><div class="label">Pending</div><div class="value">₱0</div></div></div>`;
+}
+
+else{
+content=`<h1>${p}</h1><div class="section"><h2>${p}</h2><p class="muted">Module ready for configuration.</p></div>`;
+}
+
+main.innerHTML=content;
+}
+
+if(sessionStorage.ok){
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+page("Dashboard");
+}
 </script>
-
 </body>
 </html>
