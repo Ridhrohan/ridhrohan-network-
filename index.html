@@ -1555,4 +1555,438 @@ document.getElementById("planModal")
 
 /* ACTIVATE PLAN */
 
-function
+function togglePlan(i){
+
+if(!plans[i])return;
+
+plans[i].status=
+plans[i].status==="ACTIVE"
+?"INACTIVE"
+:"ACTIVE";
+
+saveData();
+
+render("plans");
+
+}
+
+
+/* DELETE PLAN */
+
+function deletePlan(i){
+
+if(!plans[i])return;
+
+var p=plans[i];
+
+var used=clients.some(function(c){
+
+return c.plan===p.name;
+
+});
+
+
+if(used){
+
+alert(
+"Hindi puwedeng i-delete ang plan na ginagamit pa ng client.\n\n"+
+"Deactivate muna ang plan."
+);
+
+return;
+
+}
+
+
+if(!confirm(
+"Delete plan?\n\n"+
+p.name+
+"\n"+
+money(p.price)+
+"/month"
+)){
+
+return;
+
+}
+
+
+plans.splice(i,1);
+
+saveData();
+
+render("plans");
+
+}
+
+
+/* SAVE CLIENT */
+
+function saveClient(){
+
+var name=
+document.getElementById("fName")
+.value.trim();
+
+var user=
+document.getElementById("fUser")
+.value.trim();
+
+var planName=
+document.getElementById("fPlan")
+.value;
+
+var due=
+document.getElementById("fDue")
+.value;
+
+
+if(!name||!user){
+
+alert(
+"Ilagay ang Client Name at Username."
+);
+
+return;
+
+}
+
+
+var plan=plans.find(function(p){
+
+return p.name===planName;
+
+});
+
+
+if(!plan){
+
+alert("Plan not found.");
+
+return;
+
+}
+
+
+clients.push({
+
+name:name,
+
+user:user,
+
+plan:plan.name,
+
+speed:plan.speed,
+
+fee:Number(plan.price),
+
+due:due,
+
+disabled:false
+
+});
+
+
+saveData();
+
+closeModal("clientModal");
+
+showPage("clients");
+
+}
+
+
+/* PAYMENT */
+
+function paidDisabled(i){
+
+alert(
+"DISABLED ang client na ito.\n\n"+
+"I-enable muna ang client bago mag-record ng payment."
+);
+
+}
+
+
+function paid(i){
+
+var c=clients[i];
+
+if(!c)return;
+
+
+if(c.disabled){
+
+alert(
+"DISABLED ang client na ito.\n\n"+
+"I-enable muna ang client bago mag-record ng payment."
+);
+
+return;
+
+}
+
+
+var amount=Number(c.fee||0);
+
+
+var confirmPayment=confirm(
+
+"CONFIRM PAYMENT\n\n"+
+
+"Client: "+c.name+"\n"+
+
+"Username: "+c.user+"\n"+
+
+"Plan: "+c.plan+"\n"+
+
+"Amount: "+money(amount)+"\n"+
+
+"Current Due: "+(c.due||"-")+
+
+"\n\nContinue?"
+
+);
+
+
+if(!confirmPayment)return;
+
+
+var method=prompt(
+
+"Payment Method:\n\n"+
+"GCash\n"+
+"Maya\n"+
+"Cash\n\n"+
+"Type payment method:",
+
+"Cash"
+
+);
+
+
+if(method===null)return;
+
+method=method.trim();
+
+
+if(!method){
+
+alert(
+"Payment method is required."
+);
+
+return;
+
+}
+
+
+var today=
+new Date()
+.toISOString()
+.slice(0,10);
+
+
+var alreadyPaid=payments.some(function(p){
+
+return p.client===c.name &&
+p.date===today &&
+Number(p.amount||0)===amount;
+
+});
+
+
+if(alreadyPaid){
+
+var duplicate=confirm(
+
+"May payment na para sa client na ito ngayong araw.\n\n"+
+"Sigurado ka bang gusto mong mag-record ulit?"
+
+);
+
+if(!duplicate)return;
+
+}
+
+
+var previousDue=c.due||"-";
+
+var d;
+
+if(c.due){
+
+d=new Date(
+c.due+"T00:00:00"
+);
+
+}else{
+
+d=new Date();
+
+}
+
+
+if(isNaN(d.getTime())){
+
+d=new Date();
+
+}
+
+
+d.setMonth(
+d.getMonth()+1
+);
+
+
+var newDue=
+d.toISOString()
+.slice(0,10);
+
+
+c.due=newDue;
+
+c.disabled=false;
+
+
+payments.push({
+
+client:c.name,
+
+username:c.user,
+
+amount:amount,
+
+method:method,
+
+date:today,
+
+previousDue:previousDue,
+
+newDue:newDue,
+
+transactionId:createTransactionID()
+
+});
+
+
+saveData();
+
+
+alert(
+
+"PAYMENT SUCCESSFUL\n\n"+
+
+"Client: "+c.name+"\n"+
+
+"Amount: "+money(amount)+"\n"+
+
+"Method: "+method+"\n"+
+
+"New Due Date: "+newDue
+
+);
+
+
+render("clients");
+
+}
+
+
+/* ENABLE / DISABLE */
+
+function toggleDisable(i){
+
+if(!clients[i])return;
+
+
+if(clients[i].disabled){
+
+if(!confirm(
+"Enable this client?\n\n"+
+clients[i].name
+))return;
+
+clients[i].disabled=false;
+
+}else{
+
+if(!confirm(
+"Disable this client?\n\n"+
+clients[i].name
+))return;
+
+clients[i].disabled=true;
+
+}
+
+
+saveData();
+
+render("clients");
+
+}
+
+
+/* DELETE CLIENT */
+
+function removeClient(i){
+
+if(!clients[i])return;
+
+
+var c=clients[i];
+
+
+if(!confirm(
+
+"DELETE CLIENT?\n\n"+
+c.name+
+"\n"+
+c.user+
+
+"\n\nThis action cannot be undone."
+
+))return;
+
+
+clients.splice(i,1);
+
+saveData();
+
+render("clients");
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+alert(
+"Static prototype: logout is not connected to a server yet."
+);
+
+}
+
+
+/* START */
+
+function start(){
+
+safeLoad();
+
+render("dashboard");
+
+}
+
+
+window.addEventListener(
+"load",
+start
+);
+
+</script>
+
+</body>
+</html>
