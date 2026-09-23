@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RIDHROHAN NETWORK</title>
 
 <style>
@@ -14,287 +13,340 @@
   font-family:Arial,Helvetica,sans-serif;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  background:#06101f;
+  background:#07111f;
   color:#fff;
-  min-height:100vh;
 }
 
 /* HEADER */
-header{
-  height:75px;
-  background:#0d2035;
+.header{
+  height:70px;
+  background:#0d2136;
+  border-bottom:1px solid #203b55;
   display:flex;
   align-items:center;
-  padding:0 20px;
+  padding:0 18px;
   position:sticky;
   top:0;
   z-index:1000;
-  border-bottom:1px solid #1d3853;
 }
 
-.logo{
-  font-size:25px;
-  font-weight:800;
-  margin-left:20px;
-  letter-spacing:.5px;
-}
-
-.menu-btn{
-  width:48px;
-  height:48px;
+.menu{
+  width:44px;
+  height:44px;
   border:0;
-  background:transparent;
-  cursor:pointer;
+  background:none;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  gap:6px;
+  gap:5px;
+  cursor:pointer;
 }
 
-.menu-btn span{
-  display:block;
-  width:38px;
+.menu span{
+  width:34px;
   height:4px;
   background:#fff;
   border-radius:5px;
 }
 
-/* SIDE MENU */
-.side-menu{
-  position:fixed;
-  top:75px;
-  left:-290px;
-  width:270px;
-  height:calc(100vh - 75px);
-  background:#0b1c30;
-  z-index:999;
-  transition:.3s ease;
-  padding:20px 15px;
-  border-right:1px solid #24415e;
-  overflow-y:auto;
+.logo{
+  margin-left:16px;
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:.5px;
 }
 
-.side-menu.active{
+/* SIDE MENU */
+.side{
+  position:fixed;
+  top:70px;
+  left:-280px;
+  width:270px;
+  height:calc(100vh - 70px);
+  background:#0b1d31;
+  border-right:1px solid #29445d;
+  z-index:999;
+  transition:.3s;
+  padding:18px 12px;
+}
+
+.side.open{
   left:0;
 }
 
-.side-menu h3{
-  color:#8fc8ff;
-  margin:10px 12px 18px;
-  font-size:14px;
+.side-title{
+  color:#65baff;
+  font-size:13px;
+  font-weight:bold;
+  padding:10px 14px;
   text-transform:uppercase;
-  letter-spacing:1px;
 }
 
-.side-menu a{
+.side a{
   display:block;
   color:#fff;
   text-decoration:none;
-  padding:15px 14px;
-  margin:5px 0;
-  border-radius:10px;
-  font-size:16px;
+  padding:13px 14px;
+  margin:3px 0;
+  border-radius:9px;
+  font-size:15px;
 }
 
-.side-menu a:hover{
-  background:#173653;
+.side a:hover{
+  background:#163653;
 }
 
-/* OVERLAY */
 .overlay{
-  position:fixed;
-  inset:75px 0 0 0;
-  background:rgba(0,0,0,.55);
-  z-index:998;
   display:none;
+  position:fixed;
+  inset:70px 0 0 0;
+  background:rgba(0,0,0,.6);
+  z-index:998;
 }
 
-.overlay.active{
+.overlay.show{
   display:block;
 }
 
 /* HERO */
 .hero{
-  padding:65px 20px 45px;
+  max-width:1100px;
+  margin:auto;
+  padding:55px 18px 35px;
   text-align:center;
-  background:
-    radial-gradient(circle at top,#12365b 0,#06101f 55%);
+}
+
+.badge{
+  display:inline-block;
+  border:1px solid #23628d;
+  background:#0b2035;
+  color:#65baff;
+  border-radius:30px;
+  padding:7px 14px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:34px;
+  font-size:36px;
   line-height:1.15;
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
 .hero h1 span{
-  color:#55b9ff;
+  color:#38a9ff;
 }
 
 .hero p{
-  color:#b8c7d8;
   max-width:650px;
   margin:auto;
-  line-height:1.7;
+  color:#9db2c7;
   font-size:16px;
+  line-height:1.65;
 }
 
-.hero-buttons{
+.buttons{
   margin-top:25px;
   display:flex;
   justify-content:center;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
 }
 
 .btn{
-  display:inline-block;
+  padding:12px 20px;
+  border-radius:9px;
   text-decoration:none;
-  padding:13px 20px;
-  border-radius:10px;
   font-weight:bold;
-}
-
-.btn-primary{
-  background:#168cff;
-  color:white;
-}
-
-.btn-secondary{
-  border:1px solid #42617e;
-  color:white;
-}
-
-/* CONTENT */
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:25px 18px 100px;
-}
-
-.section-title{
-  text-align:center;
-  margin:35px 0 25px;
-}
-
-.section-title h2{
-  font-size:27px;
-  margin-bottom:8px;
-}
-
-.section-title p{
-  color:#91a6bb;
-}
-
-/* CARDS */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.card{
-  background:#0c1c2e;
-  border:1px solid #203b55;
-  border-radius:15px;
-  padding:24px 20px;
-  transition:.2s;
-}
-
-.card:hover{
-  transform:translateY(-3px);
-  border-color:#2c8ed0;
-}
-
-.icon{
-  font-size:34px;
-  margin-bottom:14px;
-}
-
-.card h3{
-  margin-bottom:9px;
-  font-size:19px;
-}
-
-.card p{
-  color:#9fb1c3;
-  line-height:1.6;
   font-size:14px;
 }
 
-/* STATUS */
-.status-box{
-  margin-top:30px;
-  background:#0b1d30;
-  border:1px solid #21415e;
-  border-radius:15px;
-  padding:22px;
+.primary{
+  background:#168ff0;
+  color:#fff;
 }
 
-.status{
-  display:flex;
-  align-items:center;
+.secondary{
+  border:1px solid #365a78;
+  color:#fff;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:0 18px 60px;
+}
+
+.title{
+  text-align:center;
+  margin:38px 0 20px;
+}
+
+.title h2{
+  font-size:25px;
+  margin-bottom:6px;
+}
+
+.title p{
+  color:#8fa6bb;
+  font-size:14px;
+}
+
+/* QUICK MENU */
+.quick{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
   gap:10px;
-  margin-bottom:10px;
+  margin-top:20px;
+}
+
+.quick a{
+  text-decoration:none;
+  color:#fff;
+  background:#0d2035;
+  border:1px solid #24425e;
+  border-radius:10px;
+  padding:15px 8px;
+  text-align:center;
+  font-size:13px;
   font-weight:bold;
 }
 
-.dot{
-  width:11px;
-  height:11px;
-  background:#35d07f;
-  border-radius:50%;
-  box-shadow:0 0 10px #35d07f;
+.quick-icon{
+  display:block;
+  font-size:24px;
+  margin-bottom:7px;
 }
 
-.status-box p{
-  color:#9fb1c3;
+/* SERVICE CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.card{
+  background:#0c1d30;
+  border:1px solid #1f3b55;
+  border-radius:13px;
+  padding:20px;
+}
+
+.card-icon{
+  font-size:29px;
+  margin-bottom:12px;
+}
+
+.card h3{
+  font-size:17px;
+  margin-bottom:7px;
+}
+
+.card p{
+  color:#91a7bb;
+  font-size:13px;
+  line-height:1.55;
+}
+
+/* SYSTEM */
+.system{
+  background:#0c1d30;
+  border:1px solid #1f3b55;
+  border-radius:13px;
+  padding:20px;
+  margin-top:20px;
+}
+
+.system-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+.online{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#32d583;
+  box-shadow:0 0 9px #32d583;
+}
+
+.system p{
+  color:#91a7bb;
+  font-size:13px;
   line-height:1.6;
 }
 
 /* FOOTER */
 footer{
   background:#081522;
-  border-top:1px solid #1b344b;
+  border-top:1px solid #1d354b;
   text-align:center;
   padding:25px 15px;
-  color:#8498aa;
-  font-size:13px;
+  color:#71879b;
+  font-size:12px;
 }
 
 /* MOBILE */
-@media(max-width:750px){
+@media(max-width:700px){
+
+  .header{
+    height:66px;
+  }
+
+  .side{
+    top:66px;
+    height:calc(100vh - 66px);
+  }
+
+  .overlay{
+    inset:66px 0 0 0;
+  }
 
   .logo{
-    font-size:22px;
+    font-size:19px;
   }
 
   .hero{
-    padding:50px 18px 40px;
+    padding:38px 16px 25px;
   }
 
   .hero h1{
     font-size:29px;
   }
 
+  .hero p{
+    font-size:14px;
+  }
+
+  .container{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .quick{
+    grid-template-columns:repeat(2,1fr);
+  }
+
   .cards{
     grid-template-columns:1fr;
   }
 
-  .card{
-    padding:22px;
+  .title{
+    margin-top:32px;
   }
 
-  .container{
-    padding-left:15px;
-    padding-right:15px;
-  }
-}
-
-@media(min-width:751px){
-  .menu-btn{
-    cursor:pointer;
+  .title h2{
+    font-size:23px;
   }
 }
 </style>
@@ -302,37 +354,34 @@ footer{
 
 <body>
 
-<header>
+<!-- HEADER -->
+<header class="header">
 
-  <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+  <button class="menu" onclick="openMenu()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
-  <div class="logo">RIDHROHAN NETWORK</div>
+  <div class="logo">
+    RIDHROHAN NETWORK
+  </div>
 
 </header>
 
-<!-- SIDE MENU -->
-<nav class="side-menu" id="sideMenu">
 
-  <h3>Navigation</h3>
+<!-- SIDE MENU -->
+<nav class="side" id="side">
+
+  <div class="side-title">Main Menu</div>
 
   <a href="#home" onclick="closeMenu()">🏠 Home</a>
-
-  <a href="#network" onclick="closeMenu()">🌐 Network Management</a>
-
+  <a href="#services" onclick="closeMenu()">🛠️ Services</a>
   <a href="#mikrotik" onclick="closeMenu()">⚙️ MikroTik</a>
-
-  <a href="#bandwidth" onclick="closeMenu()">📶 Bandwidth Management</a>
-
-  <a href="#gaming" onclick="closeMenu()">🎮 Gaming Priority</a>
-
+  <a href="#pppoe" onclick="closeMenu()">🔗 PPPoE</a>
   <a href="#hotspot" onclick="closeMenu()">📡 Hotspot / Piso WiFi</a>
-
-  <a href="#services" onclick="closeMenu()">🔧 Services</a>
-
+  <a href="#bandwidth" onclick="closeMenu()">📶 Bandwidth</a>
+  <a href="#gaming" onclick="closeMenu()">🎮 Gaming Priority</a>
   <a href="#contact" onclick="closeMenu()">📞 Contact</a>
 
 </nav>
@@ -343,24 +392,28 @@ footer{
 <!-- HOME -->
 <section class="hero" id="home">
 
+  <div class="badge">
+    NETWORK MANAGEMENT SYSTEM
+  </div>
+
   <h1>
     RIDHROHAN <span>NETWORK</span>
   </h1>
 
   <p>
-    Network Management System para sa MikroTik,
-    bandwidth management, gaming priority,
-    PPPoE at Hotspot / Piso WiFi management.
+    Professional network management para sa
+    MikroTik, PPPoE, Hotspot, bandwidth management
+    at gaming priority.
   </p>
 
-  <div class="hero-buttons">
+  <div class="buttons">
 
-    <a href="#services" class="btn btn-primary">
+    <a href="#services" class="btn primary">
       View Services
     </a>
 
-    <a href="#network" class="btn btn-secondary">
-      Network Management
+    <a href="#mikrotik" class="btn secondary">
+      MikroTik
     </a>
 
   </div>
@@ -370,286 +423,335 @@ footer{
 
 <main class="container">
 
-  <!-- SERVICES -->
-  <section id="services">
 
-    <div class="section-title">
-      <h2>Network Services</h2>
-      <p>Mga pangunahing serbisyo ng RIDHROHAN NETWORK</p>
-    </div>
+<!-- QUICK ACCESS -->
+<div class="quick">
 
-    <div class="cards">
+  <a href="#mikrotik">
+    <span class="quick-icon">⚙️</span>
+    MikroTik
+  </a>
 
-      <div class="card">
-        <div class="icon">🌐</div>
-        <h3>Network Management</h3>
-        <p>
-          Network monitoring at management
-          para sa stable at organized na connection.
-        </p>
-      </div>
+  <a href="#pppoe">
+    <span class="quick-icon">🔗</span>
+    PPPoE
+  </a>
 
-      <div class="card">
-        <div class="icon">⚙️</div>
-        <h3>MikroTik</h3>
-        <p>
-          MikroTik configuration para sa
-          routing, firewall, PPPoE at Hotspot.
-        </p>
-      </div>
+  <a href="#hotspot">
+    <span class="quick-icon">📡</span>
+    Hotspot
+  </a>
 
-      <div class="card">
-        <div class="icon">📶</div>
-        <h3>Bandwidth Management</h3>
-        <p>
-          Maayos na distribution ng internet
-          bandwidth para sa mga client.
-        </p>
-      </div>
+  <a href="#gaming">
+    <span class="quick-icon">🎮</span>
+    Gaming
+  </a>
 
-      <div class="card">
-        <div class="icon">🎮</div>
-        <h3>Gaming Priority</h3>
-        <p>
-          Traffic management para sa online
-          gaming tulad ng Mobile Legends,
-          Free Fire, PUBG at iba pa.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📡</div>
-        <h3>Hotspot / Piso WiFi</h3>
-        <p>
-          Voucher-based internet access
-          para sa Piso WiFi at Hotspot business.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🔧</div>
-        <h3>Technical Support</h3>
-        <p>
-          Network troubleshooting at configuration
-          assistance para sa MikroTik network.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
+</div>
 
 
-  <!-- NETWORK -->
-  <section id="network">
+<!-- SERVICES -->
+<section id="services">
 
-    <div class="section-title">
-      <h2>Network Management</h2>
-      <p>Centralized network management concept</p>
-    </div>
+  <div class="title">
+    <h2>Network Services</h2>
+    <p>RIDHROHAN NETWORK solutions</p>
+  </div>
 
-    <div class="status-box">
+  <div class="cards">
 
-      <div class="status">
-        <span class="dot"></span>
-        Network System Online
-      </div>
-
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <h3>Network Management</h3>
       <p>
-        Ang dashboard na ito ay maaaring gamitin bilang
-        central interface para sa network management.
-        Ang MikroTik connection ay idaragdag natin
-        pagkatapos maayos ang website.
+        Network organization, monitoring
+        at configuration para sa stable
+        na internet service.
       </p>
-
     </div>
 
-  </section>
-
-
-  <!-- MIKROTIK -->
-  <section id="mikrotik">
-
-    <div class="section-title">
-      <h2>⚙️ MikroTik</h2>
-      <p>Router configuration and management</p>
-    </div>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="icon">🔐</div>
-        <h3>Firewall</h3>
-        <p>
-          Security rules at traffic filtering
-          para sa network.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🔗</div>
-        <h3>PPPoE</h3>
-        <p>
-          PPPoE client management at
-          bandwidth assignment.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📡</div>
-        <h3>Hotspot</h3>
-        <p>
-          Hotspot login at voucher management
-          para sa Piso WiFi.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- BANDWIDTH -->
-  <section id="bandwidth">
-
-    <div class="section-title">
-      <h2>📶 Bandwidth Management</h2>
-      <p>Organized bandwidth allocation</p>
-    </div>
-
-    <div class="status-box">
-
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>MikroTik Configuration</h3>
       <p>
-        Dito natin ilalagay ang future bandwidth
-        management tools para sa PPPoE clients,
-        Hotspot users at gaming traffic.
+        Routing, firewall, NAT, Hotspot,
+        PPPoE at iba pang network features.
       </p>
-
     </div>
 
-  </section>
-
-
-  <!-- GAMING -->
-  <section id="gaming">
-
-    <div class="section-title">
-      <h2>🎮 Gaming Priority</h2>
-      <p>Gaming traffic management</p>
-    </div>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="icon">🎮</div>
-        <h3>Mobile Legends</h3>
-        <p>Gaming traffic priority configuration.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🔥</div>
-        <h3>Free Fire</h3>
-        <p>Gaming traffic priority configuration.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🎯</div>
-        <h3>PUBG / COD</h3>
-        <p>Gaming traffic priority configuration.</p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- HOTSPOT -->
-  <section id="hotspot">
-
-    <div class="section-title">
-      <h2>📡 Hotspot / Piso WiFi</h2>
-      <p>Voucher-based internet access</p>
-    </div>
-
-    <div class="status-box">
-
-      <div class="status">
-        <span class="dot"></span>
-        Hotspot System Ready
-      </div>
-
+    <div class="card">
+      <div class="card-icon">📶</div>
+      <h3>Bandwidth Management</h3>
       <p>
-        Ang Hotspot / Piso WiFi section ay
-        maaaring i-connect sa MikroTik at
-        Mikhmon voucher system sa susunod na phase.
+        Controlled bandwidth allocation
+        para sa clients at network users.
       </p>
-
     </div>
 
-  </section>
-
-
-  <!-- CONTACT -->
-  <section id="contact">
-
-    <div class="section-title">
-      <h2>📞 Contact</h2>
-      <p>RIDHROHAN NETWORK</p>
-    </div>
-
-    <div class="status-box">
-
+    <div class="card">
+      <div class="card-icon">🔗</div>
+      <h3>PPPoE Management</h3>
       <p>
-        Para sa network configuration,
-        MikroTik setup, PPPoE, Hotspot at
-        bandwidth management, gamitin ang
-        contact information na ilalagay natin dito.
+        PPPoE client configuration at
+        speed management.
       </p>
-
     </div>
 
-  </section>
+    <div class="card">
+      <div class="card-icon">📡</div>
+      <h3>Hotspot / Piso WiFi</h3>
+      <p>
+        Voucher-based internet access
+        para sa Hotspot business.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🎮</div>
+      <h3>Gaming Priority</h3>
+      <p>
+        Traffic management para sa
+        online games at low-latency use.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MIKROTIK -->
+<section id="mikrotik">
+
+  <div class="title">
+    <h2>⚙️ MikroTik</h2>
+    <p>Router management</p>
+  </div>
+
+  <div class="system">
+
+    <div class="system-row">
+      <span class="online"></span>
+      MikroTik Management System
+    </div>
+
+    <p>
+      Ang MikroTik management module ay
+      ihahanda natin para sa future connection
+      ng website sa router.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- PPPOE -->
+<section id="pppoe">
+
+  <div class="title">
+    <h2>🔗 PPPoE</h2>
+    <p>Client connection management</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon">👤</div>
+      <h3>Client Management</h3>
+      <p>
+        Management ng PPPoE subscribers
+        at account information.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <h3>Speed Profile</h3>
+      <p>
+        Speed profiles para sa iba't ibang
+        PPPoE clients.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <h3>Access Control</h3>
+      <p>
+        Account access at connection
+        control para sa subscribers.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- HOTSPOT -->
+<section id="hotspot">
+
+  <div class="title">
+    <h2>📡 Hotspot / Piso WiFi</h2>
+    <p>Voucher management</p>
+  </div>
+
+  <div class="system">
+
+    <div class="system-row">
+      <span class="online"></span>
+      Hotspot System Ready
+    </div>
+
+    <p>
+      Ang section na ito ay magiging lugar
+      para sa Hotspot at Mikhmon voucher
+      management sa susunod na phase.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- BANDWIDTH -->
+<section id="bandwidth">
+
+  <div class="title">
+    <h2>📶 Bandwidth Management</h2>
+    <p>Traffic and speed control</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Client Bandwidth</h3>
+      <p>
+        Speed allocation para sa PPPoE
+        at network clients.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>Traffic Control</h3>
+      <p>
+        Traffic organization para sa
+        mas stable na network.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h3>Monitoring</h3>
+      <p>
+        Future monitoring interface
+        para sa network traffic.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAMING -->
+<section id="gaming">
+
+  <div class="title">
+    <h2>🎮 Gaming Priority</h2>
+    <p>Low-latency network management</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon">🎮</div>
+      <h3>Mobile Legends</h3>
+      <p>
+        Gaming traffic management.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🔥</div>
+      <h3>Free Fire</h3>
+      <p>
+        Gaming traffic management.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>PUBG / COD</h3>
+      <p>
+        Gaming traffic management.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact">
+
+  <div class="title">
+    <h2>📞 Contact</h2>
+    <p>RIDHROHAN NETWORK</p>
+  </div>
+
+  <div class="system">
+
+    <p>
+      Para sa network services, MikroTik,
+      PPPoE, Hotspot at bandwidth management,
+      ilalagay natin dito ang contact details
+      sa susunod na version.
+    </p>
+
+  </div>
+
+</section>
 
 </main>
 
 
 <footer>
-
   © 2026 RIDHROHAN NETWORK<br>
   Network Management System
-
 </footer>
 
 
 <script>
 
-function toggleMenu(){
+function openMenu(){
 
-  const menu =
-    document.getElementById("sideMenu");
+  document
+    .getElementById("side")
+    .classList.add("open");
 
-  const overlay =
-    document.getElementById("overlay");
-
-  menu.classList.toggle("active");
-
-  overlay.classList.toggle("active");
+  document
+    .getElementById("overlay")
+    .classList.add("show");
 
 }
 
 function closeMenu(){
 
   document
-    .getElementById("sideMenu")
-    .classList.remove("active");
+    .getElementById("side")
+    .classList.remove("open");
 
   document
     .getElementById("overlay")
-    .classList.remove("active");
+    .classList.remove("show");
 
 }
 
 </script>
 
 </body>
-        </html>
+  </html>
