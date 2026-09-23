@@ -6,7 +6,11 @@
 <title>RIDHROHAN NETWORK</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
 
 body{
 font-family:Arial,Segoe UI,sans-serif;
@@ -15,8 +19,13 @@ color:#eaf2ff;
 min-height:100vh
 }
 
-button,input,select{font:inherit}
-button{cursor:pointer}
+button,input,select{
+font:inherit
+}
+
+button{
+cursor:pointer
+}
 
 .top{
 height:60px;
@@ -187,6 +196,10 @@ background:#9b3041
 background:#263b55
 }
 
+.btn.orange{
+background:#9a641d
+}
+
 .tableWrap{
 overflow:auto
 }
@@ -194,7 +207,7 @@ overflow:auto
 .table{
 width:100%;
 border-collapse:collapse;
-min-width:700px
+min-width:850px
 }
 
 .table th,
@@ -238,7 +251,7 @@ color:#d2dbe6
 display:none;
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.7);
+background:rgba(0,0,0,.72);
 z-index:50;
 align-items:center;
 justify-content:center;
@@ -304,6 +317,15 @@ margin-top:10px;
 font-size:13px
 }
 
+.successBox{
+padding:14px;
+border:1px solid #146b58;
+background:#082b25;
+border-radius:10px;
+color:#a5ffe9;
+margin-top:12px
+}
+
 .empty{
 text-align:center;
 color:#718eae;
@@ -312,6 +334,17 @@ padding:30px
 
 .bottom{
 display:none
+}
+
+.statSmall{
+font-size:12px;
+color:#7f9bbd;
+margin-top:5px
+}
+
+.txid{
+font-size:10px;
+color:#6f8cac
 }
 
 @media(max-width:850px){
@@ -693,6 +726,19 @@ Number(n||0).toLocaleString("en-PH");
 }
 
 
+function createTransactionID(){
+
+var now=Date.now();
+
+var random=Math.floor(
+Math.random()*9000
+)+1000;
+
+return "RN-"+now+"-"+random;
+
+}
+
+
 function render(page){
 
 var app=document.getElementById("app");
@@ -807,7 +853,16 @@ return;
 }
 
 
-if(page==="transactions"||page==="payments"){
+if(page==="transactions"){
+
+renderPayments(app);
+
+return;
+
+}
+
+
+if(page==="payments"){
 
 renderPayments(app);
 
@@ -901,6 +956,27 @@ var rows="";
 
 clients.forEach(function(c,i){
 
+var s=statusOf(c);
+
+var paidButton="";
+
+if(s==="DISABLED"){
+
+paidButton=
+'<button class="btn orange" onclick="paidDisabled('+i+')">'+
+'Paid'+
+'</button>';
+
+}else{
+
+paidButton=
+'<button class="btn green" onclick="paid('+i+')">'+
+'Paid'+
+'</button>';
+
+}
+
+
 rows+=
 
 '<tr>'+
@@ -915,15 +991,13 @@ rows+=
 
 '<td>'+esc(c.due||"-")+'</td>'+
 
-'<td>'+badge(statusOf(c))+'</td>'+
+'<td>'+badge(s)+'</td>'+
 
 '<td>'+
 
 '<div class="actions">'+
 
-'<button class="btn green" onclick="paid('+i+')">'+
-'Paid'+
-'</button>'+
+paidButton+
 
 '<button class="btn gray" onclick="toggleDisable('+i+')">'+
 (c.disabled?"Enable":"Disable")+
@@ -1026,11 +1100,21 @@ rows+=
 
 '<td>'+esc(p.client)+'</td>'+
 
+'<td>'+esc(p.username||"-")+'</td>'+
+
 '<td>'+money(p.amount)+'</td>'+
 
 '<td>'+esc(p.method||"Cash")+'</td>'+
 
 '<td>'+esc(p.date||"")+'</td>'+
+
+'<td>'+esc(p.previousDue||"-")+'</td>'+
+
+'<td>'+esc(p.newDue||"-")+'</td>'+
+
+'<td class="txid">'+
+esc(p.transactionId||"-")+
+'</td>'+
 
 '</tr>';
 
@@ -1042,7 +1126,7 @@ if(!rows){
 rows=
 
 '<tr>'+
-'<td colspan="4" class="empty">'+
+'<td colspan="8" class="empty">'+
 'No payments recorded.'+
 '</td>'+
 '</tr>';
@@ -1077,9 +1161,13 @@ card("Transactions",payments.length)+
 '<tr>'+
 
 '<th>Client</th>'+
+'<th>Username</th>'+
 '<th>Amount</th>'+
 '<th>Method</th>'+
 '<th>Date</th>'+
+'<th>Previous Due</th>'+
+'<th>New Due</th>'+
+'<th>Transaction</th>'+
 
 '</tr>'+
 
@@ -1150,6 +1238,12 @@ document.getElementById("clientModal")
 .classList.add("show");
 
 
+document.getElementById("fName").value="";
+document.getElementById("fUser").value="";
+document.getElementById("fPlan").value="";
+document.getElementById("fFee").value="";
+
+
 var d=new Date();
 
 d.setMonth(d.getMonth()+1);
@@ -1204,6 +1298,17 @@ return;
 }
 
 
+if(fee<=0){
+
+alert(
+"Ilagay ang tamang Monthly Fee."
+);
+
+return;
+
+}
+
+
 clients.push({
 
 name:name,
@@ -1230,28 +1335,169 @@ showPage("clients");
 }
 
 
+function paidDisabled(i){
+
+alert(
+"DISABLED ang client na ito.\n\n"+
+"I-enable muna ang client bago mag-record ng payment."
+);
+
+}
+
+
 function paid(i){
 
 var c=clients[i];
 
-if(!c)return;
+if(!c){
+
+alert("Client not found.");
+
+return;
+
+}
+
+
+/* SECURITY CHECK */
+
+if(c.disabled){
+
+alert(
+"DISABLED ang client na ito.\n\n"+
+"I-enable muna ang client bago mag-record ng payment."
+);
+
+return;
+
+}
 
 
 var amount=Number(c.fee||0);
 
 
-var method=prompt(
-"Payment method: GCash / Maya / Cash",
-"Cash"
+/* CONFIRMATION */
+
+var confirmPayment=confirm(
+
+"CONFIRM PAYMENT\n\n"+
+
+"Client: "+c.name+"\n"+
+
+"Username: "+c.user+"\n"+
+
+"Plan: "+c.plan+"\n"+
+
+"Amount: ₱"+
+amount.toLocaleString("en-PH")+"\n"+
+
+"Current Due: "+
+(c.due||"-")+
+
+"\n\nContinue?"
+
 );
 
 
-if(method===null)return;
+if(!confirmPayment){
+
+return;
+
+}
 
 
-var d=c.due
-?new Date(c.due+"T00:00:00")
-:new Date();
+/* PAYMENT METHOD */
+
+var method=prompt(
+
+"Payment Method:\n\n"+
+"GCash\n"+
+"Maya\n"+
+"Cash\n\n"+
+"Type payment method:",
+
+"Cash"
+
+);
+
+
+if(method===null){
+
+return;
+
+}
+
+
+method=method.trim();
+
+
+if(!method){
+
+alert(
+"Payment method is required."
+);
+
+return;
+
+}
+
+
+/* PREVENT DOUBLE PAYMENT */
+
+var today=
+new Date()
+.toISOString()
+.slice(0,10);
+
+
+var alreadyPaid=payments.some(function(p){
+
+return p.client===c.name &&
+p.date===today &&
+Number(p.amount||0)===amount;
+
+});
+
+
+if(alreadyPaid){
+
+var continueDuplicate=confirm(
+
+"May payment na para sa client na ito ngayong araw.\n\n"+
+"Sigurado ka bang gusto mong mag-record ulit?"
+
+);
+
+
+if(!continueDuplicate){
+
+return;
+
+}
+
+}
+
+
+/* SAVE OLD DUE DATE */
+
+var previousDue=c.due||"-";
+
+
+/* CALCULATE NEW DUE */
+
+var d;
+
+
+if(c.due){
+
+d=new Date(
+c.due+"T00:00:00"
+);
+
+}else{
+
+d=new Date();
+
+}
 
 
 if(isNaN(d.getTime())){
@@ -1261,32 +1507,70 @@ d=new Date();
 }
 
 
-d.setMonth(d.getMonth()+1);
+d.setMonth(
+d.getMonth()+1
+);
 
 
-c.due=
-d.toISOString().slice(0,10);
+var newDue=
+d.toISOString()
+.slice(0,10);
 
+
+/* UPDATE CLIENT */
+
+c.due=newDue;
 
 c.disabled=false;
 
+
+/* CREATE PAYMENT */
 
 payments.push({
 
 client:c.name,
 
+username:c.user,
+
 amount:amount,
 
 method:method,
 
-date:new Date()
-.toISOString()
-.slice(0,10)
+date:today,
+
+previousDue:previousDue,
+
+newDue:newDue,
+
+transactionId:createTransactionID()
 
 });
 
 
+/* SAVE */
+
 saveData();
+
+
+/* SUCCESS */
+
+alert(
+
+"PAYMENT SUCCESSFUL\n\n"+
+
+"Client: "+c.name+"\n"+
+
+"Amount: ₱"+
+amount.toLocaleString("en-PH")+"\n"+
+
+"Method: "+method+"\n"+
+
+"Previous Due: "+previousDue+"\n"+
+
+"New Due Date: "+newDue
+
+);
+
 
 render("clients");
 
@@ -1295,11 +1579,53 @@ render("clients");
 
 function toggleDisable(i){
 
-if(!clients[i])return;
+if(!clients[i]){
+
+return;
+
+}
 
 
-clients[i].disabled=
-!clients[i].disabled;
+if(clients[i].disabled){
+
+var enable=confirm(
+
+"Enable this client?\n\n"+
+"Client: "+clients[i].name
+
+);
+
+
+if(!enable){
+
+return;
+
+}
+
+
+clients[i].disabled=false;
+
+}else{
+
+var disable=confirm(
+
+"Disable this client?\n\n"+
+"Client: "+clients[i].name+"\n\n"+
+"This only changes the dashboard status for now."
+
+);
+
+
+if(!disable){
+
+return;
+
+}
+
+
+clients[i].disabled=true;
+
+}
 
 
 saveData();
@@ -1311,10 +1637,34 @@ render("clients");
 
 function removeClient(i){
 
-if(!clients[i])return;
+if(!clients[i]){
+
+return;
+
+}
 
 
-if(confirm("Delete this client?")){
+var c=clients[i];
+
+
+var yes=confirm(
+
+"DELETE CLIENT?\n\n"+
+
+"Client: "+c.name+"\n"+
+"Username: "+c.user+"\n\n"+
+
+"This action cannot be undone."
+
+);
+
+
+if(!yes){
+
+return;
+
+}
+
 
 clients.splice(i,1);
 
@@ -1324,13 +1674,13 @@ render("clients");
 
 }
 
-}
-
 
 function logout(){
 
 alert(
+
 "Static prototype: logout is not connected to a server yet."
+
 );
 
 }
