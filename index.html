@@ -2,722 +2,254 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIDHROHAN NETWORK</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#07111f;color:#fff;
- font-family:Arial,Helvetica,sans-serif
-}
+body{margin:0;background:#07111f;color:#fff;font-family:Arial,Helvetica,sans-serif}
 button,input,select{font:inherit}
-
-.top{
- height:76px;background:#102033;
- border-bottom:1px solid #263b54;
- display:flex;align-items:center;padding:0 24px;
- position:sticky;top:0;z-index:20
-}
-.menuBtn{
- border:0;background:transparent;color:#fff;
- font-size:36px;cursor:pointer;margin-right:28px
-}
-.brand{font-size:25px;font-weight:700}
-
-.sidebar{
- position:fixed;left:0;top:76px;bottom:0;
- width:390px;background:#0b1829;
- overflow-y:auto;padding:30px 24px;
- z-index:15;transform:translateX(-100%);
- transition:.2s
-}
-.sidebar.open{transform:translateX(0)}
-
-.nav{
- display:block;color:#b8c6d8;
- font-size:28px;padding:18px 24px;
- border-radius:15px;margin:2px 0;cursor:pointer
-}
-.nav.active,.nav:hover{background:#1680f5;color:#fff}
-.arrow{float:right;font-size:20px}
-
-.sub{display:none;padding:4px 0 8px 18px}
+.top{height:76px;background:#102033;display:flex;align-items:center;padding:0 28px;gap:24px;position:sticky;top:0;z-index:20;border-bottom:1px solid #263b55}
+.menuBtn{border:0;background:none;color:#fff;font-size:38px;cursor:pointer;width:52px}
+.brand{font-size:28px;font-weight:800}
+.side{position:fixed;left:-330px;top:76px;bottom:0;width:330px;background:#0c1a2b;padding:24px;z-index:30;transition:.25s;overflow:auto}
+.side.open{left:0}
+.side button,.navitem{display:block;width:100%;text-align:left;border:0;background:none;color:#b8c6d8;padding:18px 14px;font-size:22px;border-radius:12px;cursor:pointer;margin-bottom:4px}
+.side button:hover,.navitem:hover,.navitem.active{background:#1484f5;color:#fff}
+.sub{display:none;padding-left:18px}
 .sub.open{display:block}
-.sub .nav{font-size:25px;padding:15px 24px}
-
-.logout{
- margin-top:18px;background:#e9455a;color:#fff
-}
-
-.main{
- padding:38px 34px;
- max-width:1100px;margin:auto
-}
-
-h1{font-size:42px;margin:0 0 10px}
-.subtitle{
- font-size:26px;color:#9eacc0;margin-bottom:40px
-}
-
-.cards{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:24px
-}
-
-.card{
- background:#112033;
- border:1px solid #29405b;
- border-radius:26px;
- padding:30px
-}
-.label{font-size:23px;color:#aab8ca}
-.value{font-size:52px;font-weight:700;margin-top:18px}
-
-.online{
- display:inline-block;
- background:#0d5138;color:#63e39f;
- padding:12px 22px;border-radius:30px;
- font-size:22px
-}
-
-.page{display:none}
-.page.show{display:block}
-
-.sectionTitle{
- font-size:34px;margin-bottom:8px
-}
-.sectionDesc{
- font-size:19px;color:#9eacc0;
- margin-bottom:25px
-}
-
-.toolbar{
- display:flex;gap:12px;
- flex-wrap:wrap;margin-bottom:22px
-}
-
-.btn{
- border:0;border-radius:12px;
- padding:14px 20px;
- background:#1680f5;color:#fff;
- cursor:pointer;font-weight:700
-}
-.btn.secondary{background:#24364d}
-.btn.danger{background:#e9455a}
-
-.serverGrid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:20px
-}
-
-.server{
- background:#112033;
- border:1px solid #29405b;
- border-radius:20px;
- padding:24px
-}
-.server h3{
- margin:0 0 10px;
- font-size:25px
-}
-.meta{
- color:#aab8ca;
- line-height:1.8;
- font-size:18px
-}
-.status{
- display:inline-block;
- margin-top:15px;
- padding:8px 14px;
- border-radius:20px;
- background:#0d5138;
- color:#63e39f;
- font-weight:700
-}
-
-.modal{
- position:fixed;inset:0;
- background:#0009;
- display:none;
- align-items:center;
- justify-content:center;
- padding:20px;
- z-index:50
-}
+.sub button{font-size:19px;padding:14px}
+.logout{background:#e9445b!important;color:#fff!important;margin-top:20px}
+.overlay{display:none;position:fixed;inset:76px 0 0;background:rgba(0,0,0,.45);z-index:25}
+.overlay.show{display:block}
+main{max-width:1100px;margin:auto;padding:42px 28px 80px}
+h1{font-size:48px;margin:0 0 8px}
+h2{font-size:34px;margin:0 0 8px}
+.subtitle{font-size:25px;color:#9eafc3;margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.card{background:#122235;border:1px solid #29415c;border-radius:24px;padding:30px;box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.label{font-size:22px;color:#aab9ca}
+.value{font-size:48px;font-weight:800;margin-top:12px}
+.status{display:inline-block;padding:11px 20px;border-radius:30px;background:#0c5a3f;color:#63e6a8;font-weight:800;margin-top:15px}
+.btn{border:0;border-radius:14px;background:#1685f5;color:#fff;padding:15px 22px;font-weight:700;cursor:pointer}
+.btn.danger{background:#e9445b}
+.btn.gray{background:#263a52}
+.btn.small{padding:10px 14px;font-size:15px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:16px;border-bottom:1px solid #29415c}
+th{color:#aebdd0}
+.badge{padding:7px 12px;border-radius:20px;font-size:14px;font-weight:700;background:#0c5a3f;color:#63e6a8}
+.badge.off{background:#572735;color:#ff9aaa}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
-
-.modalBox{
- width:min(500px,100%);
- background:#102033;
- border:1px solid #29405b;
- border-radius:22px;
- padding:25px
-}
-
-.modalBox h2{margin-top:0}
-
-.field{margin:15px 0}
-.field label{
- display:block;color:#aab8ca;
- margin-bottom:7px
-}
-.field input,.field select{
- width:100%;padding:14px;
- border-radius:10px;
- border:1px solid #344b66;
- background:#07111f;
- color:#fff
-}
-
-.modalActions{
- display:flex;gap:10px;
- justify-content:flex-end;
- margin-top:20px
-}
-
-.empty{
- color:#9eacc0;
- padding:25px 0
-}
-
+.modalbox{background:#102033;border:1px solid #304963;border-radius:22px;padding:28px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.modalbox h3{font-size:28px;margin-top:0}
+.field{margin:14px 0}
+.field label{display:block;color:#aebdd0;margin-bottom:7px}
+.field input,.field select{width:100%;padding:14px;border-radius:12px;border:1px solid #39506a;background:#07111f;color:#fff;outline:none}
+.empty{text-align:center;color:#9eafc3;padding:30px}
+.page{display:none}
+.page.active{display:block}
+.notice{background:#102b46;border-left:4px solid #1685f5;padding:16px 18px;border-radius:10px;color:#b9c9db;margin-bottom:25px}
 @media(max-width:700px){
- .brand{font-size:20px}
- .top{padding:0 18px}
- .menuBtn{margin-right:18px}
- .sidebar{width:88%;max-width:390px}
- .main{padding:30px 20px}
- h1{font-size:36px}
- .subtitle{font-size:22px}
- .cards,.serverGrid{grid-template-columns:1fr}
+.top{padding:0 16px;gap:12px}.brand{font-size:23px}
+main{padding:32px 18px 70px}h1{font-size:38px}h2{font-size:30px}.subtitle{font-size:20px}
+.grid{grid-template-columns:1fr}.card{padding:24px}.side{width:300px}
 }
 </style>
 </head>
-
 <body>
 
 <header class="top">
-<button class="menuBtn" onclick="toggleSidebar()">☰</button>
+<button class="menuBtn" onclick="toggleMenu()">☰</button>
 <div class="brand">RIDHROHAN NETWORK</div>
 </header>
 
-<aside class="sidebar" id="sidebar">
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<div class="nav active"
-onclick="showPage('dashboard',this)">
-Dashboard
+<aside class="side" id="side">
+<button class="navitem active" onclick="showPage('dashboard');closeMenu()">Dashboard</button>
+<button class="navitem" onclick="showPage('ecash');closeMenu()">ECash</button>
+
+<button class="navitem" onclick="toggleSub('pppoeSub')">PPPoE <span style="float:right">▾</span></button>
+<div class="sub open" id="pppoeSub">
+<button onclick="showPage('servers');closeMenu()">Servers</button>
+<button onclick="showPage('plans');closeMenu()">Plans</button>
+<button onclick="showPage('clients');closeMenu()">Clients</button>
+<button onclick="showPage('transactions');closeMenu()">Transactions</button>
+<button onclick="showPage('active');closeMenu()">Active Connections</button>
+<button onclick="showPage('logs');closeMenu()">Cron Logs</button>
 </div>
 
-<div class="nav"
-onclick="showPage('ecash',this)">
-ECash
-</div>
-
-<div class="nav"
-onclick="toggleSub('pppoeSub')">
-PPPoE <span class="arrow">▾</span>
-</div>
-
-<div class="sub" id="pppoeSub">
-
-<div class="nav"
-onclick="showPage('servers',this)">
-Servers
-</div>
-
-<div class="nav"
-onclick="showPage('plans',this)">
-Plans
-</div>
-
-<div class="nav"
-onclick="showPage('clients',this)">
-Clients
-</div>
-
-<div class="nav"
-onclick="showPage('transactions',this)">
-Transactions
-</div>
-
-<div class="nav"
-onclick="showPage('active',this)">
-Active Connections
-</div>
-
-<div class="nav"
-onclick="showPage('cron',this)">
-Cron Logs
-</div>
-
-</div>
-
-<div class="nav"
-onclick="showPage('pppoev2',this)">
-PPPoE V2
-</div>
-
-<div class="nav"
-onclick="showPage('ipoe',this)">
-IPoE
-</div>
-
-<div class="nav"
-onclick="showPage('mikrotik',this)">
-Mikrotik
-</div>
-
-<div class="nav"
-onclick="showPage('payments',this)">
-Payments
-</div>
-
-<div class="nav"
-onclick="showPage('support',this)">
-Support Center
-</div>
-
-<div class="nav"
-onclick="toggleSub('settingsSub')">
-Settings <span class="arrow">▾</span>
-</div>
-
+<button class="navitem" onclick="showPage('pppoev2');closeMenu()">PPPoE V2</button>
+<button class="navitem" onclick="showPage('ipoe');closeMenu()">IPoE</button>
+<button class="navitem" onclick="showPage('mikrotik');closeMenu()">Mikrotik</button>
+<button class="navitem" onclick="showPage('payments');closeMenu()">Payments</button>
+<button class="navitem" onclick="showPage('support');closeMenu()">Support Center</button>
+<button class="navitem" onclick="toggleSub('settingsSub')">Settings <span style="float:right">▾</span></button>
 <div class="sub" id="settingsSub">
-
-<div class="nav"
-onclick="showPage('account',this)">
-Account
+<button onclick="showPage('account');closeMenu()">Account</button>
+<button onclick="showPage('telegram');closeMenu()">Telegram Notification</button>
 </div>
-
-<div class="nav"
-onclick="showPage('disbursement',this)">
-Disbursement
-</div>
-
-<div class="nav"
-onclick="showPage('telegram',this)">
-Telegram Notification
-</div>
-
-</div>
-
-<div class="nav logout"
-onclick="alert('Sign out is a prototype action for now.')">
-Sign Out
-</div>
-
+<button class="navitem logout" onclick="logout()">Sign Out</button>
 </aside>
 
-<main class="main">
+<main>
 
-<section class="page show" id="dashboard">
-
+<section class="page active" id="dashboard">
 <h1>Dashboard</h1>
-
-<div class="subtitle">
-Network Management System
+<div class="subtitle">Network Management System</div>
+<div class="grid">
+<div class="card"><div class="label">Total Clients</div><div class="value" id="statClients">0</div></div>
+<div class="card"><div class="label">Active Connections</div><div class="value" id="statActive">0</div></div>
+<div class="card"><div class="label">Payments</div><div class="value" id="statPayments">₱0</div></div>
+<div class="card"><div class="label">System Status</div><div class="status">ONLINE</div></div>
 </div>
-
-<div class="cards">
-
+<br>
 <div class="card">
-<div class="label">Total Clients</div>
-<div class="value">2</div>
+<h2>Quick Actions</h2>
+<div class="row">
+<button class="btn" onclick="showPage('clients');openClientModal()">＋ Add PPPoE Client</button>
+<button class="btn gray" onclick="showPage('clients')">View Clients</button>
 </div>
-
-<div class="card">
-<div class="label">Active Connections</div>
-<div class="value">2</div>
-</div>
-
-<div class="card">
-<div class="label">Payments</div>
-<div class="value">₱0</div>
-</div>
-
-<div class="card">
-<div class="label">System Status</div>
-<div class="value">
-<span class="online">ONLINE</span>
-</div>
-</div>
-
-</div>
-</section>
-
-
-<section class="page" id="servers">
-
-<div class="sectionTitle">
-PPPoE Servers
-</div>
-
-<div class="sectionDesc">
-Manage your PPPoE server information.
-</div>
-
-<div class="toolbar">
-
-<button class="btn"
-onclick="openServer()">
-＋ Add Server
-</button>
-
-</div>
-
-<div id="serverList"
-class="serverGrid">
-</div>
-
-</section>
-
-
-<section class="page" id="ecash">
-<h1>ECash</h1>
-<div class="subtitle">
-Electronic cash and wallet management.
-</div>
-</section>
-
-<section class="page" id="plans">
-<h1>PPPoE Plans</h1>
-<div class="subtitle">
-Create and manage internet plans.
 </div>
 </section>
 
 <section class="page" id="clients">
 <h1>PPPoE Clients</h1>
-<div class="subtitle">
-Client accounts will be managed here.
+<div class="subtitle">Manage your PPPoE customers.</div>
+<div class="notice">Client data below is stored in this browser for now. MikroTik connection will be added securely later.</div>
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:22px">
+<h2 style="margin:0">Client List</h2>
+<button class="btn" onclick="openClientModal()">＋ Add Client</button>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Name</th><th>Username</th><th>Plan</th><th>Speed</th><th>Due Date</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody id="clientTable"></tbody>
+</table>
+</div>
 </div>
 </section>
 
-<section class="page" id="transactions">
-<h1>Transactions</h1>
-<div class="subtitle">
-PPPoE transaction history.
-</div>
+<section class="page" id="servers">
+<h1>PPPoE Servers</h1><div class="subtitle">Manage your PPPoE server information.</div>
+<div class="card"><h2>RIDHROHAN MikroTik</h2><p class="label">IP Address: <b>192.168.88.1</b></p><p class="label">API Port: <b>8728</b></p><span class="status">Configured</span><p style="color:#9eafc3;margin-top:20px">Prototype only — no public API connection is being made.</p></div>
 </section>
 
-<section class="page" id="active">
-<h1>Active Connections</h1>
-<div class="subtitle">
-Current PPPoE sessions.
-</div>
-</section>
-
-<section class="page" id="cron">
-<h1>Cron Logs</h1>
-<div class="subtitle">
-Scheduled task logs.
-</div>
-</section>
-
-<section class="page" id="pppoev2">
-<h1>PPPoE V2</h1>
-<div class="subtitle">
-PPPoE V2 management.
-</div>
-</section>
-
-<section class="page" id="ipoe">
-<h1>IPoE</h1>
-<div class="subtitle">
-IPoE management.
-</div>
-</section>
-
-<section class="page" id="mikrotik">
-<h1>Mikrotik</h1>
-<div class="subtitle">
-MikroTik management will be connected later.
-</div>
-</section>
-
-<section class="page" id="payments">
-<h1>Payments</h1>
-<div class="subtitle">
-Payment records and collection.
-</div>
-</section>
-
-<section class="page" id="support">
-<h1>Support Center</h1>
-<div class="subtitle">
-Customer support tools.
-</div>
-</section>
-
-<section class="page" id="account">
-<h1>Account</h1>
-<div class="subtitle">
-Account settings.
-</div>
-</section>
-
-<section class="page" id="disbursement">
-<h1>Disbursement</h1>
-<div class="subtitle">
-Disbursement settings.
-</div>
-</section>
-
-<section class="page" id="telegram">
-<h1>Telegram Notification</h1>
-<div class="subtitle">
-Telegram notification settings.
-</div>
-</section>
+<section class="page" id="plans"><h1>PPPoE Plans</h1><div class="subtitle">Create and manage internet plans.</div><div class="card"><h2>Available Plans</h2><p class="label">25 Mbps — ₱1,000 / month</p><p class="label">You can add more plans later.</p></div></section>
+<section class="page" id="ecash"><h1>ECash</h1><div class="subtitle">Payment collection overview.</div><div class="card"><h2>₱0</h2><p class="label">No payments recorded yet.</p></div></section>
+<section class="page" id="transactions"><h1>Transactions</h1><div class="subtitle">Payment transaction history.</div><div class="card empty">No transactions yet.</div></section>
+<section class="page" id="active"><h1>Active Connections</h1><div class="subtitle">Currently active PPPoE clients.</div><div class="card empty" id="activeList">No active clients.</div></section>
+<section class="page" id="logs"><h1>Cron Logs</h1><div class="subtitle">Automation and scheduled task logs.</div><div class="card empty">No logs yet.</div></section>
+<section class="page" id="pppoev2"><h1>PPPoE V2</h1><div class="subtitle">Advanced PPPoE management.</div><div class="card empty">Module ready for development.</div></section>
+<section class="page" id="ipoe"><h1>IPoE</h1><div class="subtitle">IPoE client management.</div><div class="card empty">Module ready for development.</div></section>
+<section class="page" id="mikrotik"><h1>MikroTik</h1><div class="subtitle">Router management.</div><div class="card"><h2>RIDHROHAN MikroTik</h2><p class="label">192.168.88.1 : 8728</p><span class="status">Configured</span></div></section>
+<section class="page" id="payments"><h1>Payments</h1><div class="subtitle">Payment management.</div><div class="card empty">No payments recorded.</div></section>
+<section class="page" id="support"><h1>Support Center</h1><div class="subtitle">Customer support tools.</div><div class="card empty">Support center ready.</div></section>
+<section class="page" id="account"><h1>Account</h1><div class="subtitle">Account settings.</div><div class="card"><p class="label">RIDHROHAN NETWORK Administrator</p></div></section>
+<section class="page" id="telegram"><h1>Telegram Notification</h1><div class="subtitle">Notification settings.</div><div class="card"><p class="label">Telegram integration will be configured later.</p></div></section>
 
 </main>
 
-
-<div class="modal" id="serverModal">
-
-<div class="modalBox">
-
-<h2>Add PPPoE Server</h2>
-
-<div class="field">
-<label>Server Name</label>
-<input id="sName"
-placeholder="RIDHROHAN PPPoE">
-</div>
-
-<div class="field">
-<label>IP Address</label>
-<input id="sIp"
-placeholder="192.168.88.1">
-</div>
-
-<div class="field">
-<label>Port</label>
-<input id="sPort"
-value="8728">
-</div>
-
-<div class="field">
-<label>Status</label>
-
-<select id="sStatus">
-<option>Online</option>
-<option>Offline</option>
-</select>
-
-</div>
-
-<div class="modalActions">
-
-<button class="btn secondary"
-onclick="closeServer()">
-Cancel
-</button>
-
-<button class="btn"
-onclick="saveServer()">
-Save Server
-</button>
-
-</div>
-
+<div class="modal" id="clientModal">
+<div class="modalbox">
+<h3>Add PPPoE Client</h3>
+<div class="field"><label>Client Name</label><input id="cName" placeholder="Juan Dela Cruz"></div>
+<div class="field"><label>PPPoE Username</label><input id="cUser" placeholder="juan123"></div>
+<div class="field"><label>Plan</label><select id="cPlan"><option>25 Mbps</option><option>50 Mbps</option><option>100 Mbps</option><option>200 Mbps</option></select></div>
+<div class="field"><label>Monthly Fee</label><input id="cFee" type="number" value="1000"></div>
+<div class="field"><label>Due Date</label><input id="cDue" type="date"></div>
+<div class="row" style="margin-top:20px">
+<button class="btn" onclick="saveClient()">Save Client</button>
+<button class="btn gray" onclick="closeClientModal()">Cancel</button>
 </div>
 </div>
-
+</div>
 
 <script>
+let clients=JSON.parse(localStorage.getItem('ridhrohan_clients')||'[]');
 
-const defaultServers=[
-{
-name:"RIDHROHAN MikroTik",
-ip:"192.168.88.1",
-port:"8728",
-status:"Online"
+function toggleMenu(){
+ const s=document.getElementById('side'),o=document.getElementById('overlay');
+ s.classList.toggle('open');o.classList.toggle('show');
 }
-];
-
-let servers=
-JSON.parse(
-localStorage.getItem("ridhrohan_servers")||"null"
-)||defaultServers;
-
-
-function toggleSidebar(){
-document.getElementById("sidebar")
-.classList.toggle("open");
+function closeMenu(){
+ document.getElementById('side').classList.remove('open');
+ document.getElementById('overlay').classList.remove('show');
 }
-
-
-function toggleSub(id){
-document.getElementById(id)
-.classList.toggle("open");
+function toggleSub(id){document.getElementById(id).classList.toggle('open')}
+function showPage(id){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ renderClients();
+ window.scrollTo(0,0);
 }
-
-
-function showPage(id,el){
-
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("show"));
-
-const page=document.getElementById(id);
-
-if(page)page.classList.add("show");
-
-document.querySelectorAll(".sidebar .nav")
-.forEach(n=>n.classList.remove("active"));
-
-if(el)el.classList.add("active");
-
-if(id==="servers")renderServers();
-
-if(window.innerWidth<800){
-document.getElementById("sidebar")
-.classList.remove("open");
+function openClientModal(){document.getElementById('clientModal').classList.add('show')}
+function closeClientModal(){document.getElementById('clientModal').classList.remove('show')}
+function saveClient(){
+ const name=document.getElementById('cName').value.trim();
+ const user=document.getElementById('cUser').value.trim();
+ const plan=document.getElementById('cPlan').value;
+ const fee=Number(document.getElementById('cFee').value||0);
+ const due=document.getElementById('cDue').value;
+ if(!name||!user||!due){alert('Pakilagay ang Client Name, Username at Due Date.');return}
+ clients.push({id:Date.now(),name,user,plan,fee,due,active:true});
+ localStorage.setItem('ridhrohan_clients',JSON.stringify(clients));
+ document.getElementById('cName').value='';
+ document.getElementById('cUser').value='';
+ document.getElementById('cFee').value='1000';
+ document.getElementById('cDue').value='';
+ closeClientModal();renderClients();
+ alert('Client added successfully.');
 }
-
+function deleteClient(id){
+ if(confirm('Burahin ang client na ito?')){
+  clients=clients.filter(c=>c.id!==id);
+  localStorage.setItem('ridhrohan_clients',JSON.stringify(clients));
+  renderClients();
+ }
 }
-
-
-function openServer(){
-document.getElementById("serverModal")
-.classList.add("show");
+function toggleClient(id){
+ const c=clients.find(x=>x.id===id);
+ if(c)c.active=!c.active;
+ localStorage.setItem('ridhrohan_clients',JSON.stringify(clients));
+ renderClients();
 }
-
-
-function closeServer(){
-document.getElementById("serverModal")
-.classList.remove("show");
+function renderClients(){
+ const body=document.getElementById('clientTable');
+ if(!body)return;
+ document.getElementById('statClients').textContent=clients.length;
+ document.getElementById('statActive').textContent=clients.filter(c=>c.active).length;
+ document.getElementById('statPayments').textContent='₱'+clients.reduce((a,c)=>a+(Number(c.fee)||0),0).toLocaleString();
+ if(!clients.length){
+  body.innerHTML='<tr><td colspan="7" class="empty">Wala pang PPPoE client. Pindutin ang + Add Client.</td></tr>';
+ }else{
+  body.innerHTML=clients.map(c=>`
+  <tr>
+   <td><b>${esc(c.name)}</b></td>
+   <td>${esc(c.user)}</td>
+   <td>${esc(c.plan)}</td>
+   <td>${esc(c.plan)}</td>
+   <td>${esc(c.due)}</td>
+   <td><span class="badge ${c.active?'':'off'}">${c.active?'ACTIVE':'DISABLED'}</span></td>
+   <td>
+    <button class="btn small gray" onclick="toggleClient(${c.id})">${c.active?'Disable':'Enable'}</button>
+    <button class="btn small danger" onclick="deleteClient(${c.id})">Delete</button>
+   </td>
+  </tr>`).join('');
+ }
+ const active=document.getElementById('activeList');
+ if(active){
+  const a=clients.filter(c=>c.active);
+  active.innerHTML=a.length?a.map(c=>`<p class="label"><b>${esc(c.name)}</b> — ${esc(c.user)} — ${esc(c.plan)}</p>`).join(''):'No active clients.';
+ }
 }
-
-
-function saveServer(){
-
-const name=
-document.getElementById("sName").value.trim();
-
-const ip=
-document.getElementById("sIp").value.trim();
-
-const port=
-document.getElementById("sPort").value.trim();
-
-const status=
-document.getElementById("sStatus").value;
-
-if(!name||!ip){
-alert("Ilagay ang Server Name at IP Address.");
-return;
-}
-
-servers.push({
-name:name,
-ip:ip,
-port:port,
-status:status
-});
-
-localStorage.setItem(
-"ridhrohan_servers",
-JSON.stringify(servers)
-);
-
-document.getElementById("sName").value="";
-document.getElementById("sIp").value="";
-document.getElementById("sPort").value="8728";
-
-closeServer();
-renderServers();
-
-}
-
-
-function deleteServer(i){
-
-if(confirm("Tanggalin ang server na ito?")){
-
-servers.splice(i,1);
-
-localStorage.setItem(
-"ridhrohan_servers",
-JSON.stringify(servers)
-);
-
-renderServers();
-
-}
-
-}
-
-
-function renderServers(){
-
-const box=
-document.getElementById("serverList");
-
-if(!servers.length){
-
-box.innerHTML=
-'<div class="empty">Wala pang PPPoE server. Pindutin ang ＋ Add Server.</div>';
-
-return;
-
-}
-
-box.innerHTML=
-servers.map((s,i)=>`
-
-<div class="server">
-
-<h3>${escapeHtml(s.name)}</h3>
-
-<div class="meta">
-IP Address:
-<b>${escapeHtml(s.ip)}</b>
-<br>
-API Port:
-<b>${escapeHtml(s.port)}</b>
-</div>
-
-<span class="status">
-${escapeHtml(s.status)}
-</span>
-
-<div style="margin-top:18px">
-
-<button class="btn danger"
-onclick="deleteServer(${i})">
-Delete
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-
-function escapeHtml(v){
-
-return String(v).replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m])
-);
-
-}
-
-renderServers();
-
+function esc(v){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function logout(){alert('Prototype logout.')}
+renderClients();
 </script>
-
 </body>
-  </html>
+</html>
