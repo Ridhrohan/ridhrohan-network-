@@ -155,4 +155,191 @@ button{
   }
 
   .main{
-   
+    margin-left:0
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr
+  }
+}
+
+@media(max-width:430px){
+  .cards{
+    grid-template-columns:1fr
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+
+  <div class="box">
+
+    <div class="logo">RN</div>
+
+    <h1>RIDHROHAN NETWORK</h1>
+
+    <div class="sub">
+      Network Management System
+    </div>
+
+    <input
+      id="user"
+      type="text"
+      placeholder="Username"
+      autocomplete="username"
+    >
+
+    <input
+      id="pass"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button id="sign" type="button">
+      Sign In
+    </button>
+
+    <div id="error">
+      Invalid username or password
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="dash">
+
+  <div class="top">
+    RIDHROHAN NETWORK
+  </div>
+
+  <div class="side">
+
+    <div class="item active">Dashboard</div>
+    <div class="item">ECash</div>
+    <div class="item">PPPoE</div>
+    <div class="item">Servers</div>
+    <div class="item">Plans</div>
+    <div class="item">Clients</div>
+    <div class="item">Transactions</div>
+    <div class="item">Active Connections</div>
+    <div class="item">Payments</div>
+
+  </div>
+
+  <div class="main">
+
+    <h2>Dashboard</h2>
+
+    <p>
+      Welcome to RIDHROHAN NETWORK Management System.
+    </p>
+
+    <div class="cards">
+
+      <div class="card">
+        Total Clients
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        Active Connections
+        <h2>0</h2>
+      </div>
+
+      <div class="card">
+        Payments
+        <h2>₱0</h2>
+      </div>
+
+      <div class="card">
+        System Status
+        <h2>Online</h2>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const login =
+  document.getElementById('login');
+
+const dash =
+  document.getElementById('dash');
+
+const error =
+  document.getElementById('error');
+
+
+function go(){
+
+  login.style.display='none';
+
+  dash.style.display='block';
+
+}
+
+
+document.getElementById('sign').onclick=function(){
+
+  const username =
+    document.getElementById('user').value.trim();
+
+  const password =
+    document.getElementById('pass').value;
+
+  if(
+    username === 'admin' &&
+    password === 'ridhrohan'
+  ){
+
+    sessionStorage.setItem(
+      'rn',
+      '1'
+    );
+
+    error.style.display='none';
+
+    go();
+
+  }else{
+
+    error.style.display='block';
+
+  }
+
+};
+
+
+document.getElementById('pass')
+.addEventListener('keydown',function(e){
+
+  if(e.key==='Enter'){
+
+    document.getElementById('sign').click();
+
+  }
+
+});
+
+
+if(sessionStorage.getItem('rn')==='1'){
+
+  go();
+
+}
+
+</script>
+
+</body>
+</html>
