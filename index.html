@@ -6,11 +6,7 @@
 <title>RIDHROHAN NETWORK</title>
 
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
 font-family:Arial,Segoe UI,sans-serif;
@@ -19,13 +15,8 @@ color:#eaf2ff;
 min-height:100vh
 }
 
-button,input,select{
-font:inherit
-}
-
-button{
-cursor:pointer
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
 .top{
 height:60px;
@@ -40,10 +31,7 @@ top:0;
 z-index:20
 }
 
-.brand{
-font-weight:800;
-letter-spacing:.5px
-}
+.brand{font-weight:800;letter-spacing:.5px}
 
 .brand small{
 display:block;
@@ -75,8 +63,7 @@ padding:14px;
 flex-shrink:0
 }
 
-.side button,
-.sub button{
+.side button,.sub button{
 width:100%;
 border:0;
 background:transparent;
@@ -107,13 +94,9 @@ display:none;
 padding-left:10px
 }
 
-.sub.open{
-display:block
-}
+.sub.open{display:block}
 
-.arrow{
-float:right
-}
+.arrow{float:right}
 
 .main{
 flex:1;
@@ -141,8 +124,7 @@ gap:12px;
 margin:20px 0
 }
 
-.card,
-.panel{
+.card,.panel{
 background:#0b1b31;
 border:1px solid #1b3557;
 border-radius:13px;
@@ -166,9 +148,7 @@ grid-template-columns:1.3fr .7fr;
 gap:14px
 }
 
-.panel h3{
-margin-bottom:14px
-}
+.panel h3{margin-bottom:14px}
 
 .actions{
 display:flex;
@@ -184,34 +164,20 @@ background:#16477c;
 color:#fff
 }
 
-.btn.green{
-background:#087f62
-}
+.btn.green{background:#087f62}
+.btn.red{background:#9b3041}
+.btn.gray{background:#263b55}
+.btn.orange{background:#9a641d}
 
-.btn.red{
-background:#9b3041
-}
-
-.btn.gray{
-background:#263b55
-}
-
-.btn.orange{
-background:#9a641d
-}
-
-.tableWrap{
-overflow:auto
-}
+.tableWrap{overflow:auto}
 
 .table{
 width:100%;
 border-collapse:collapse;
-min-width:850px
+min-width:700px
 }
 
-.table th,
-.table td{
+.table th,.table td{
 padding:11px 9px;
 border-bottom:1px solid #1a304c;
 text-align:left;
@@ -237,6 +203,11 @@ background:#0c6b52;
 color:#9effdd
 }
 
+.inactive{
+background:#7a2735;
+color:#ffd0d7
+}
+
 .expired{
 background:#7a2735;
 color:#ffd0d7
@@ -258,9 +229,7 @@ justify-content:center;
 padding:15px
 }
 
-.modal.show{
-display:flex
-}
+.modal.show{display:flex}
 
 .box{
 background:#0b1b31;
@@ -272,13 +241,9 @@ max-height:90vh;
 overflow:auto
 }
 
-.box h2{
-margin-bottom:15px
-}
+.box h2{margin-bottom:15px}
 
-.field{
-margin:10px 0
-}
+.field{margin:10px 0}
 
 .field label{
 display:block;
@@ -287,8 +252,7 @@ font-size:12px;
 margin-bottom:6px
 }
 
-.field input,
-.field select{
+.field input,.field select{
 width:100%;
 background:#071321;
 color:#fff;
@@ -304,9 +268,7 @@ gap:8px;
 margin-top:15px
 }
 
-.modalBtns button{
-flex:1
-}
+.modalBtns button{flex:1}
 
 .notice{
 padding:13px;
@@ -317,35 +279,18 @@ margin-top:10px;
 font-size:13px
 }
 
-.successBox{
-padding:14px;
-border:1px solid #146b58;
-background:#082b25;
-border-radius:10px;
-color:#a5ffe9;
-margin-top:12px
-}
-
 .empty{
 text-align:center;
 color:#718eae;
 padding:30px
 }
 
-.bottom{
-display:none
-}
-
-.statSmall{
-font-size:12px;
-color:#7f9bbd;
-margin-top:5px
-}
-
 .txid{
 font-size:10px;
 color:#6f8cac
 }
+
+.bottom{display:none}
 
 @media(max-width:850px){
 
@@ -359,21 +304,15 @@ transition:.2s;
 box-shadow:10px 0 30px #0008
 }
 
-.side.show{
-left:0
-}
+.side.show{left:0}
 
-.main{
-padding:14px
-}
+.main{padding:14px}
 
 .cards{
 grid-template-columns:repeat(2,1fr)
 }
 
-.grid{
-grid-template-columns:1fr
-}
+.grid{grid-template-columns:1fr}
 
 }
 
@@ -384,17 +323,11 @@ grid-template-columns:repeat(2,1fr);
 gap:8px
 }
 
-.card{
-padding:12px
-}
+.card{padding:12px}
 
-.card .num{
-font-size:22px
-}
+.card .num{font-size:22px}
 
-.pageTitle{
-font-size:20px
-}
+.pageTitle{font-size:20px}
 
 .bottom{
 display:flex;
@@ -424,9 +357,7 @@ color:#dcecff;
 margin-bottom:2px
 }
 
-.main{
-padding-bottom:75px
-}
+.main{padding-bottom:75px}
 
 }
 </style>
@@ -445,7 +376,6 @@ RIDHROHAN NETWORK
 
 </header>
 
-
 <div class="layout">
 
 <aside class="side" id="side">
@@ -457,7 +387,6 @@ RIDHROHAN NETWORK
 <button onclick="showPage('ecash',this)">
 ₱ &nbsp; ECash
 </button>
-
 
 <button onclick="togglePPPoE()">
 ◉ &nbsp; PPPoE
@@ -492,7 +421,6 @@ Cron Logs
 
 </div>
 
-
 <button onclick="showPage('pppoev2',this)">
 ◉ &nbsp; PPPoE V2
 </button>
@@ -513,10 +441,7 @@ Cron Logs
 ? &nbsp; Support Center
 </button>
 
-
-<div class="section">
-Settings
-</div>
+<div class="section">Settings</div>
 
 <button onclick="showPage('account',this)">
 Account
@@ -536,49 +461,42 @@ Sign out
 
 </aside>
 
-
 <main class="main" id="app"></main>
 
 </div>
 
-
 <nav class="bottom">
 
 <button onclick="showPage('dashboard')">
-<b>⌂</b>
-Home
+<b>⌂</b>Home
 </button>
 
 <button onclick="showPage('clients')">
-<b>◉</b>
-Clients
+<b>◉</b>Clients
 </button>
 
-<button onclick="openAdd()">
-<b>＋</b>
-Add
+<button onclick="openClient()">
+<b>＋</b>Add
 </button>
 
 <button onclick="showPage('payments')">
-<b>₱</b>
-Payments
+<b>₱</b>Payments
 </button>
 
 <button onclick="toggleMenu()">
-<b>☰</b>
-Menu
+<b>☰</b>Menu
 </button>
 
 </nav>
 
 
+<!-- CLIENT MODAL -->
+
 <div class="modal" id="clientModal">
 
 <div class="box">
 
-<h2>
-Add PPPoE Client
-</h2>
+<h2>Add PPPoE Client</h2>
 
 <div class="field">
 <label>Client Name</label>
@@ -591,13 +509,8 @@ Add PPPoE Client
 </div>
 
 <div class="field">
-<label>Plan / Speed</label>
-<input id="fPlan" placeholder="25 Mbps">
-</div>
-
-<div class="field">
-<label>Monthly Fee (₱)</label>
-<input id="fFee" type="number" min="0" placeholder="1000">
+<label>Plan</label>
+<select id="fPlan"></select>
 </div>
 
 <div class="field">
@@ -607,7 +520,7 @@ Add PPPoE Client
 
 <div class="modalBtns">
 
-<button class="btn gray" onclick="closeModal()">
+<button class="btn gray" onclick="closeModal('clientModal')">
 Cancel
 </button>
 
@@ -618,7 +531,57 @@ Save Client
 </div>
 
 </div>
+</div>
 
+
+<!-- PLAN MODAL -->
+
+<div class="modal" id="planModal">
+
+<div class="box">
+
+<h2 id="planModalTitle">Add PPPoE Plan</h2>
+
+<input type="hidden" id="editPlanIndex">
+
+<div class="field">
+<label>Plan Name</label>
+<input id="pName" placeholder="25 Mbps">
+</div>
+
+<div class="field">
+<label>Speed</label>
+<input id="pSpeed" placeholder="25 Mbps">
+</div>
+
+<div class="field">
+<label>Monthly Price (₱)</label>
+<input id="pPrice" type="number" min="1" placeholder="1000">
+</div>
+
+<div class="field">
+<label>Status</label>
+<select id="pStatus">
+<option value="ACTIVE">ACTIVE</option>
+<option value="INACTIVE">INACTIVE</option>
+</select>
+</div>
+
+<div class="modalBtns">
+
+<button class="btn gray"
+onclick="closeModal('planModal')">
+Cancel
+</button>
+
+<button class="btn green"
+onclick="savePlan()">
+Save Plan
+</button>
+
+</div>
+
+</div>
 </div>
 
 
@@ -629,7 +592,40 @@ Save Client
 
 var clients=[];
 var payments=[];
+var plans=[];
 
+
+/* DEFAULT PLANS */
+
+var defaultPlans=[
+{
+name:"10 Mbps",
+speed:"10 Mbps",
+price:500,
+status:"ACTIVE"
+},
+{
+name:"15 Mbps",
+speed:"15 Mbps",
+price:700,
+status:"ACTIVE"
+},
+{
+name:"25 Mbps",
+speed:"25 Mbps",
+price:1000,
+status:"ACTIVE"
+},
+{
+name:"50 Mbps",
+speed:"50 Mbps",
+price:1500,
+status:"ACTIVE"
+}
+];
+
+
+/* LOAD DATA */
 
 function safeLoad(){
 
@@ -637,22 +633,32 @@ try{
 
 var c=localStorage.getItem("RN_CLIENTS");
 var p=localStorage.getItem("RN_PAYMENTS");
+var pl=localStorage.getItem("RN_PLANS");
 
-var parsedC=c?JSON.parse(c):[];
-var parsedP=p?JSON.parse(p):[];
+clients=c?JSON.parse(c):[];
+payments=p?JSON.parse(p):[];
+plans=pl?JSON.parse(pl):defaultPlans.slice();
 
-clients=Array.isArray(parsedC)?parsedC:[];
-payments=Array.isArray(parsedP)?parsedP:[];
+if(!Array.isArray(clients))clients=[];
+if(!Array.isArray(payments))payments=[];
+if(!Array.isArray(plans)||plans.length===0){
+plans=defaultPlans.slice();
+}
 
 }catch(e){
 
 clients=[];
 payments=[];
+plans=defaultPlans.slice();
 
 }
 
+saveData();
+
 }
 
+
+/* SAVE */
 
 function saveData(){
 
@@ -668,10 +674,17 @@ localStorage.setItem(
 JSON.stringify(payments)
 );
 
+localStorage.setItem(
+"RN_PLANS",
+JSON.stringify(plans)
+);
+
 }catch(e){}
 
 }
 
+
+/* ESCAPE */
 
 function esc(v){
 
@@ -685,13 +698,23 @@ return String(v==null?"":v)
 }
 
 
+/* MONEY */
+
+function money(n){
+
+return "₱"+
+Number(n||0).toLocaleString("en-PH");
+
+}
+
+
+/* STATUS */
+
 function statusOf(c){
 
-if(c.disabled)
-return "DISABLED";
+if(c.disabled)return"DISABLED";
 
-if(!c.due)
-return "ACTIVE";
+if(!c.due)return"ACTIVE";
 
 var today=new Date();
 
@@ -704,40 +727,50 @@ return d<today?"EXPIRED":"ACTIVE";
 }
 
 
+/* BADGE */
+
 function badge(s){
 
 var cls=
 s==="ACTIVE"
-?"active"
-:s==="EXPIRED"
-?"expired"
-:"disabled";
+?"active":
+s==="INACTIVE"
+?"inactive":
+s==="EXPIRED"
+?"expired":
+"disabled";
 
-return '<span class="badge '+cls+'">'+s+'</span>';
-
-}
-
-
-function money(n){
-
-return "₱"+
-Number(n||0).toLocaleString("en-PH");
+return '<span class="badge '+cls+'">'+
+s+
+'</span>';
 
 }
 
+
+/* TRANSACTION ID */
 
 function createTransactionID(){
 
-var now=Date.now();
-
-var random=Math.floor(
-Math.random()*9000
-)+1000;
-
-return "RN-"+now+"-"+random;
+return "RN-"+
+Date.now()+"-"+
+Math.floor(Math.random()*9000+1000);
 
 }
 
+
+/* CARD */
+
+function card(label,value){
+
+return '<div class="card">'+
+'<div class="label">'+label+'</div>'+
+'<div class="num">'+value+'</div>'+
+'</div>';
+
+}
+
+
+/* RENDER */
 
 function render(page){
 
@@ -747,50 +780,36 @@ if(!app)return;
 
 
 var active=clients.filter(function(c){
-
 return statusOf(c)==="ACTIVE";
-
 }).length;
-
 
 var expired=clients.filter(function(c){
-
 return statusOf(c)==="EXPIRED";
-
 }).length;
-
 
 var disabled=clients.filter(function(c){
-
 return statusOf(c)==="DISABLED";
-
 }).length;
 
-
 var total=payments.reduce(function(a,p){
-
 return a+Number(p.amount||0);
-
 },0);
 
+
+/* DASHBOARD */
 
 if(page==="dashboard"){
 
 app.innerHTML=
 
 '<div class="pageTitle">Dashboard</div>'+
-
-'<div class="muted">'+
-'RIDHROHAN NETWORK overview'+
-'</div>'+
+'<div class="muted">RIDHROHAN NETWORK overview</div>'+
 
 '<div class="cards">'+
-
 card("Clients",clients.length)+
 card("Active",active)+
 card("Expired",expired)+
 card("Collected",money(total))+
-
 '</div>'+
 
 '<div class="grid">'+
@@ -801,7 +820,7 @@ card("Collected",money(total))+
 
 '<div class="actions">'+
 
-'<button class="btn green" onclick="openAdd()">'+
+'<button class="btn green" onclick="openClient()">'+
 '＋ Add PPPoE Client'+
 '</button>'+
 
@@ -825,14 +844,23 @@ card("Collected",money(total))+
 
 '<h3>System</h3>'+
 
-'<p class="muted">PPPoE: '+clients.length+' clients</p>'+
-
-'<p class="muted" style="margin-top:8px">'+
-'Disabled: '+disabled+
+'<p class="muted">PPPoE Clients: '+
+clients.length+
 '</p>'+
 
 '<p class="muted" style="margin-top:8px">'+
-'Payments: '+payments.length+
+'Plans: '+
+plans.length+
+'</p>'+
+
+'<p class="muted" style="margin-top:8px">'+
+'Disabled: '+
+disabled+
+'</p>'+
+
+'<p class="muted" style="margin-top:8px">'+
+'Payments: '+
+payments.length+
 '</p>'+
 
 '</div>'+
@@ -844,6 +872,19 @@ return;
 }
 
 
+/* PLANS */
+
+if(page==="plans"){
+
+renderPlans(app);
+
+return;
+
+}
+
+
+/* CLIENTS */
+
 if(page==="clients"){
 
 renderClients(app);
@@ -853,7 +894,9 @@ return;
 }
 
 
-if(page==="transactions"){
+/* PAYMENTS */
+
+if(page==="payments"||page==="transactions"){
 
 renderPayments(app);
 
@@ -862,43 +905,23 @@ return;
 }
 
 
-if(page==="payments"){
-
-renderPayments(app);
-
-return;
-
-}
-
+/* OTHER PAGES */
 
 var titles={
 
 ecash:"ECash",
-
 servers:"PPPoE Servers",
-
-plans:"PPPoE Plans",
-
 active:"Active Connections",
-
 cron:"Cron Logs",
-
 pppoev2:"PPPoE V2",
-
 ipoe:"IPoE",
-
 mikrotik:"Mikrotik",
-
 support:"Support Center",
-
 account:"Account",
-
 disbursement:"Disbursement",
-
 telegram:"Telegram Notification"
 
 };
-
 
 var title=titles[page]||"Dashboard";
 
@@ -909,9 +932,7 @@ app.innerHTML=
 esc(title)+
 '</div>'+
 
-'<div class="muted">'+
-'RIDHROHAN NETWORK'+
-'</div>'+
+'<div class="muted">RIDHROHAN NETWORK</div>'+
 
 '<div class="panel" style="margin-top:20px">'+
 
@@ -924,7 +945,7 @@ esc(title)+
 '</p>'+
 
 '<div class="notice">'+
-'Hindi pa ito nakakonekta sa MikroTik. Ihahanda muna natin ang interface bago secure na API/backend connection.'+
+'Hindi pa ito nakakonekta sa MikroTik. UI at data structure muna bago secure backend/API connection.'+
 '</div>'+
 
 '</div>';
@@ -932,49 +953,136 @@ esc(title)+
 }
 
 
-function card(label,value){
+/* PLANS PAGE */
 
-return '<div class="card">'+
+function renderPlans(app){
 
-'<div class="label">'+
-label+
+var rows="";
+
+plans.forEach(function(p,i){
+
+rows+=
+
+'<tr>'+
+
+'<td>'+
+esc(p.name)+
+'</td>'+
+
+'<td>'+
+esc(p.speed)+
+'</td>'+
+
+'<td>'+
+money(p.price)+
+'</td>'+
+
+'<td>'+
+badge(p.status)+
+'</td>'+
+
+'<td>'+
+
+'<div class="actions">'+
+
+'<button class="btn" onclick="editPlan('+i+')">'+
+'Edit'+
+'</button>'+
+
+'<button class="btn gray" onclick="togglePlan('+i+')">'+
+(p.status==="ACTIVE"?"Deactivate":"Activate")+
+'</button>'+
+
+'<button class="btn red" onclick="deletePlan('+i+')">'+
+'Delete'+
+'</button>'+
+
 '</div>'+
 
-'<div class="num">'+
-value+
+'</td>'+
+
+'</tr>';
+
+});
+
+
+if(!rows){
+
+rows=
+'<tr>'+
+'<td colspan="5" class="empty">'+
+'No plans yet.'+
+'</td>'+
+'</tr>';
+
+}
+
+
+app.innerHTML=
+
+'<div class="pageTitle">PPPoE Plans</div>'+
+
+'<div class="muted">'+
+'Manage internet packages and monthly pricing'+
+'</div>'+
+
+'<div class="panel" style="margin-top:20px">'+
+
+'<div class="actions" style="margin-bottom:15px">'+
+
+'<button class="btn green" onclick="openPlan()">'+
+'＋ Add Plan'+
+'</button>'+
+
+'</div>'+
+
+'<div class="tableWrap">'+
+
+'<table class="table">'+
+
+'<thead>'+
+
+'<tr>'+
+'<th>Plan Name</th>'+
+'<th>Speed</th>'+
+'<th>Monthly Price</th>'+
+'<th>Status</th>'+
+'<th>Action</th>'+
+'</tr>'+
+
+'</thead>'+
+
+'<tbody>'+
+rows+
+'</tbody>'+
+
+'</table>'+
+
 '</div>'+
 
 '</div>';
 
 }
 
+
+/* CLIENT PAGE */
 
 function renderClients(app){
 
 var rows="";
 
-
 clients.forEach(function(c,i){
 
 var s=statusOf(c);
 
-var paidButton="";
+var paidButton=
+s==="DISABLED"
 
-if(s==="DISABLED"){
+?
+'<button class="btn orange" onclick="paidDisabled('+i+')">Paid</button>'
 
-paidButton=
-'<button class="btn orange" onclick="paidDisabled('+i+')">'+
-'Paid'+
-'</button>';
-
-}else{
-
-paidButton=
-'<button class="btn green" onclick="paid('+i+')">'+
-'Paid'+
-'</button>';
-
-}
+:
+'<button class="btn green" onclick="paid('+i+')">Paid</button>';
 
 
 rows+=
@@ -1019,7 +1127,6 @@ paidButton+
 if(!rows){
 
 rows=
-
 '<tr>'+
 '<td colspan="7" class="empty">'+
 'No PPPoE clients yet.'+
@@ -1041,7 +1148,7 @@ app.innerHTML=
 
 '<div class="actions" style="margin-bottom:15px">'+
 
-'<button class="btn green" onclick="openAdd()">'+
+'<button class="btn green" onclick="openClient()">'+
 '＋ Add Client'+
 '</button>'+
 
@@ -1054,7 +1161,6 @@ app.innerHTML=
 '<thead>'+
 
 '<tr>'+
-
 '<th>Name</th>'+
 '<th>Username</th>'+
 '<th>Plan</th>'+
@@ -1062,7 +1168,6 @@ app.innerHTML=
 '<th>Due</th>'+
 '<th>Status</th>'+
 '<th>Action</th>'+
-
 '</tr>'+
 
 '</thead>'+
@@ -1080,6 +1185,8 @@ rows+
 }
 
 
+/* PAYMENT PAGE */
+
 function renderPayments(app){
 
 var total=payments.reduce(function(a,p){
@@ -1088,9 +1195,7 @@ return a+Number(p.amount||0);
 
 },0);
 
-
 var rows="";
-
 
 payments.slice().reverse().forEach(function(p){
 
@@ -1124,7 +1229,6 @@ esc(p.transactionId||"-")+
 if(!rows){
 
 rows=
-
 '<tr>'+
 '<td colspan="8" class="empty">'+
 'No payments recorded.'+
@@ -1145,7 +1249,6 @@ app.innerHTML=
 '<div class="cards">'+
 
 card("Total Collected",money(total))+
-
 card("Transactions",payments.length)+
 
 '</div>'+
@@ -1159,7 +1262,6 @@ card("Transactions",payments.length)+
 '<thead>'+
 
 '<tr>'+
-
 '<th>Client</th>'+
 '<th>Username</th>'+
 '<th>Amount</th>'+
@@ -1168,7 +1270,6 @@ card("Transactions",payments.length)+
 '<th>Previous Due</th>'+
 '<th>New Due</th>'+
 '<th>Transaction</th>'+
-
 '</tr>'+
 
 '</thead>'+
@@ -1186,25 +1287,24 @@ rows+
 }
 
 
+/* MENU */
+
 function showPage(page,btn){
 
 render(page);
 
-
 if(btn){
 
-var all=document.querySelectorAll(".side button");
+var all=
+document.querySelectorAll(".side button");
 
 all.forEach(function(x){
-
 x.classList.remove("active");
-
 });
 
 btn.classList.add("active");
 
 }
-
 
 if(window.innerWidth<=850){
 
@@ -1232,16 +1332,62 @@ document.getElementById("pppoeSub")
 }
 
 
-function openAdd(){
+/* MODAL */
 
-document.getElementById("clientModal")
-.classList.add("show");
+function closeModal(id){
+
+document.getElementById(id)
+.classList.remove("show");
+
+}
+
+
+/* OPEN CLIENT */
+
+function openClient(){
+
+var select=
+document.getElementById("fPlan");
+
+select.innerHTML="";
+
+var activePlans=
+plans.filter(function(p){
+return p.status==="ACTIVE";
+});
+
+
+if(activePlans.length===0){
+
+alert(
+"Walang ACTIVE PPPoE Plan.\n\n"+
+"Gumawa muna ng plan sa PPPoE → Plans."
+);
+
+return;
+
+}
+
+
+activePlans.forEach(function(p){
+
+var option=document.createElement("option");
+
+option.value=p.name;
+
+option.textContent=
+p.name+
+" — "+
+money(p.price)+
+"/month";
+
+select.appendChild(option);
+
+});
 
 
 document.getElementById("fName").value="";
 document.getElementById("fUser").value="";
-document.getElementById("fPlan").value="";
-document.getElementById("fFee").value="";
 
 
 var d=new Date();
@@ -1251,46 +1397,64 @@ d.setMonth(d.getMonth()+1);
 document.getElementById("fDue")
 .value=d.toISOString().slice(0,10);
 
-}
-
-
-function closeModal(){
 
 document.getElementById("clientModal")
-.classList.remove("show");
+.classList.add("show");
 
 }
 
 
-function saveClient(){
+/* PLAN MODAL */
+
+function openPlan(){
+
+document.getElementById("editPlanIndex").value="";
+
+document.getElementById("planModalTitle")
+.textContent="Add PPPoE Plan";
+
+document.getElementById("pName").value="";
+document.getElementById("pSpeed").value="";
+document.getElementById("pPrice").value="";
+document.getElementById("pStatus").value="ACTIVE";
+
+document.getElementById("planModal")
+.classList.add("show");
+
+}
+
+
+/* SAVE PLAN */
+
+function savePlan(){
 
 var name=
-document.getElementById("fName")
+document.getElementById("pName")
 .value.trim();
 
-var user=
-document.getElementById("fUser")
+var speed=
+document.getElementById("pSpeed")
 .value.trim();
 
-var plan=
-document.getElementById("fPlan")
-.value.trim();
-
-var fee=
+var price=
 Number(
-document.getElementById("fFee")
+document.getElementById("pPrice")
 .value||0
 );
 
-var due=
-document.getElementById("fDue")
+var status=
+document.getElementById("pStatus")
+.value;
+
+var edit=
+document.getElementById("editPlanIndex")
 .value;
 
 
-if(!name||!user){
+if(!name||!speed){
 
 alert(
-"Ilagay ang Client Name at Username."
+"Ilagay ang Plan Name at Speed."
 );
 
 return;
@@ -1298,10 +1462,10 @@ return;
 }
 
 
-if(fee<=0){
+if(price<=0){
 
 alert(
-"Ilagay ang tamang Monthly Fee."
+"Ilagay ang tamang Monthly Price."
 );
 
 return;
@@ -1309,398 +1473,86 @@ return;
 }
 
 
-clients.push({
+var duplicate=plans.some(function(p,index){
 
+return p.name.toLowerCase()===
+name.toLowerCase() &&
+String(index)!==String(edit);
+
+});
+
+
+if(duplicate){
+
+alert(
+"May existing plan na may ganitong pangalan."
+);
+
+return;
+
+}
+
+
+var obj={
 name:name,
+speed:speed,
+price:price,
+status:status
+};
 
-user:user,
 
-plan:plan||"—",
+if(edit===""){
 
-fee:fee,
-
-due:due,
-
-disabled:false
-
-});
-
-
-saveData();
-
-closeModal();
-
-showPage("clients");
-
-}
-
-
-function paidDisabled(i){
-
-alert(
-"DISABLED ang client na ito.\n\n"+
-"I-enable muna ang client bago mag-record ng payment."
-);
-
-}
-
-
-function paid(i){
-
-var c=clients[i];
-
-if(!c){
-
-alert("Client not found.");
-
-return;
-
-}
-
-
-/* SECURITY CHECK */
-
-if(c.disabled){
-
-alert(
-"DISABLED ang client na ito.\n\n"+
-"I-enable muna ang client bago mag-record ng payment."
-);
-
-return;
-
-}
-
-
-var amount=Number(c.fee||0);
-
-
-/* CONFIRMATION */
-
-var confirmPayment=confirm(
-
-"CONFIRM PAYMENT\n\n"+
-
-"Client: "+c.name+"\n"+
-
-"Username: "+c.user+"\n"+
-
-"Plan: "+c.plan+"\n"+
-
-"Amount: ₱"+
-amount.toLocaleString("en-PH")+"\n"+
-
-"Current Due: "+
-(c.due||"-")+
-
-"\n\nContinue?"
-
-);
-
-
-if(!confirmPayment){
-
-return;
-
-}
-
-
-/* PAYMENT METHOD */
-
-var method=prompt(
-
-"Payment Method:\n\n"+
-"GCash\n"+
-"Maya\n"+
-"Cash\n\n"+
-"Type payment method:",
-
-"Cash"
-
-);
-
-
-if(method===null){
-
-return;
-
-}
-
-
-method=method.trim();
-
-
-if(!method){
-
-alert(
-"Payment method is required."
-);
-
-return;
-
-}
-
-
-/* PREVENT DOUBLE PAYMENT */
-
-var today=
-new Date()
-.toISOString()
-.slice(0,10);
-
-
-var alreadyPaid=payments.some(function(p){
-
-return p.client===c.name &&
-p.date===today &&
-Number(p.amount||0)===amount;
-
-});
-
-
-if(alreadyPaid){
-
-var continueDuplicate=confirm(
-
-"May payment na para sa client na ito ngayong araw.\n\n"+
-"Sigurado ka bang gusto mong mag-record ulit?"
-
-);
-
-
-if(!continueDuplicate){
-
-return;
-
-}
-
-}
-
-
-/* SAVE OLD DUE DATE */
-
-var previousDue=c.due||"-";
-
-
-/* CALCULATE NEW DUE */
-
-var d;
-
-
-if(c.due){
-
-d=new Date(
-c.due+"T00:00:00"
-);
+plans.push(obj);
 
 }else{
 
-d=new Date();
-
-}
-
-
-if(isNaN(d.getTime())){
-
-d=new Date();
-
-}
-
-
-d.setMonth(
-d.getMonth()+1
-);
-
-
-var newDue=
-d.toISOString()
-.slice(0,10);
-
-
-/* UPDATE CLIENT */
-
-c.due=newDue;
-
-c.disabled=false;
-
-
-/* CREATE PAYMENT */
-
-payments.push({
-
-client:c.name,
-
-username:c.user,
-
-amount:amount,
-
-method:method,
-
-date:today,
-
-previousDue:previousDue,
-
-newDue:newDue,
-
-transactionId:createTransactionID()
-
-});
-
-
-/* SAVE */
-
-saveData();
-
-
-/* SUCCESS */
-
-alert(
-
-"PAYMENT SUCCESSFUL\n\n"+
-
-"Client: "+c.name+"\n"+
-
-"Amount: ₱"+
-amount.toLocaleString("en-PH")+"\n"+
-
-"Method: "+method+"\n"+
-
-"Previous Due: "+previousDue+"\n"+
-
-"New Due Date: "+newDue
-
-);
-
-
-render("clients");
-
-}
-
-
-function toggleDisable(i){
-
-if(!clients[i]){
-
-return;
-
-}
-
-
-if(clients[i].disabled){
-
-var enable=confirm(
-
-"Enable this client?\n\n"+
-"Client: "+clients[i].name
-
-);
-
-
-if(!enable){
-
-return;
-
-}
-
-
-clients[i].disabled=false;
-
-}else{
-
-var disable=confirm(
-
-"Disable this client?\n\n"+
-"Client: "+clients[i].name+"\n\n"+
-"This only changes the dashboard status for now."
-
-);
-
-
-if(!disable){
-
-return;
-
-}
-
-
-clients[i].disabled=true;
+plans[Number(edit)]=obj;
 
 }
 
 
 saveData();
 
-render("clients");
+closeModal("planModal");
+
+render("plans");
 
 }
 
 
-function removeClient(i){
+/* EDIT PLAN */
 
-if(!clients[i]){
+function editPlan(i){
 
-return;
+var p=plans[i];
 
-}
+if(!p)return;
 
+document.getElementById("editPlanIndex")
+.value=i;
 
-var c=clients[i];
+document.getElementById("planModalTitle")
+.textContent="Edit PPPoE Plan";
 
+document.getElementById("pName")
+.value=p.name;
 
-var yes=confirm(
+document.getElementById("pSpeed")
+.value=p.speed;
 
-"DELETE CLIENT?\n\n"+
+document.getElementById("pPrice")
+.value=p.price;
 
-"Client: "+c.name+"\n"+
-"Username: "+c.user+"\n\n"+
+document.getElementById("pStatus")
+.value=p.status;
 
-"This action cannot be undone."
-
-);
-
-
-if(!yes){
-
-return;
-
-}
-
-
-clients.splice(i,1);
-
-saveData();
-
-render("clients");
+document.getElementById("planModal")
+.classList.add("show");
 
 }
 
 
-function logout(){
+/* ACTIVATE PLAN */
 
-alert(
-
-"Static prototype: logout is not connected to a server yet."
-
-);
-
-}
-
-
-function start(){
-
-safeLoad();
-
-render("dashboard");
-
-}
-
-
-window.addEventListener(
-"load",
-start
-);
-
-</script>
-
-</body>
-</html>
+function
