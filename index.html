@@ -2,633 +2,2567 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>RIDHROHAN NETWORK</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#061427;--panel:#0c213b;--panel2:#102a49;--line:#214a78;
-  --text:#edf5ff;--muted:#91a9c7;--blue:#1769b0;--green:#08a681;
-  --red:#c83b58;--gray:#2d4663
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
-body{font-family:Arial,Segoe UI,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-button,input,select{font:inherit}
-button{border:0;cursor:pointer}
-.header{height:78px;background:#0a203a;border-bottom:2px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;position:sticky;top:0;z-index:20}
-.brand h1{font-size:23px;letter-spacing:.3px}.brand p{color:var(--muted);font-size:12px;margin-top:4px}
-.menuBtn{width:58px;height:58px;border-radius:16px;background:#123253;border:2px solid #2a5787;color:white;font-size:31px}
-main{padding:25px 20px 100px;max-width:1200px;margin:auto}
-h2{font-size:29px;margin-bottom:7px}.sub{color:var(--muted);font-size:17px;margin-bottom:22px}
-.card{background:var(--panel);border:2px solid #1b416d;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 5px 20px #0002}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{min-height:125px}.stat .label{color:var(--muted);font-size:16px}.stat strong{display:block;font-size:32px;margin-top:20px}
-.quick{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:11px 17px;border-radius:11px;color:white;background:var(--gray);font-size:15px}.btn.green{background:var(--green)}.btn.blue{background:#1768ac}.btn.red{background:var(--red)}.btn.small{padding:8px 11px;font-size:13px}.btn:active{transform:scale(.98)}
-.tableWrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:850px}.table th{text-align:left;color:#91a9c7;font-size:13px;padding:12px 10px;border-bottom:1px solid #234669}.table td{padding:12px 10px;border-bottom:1px solid #183754;font-size:14px}.actions{display:flex;gap:5px;flex-wrap:wrap}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:bold}.active{background:#078f72;color:#d9fff5}.expired{background:#8c2f40;color:#ffe8ed}.disabled{background:#52657a;color:#eef3f8}
-.notice{border:2px dashed #315a86;border-radius:14px;padding:15px;color:#a9bfda;margin-top:16px}
-.side{position:fixed;z-index:30;top:78px;right:0;width:310px;max-width:90%;height:calc(100vh - 78px);background:#081d35;border-left:2px solid var(--line);padding:22px;transform:translateX(105%);transition:.25s;overflow:auto}
-.side.open{transform:translateX(0)}.side a,.side button{display:block;width:100%;text-align:left;background:transparent;color:#b9cce4;padding:15px 10px;border-radius:12px;font-size:18px;margin:3px 0}.side a:hover,.side button:hover{background:#173d67;color:white}.side .selected{background:#174678;color:white}.sideTitle{color:#7894b5;font-size:12px;text-transform:uppercase;margin:18px 10px 7px}.subMenu{padding-left:18px}.subMenu a{font-size:15px;padding:11px 10px}
-.bottom{position:fixed;bottom:0;left:0;right:0;height:72px;background:#0a2039;border-top:2px solid #1b416d;z-index:19;display:flex;justify-content:space-around}.bottom button{flex:1;background:transparent;color:#bdd0e8;font-size:12px}.bottom b{display:block;font-size:22px;margin-bottom:3px}
-.modalBack{position:fixed;inset:0;background:#000b;z-index:50;display:none;align-items:center;justify-content:center;padding:16px}.modalBack.show{display:flex}.modal{width:100%;max-width:650px;background:#0d2745;border:2px solid #35618f;border-radius:18px;padding:22px;max-height:90vh;overflow:auto}.modal h3{font-size:22px;margin-bottom:16px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:#9db2cd;font-size:12px;margin:0 0 6px}.field input,.field select{width:100%;background:#071a2f;color:white;border:2px solid #28517e;border-radius:10px;padding:11px;outline:none}.field input:focus,.field select:focus{border-color:#48a1ef}.full{grid-column:1/-1}.modalBtns{display:flex;gap:10px;margin-top:18px}.modalBtns button{flex:1}
-.empty{text-align:center;color:#7892b2;padding:30px 10px}
-.kpiRow{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.kpi{padding:18px;border-radius:14px;background:#0b2038;border:1px solid #24496f}.kpi span{color:var(--muted);font-size:13px}.kpi strong{display:block;font-size:25px;margin-top:7px}
-@media(max-width:700px){
-  .header{height:78px;padding:12px 20px}.brand h1{font-size:21px}.menuBtn{width:56px;height:56px}
-  main{padding:24px 20px 95px}h2{font-size:28px}.grid4{grid-template-columns:1fr 1fr}.stat{min-height:115px}.stat strong{font-size:29px}
-  .formGrid{grid-template-columns:1fr}.full{grid-column:auto}.modal{padding:18px}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#061426;
+  color:#eaf3ff;
+  min-height:100vh;
 }
-@media(max-width:420px){.grid4{gap:9px}.stat{padding:15px}.stat strong{font-size:25px}.quick .btn{width:100%}}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.header{
+  height:100px;
+  background:#0b2441;
+  border-bottom:2px solid #17436f;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.brand h1{
+  font-size:24px;
+}
+
+.brand p{
+  color:#9bb1cc;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.menuBtn{
+  width:50px;
+  height:50px;
+  border-radius:15px;
+  background:#15395f;
+  border:2px solid #2c5c8d;
+  color:white;
+  font-size:26px;
+}
+
+.sidebar{
+  width:290px;
+  background:#091d35;
+  border-right:2px solid #17436f;
+  padding:18px;
+  position:fixed;
+  top:100px;
+  bottom:0;
+  left:0;
+  z-index:15;
+  overflow:auto;
+  transform:translateX(-100%);
+  transition:.25s;
+}
+
+.sidebar.open{
+  transform:translateX(0);
+}
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:100px 0 0;
+  background:rgba(0,0,0,.65);
+  z-index:14;
+}
+
+.overlay.show{
+  display:block;
+}
+
+.navbtn,
+.subbtn{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  color:#b9cde5;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:5px;
+  font-size:17px;
+}
+
+.navbtn:hover,
+.subbtn:hover{
+  background:#12365c;
+  color:#fff;
+}
+
+.navgroup{
+  background:#123d68;
+  border-radius:14px;
+  padding:7px;
+  margin:5px 0;
+}
+
+.subbtn{
+  padding-left:30px;
+}
+
+.sectionLabel{
+  color:#7894b2;
+  font-size:12px;
+  margin:22px 14px 7px;
+  text-transform:uppercase;
+}
+
+.main{
+  width:100%;
+  padding:25px 14px 90px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.page h2{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.desc{
+  color:#9bb1cc;
+  margin-bottom:20px;
+}
+
+.card{
+  background:#0b2340;
+  border:2px solid #174a7d;
+  border-radius:17px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:#0b2340;
+  border:2px solid #1b4e82;
+  border-radius:18px;
+  padding:20px;
+  min-height:115px;
+}
+
+.stat small{
+  color:#9bb1cc;
+  font-size:15px;
+}
+
+.stat strong{
+  display:block;
+  font-size:30px;
+  margin-top:17px;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.btn{
+  padding:11px 15px;
+  border-radius:10px;
+  color:#fff;
+}
+
+.primary{
+  background:#08ad87;
+}
+
+.blue{
+  background:#2169b3;
+}
+
+.gray{
+  background:#304c6c;
+}
+
+.red{
+  background:#c33650;
+}
+
+.search{
+  background:#071a30;
+  border:2px solid #245789;
+  color:#fff;
+  border-radius:10px;
+  padding:11px 14px;
+  min-width:220px;
+  outline:none;
+}
+
+.tableWrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,
+td{
+  padding:13px 9px;
+  border-bottom:1px solid #1b3d62;
+  text-align:left;
+  white-space:nowrap;
+}
+
+th{
+  color:#9eb5d0;
+  font-size:12px;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.unused,
+.active{
+  background:#079c78;
+}
+
+.used{
+  background:#2469b2;
+}
+
+.expired,
+.disabled{
+  background:#c33650;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:#829ab5;
+}
+
+.notice{
+  padding:14px;
+  border:1px dashed #3970a2;
+  border-radius:10px;
+  color:#a9bdd4;
+  margin-top:15px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#102f50;
+  border:2px solid #326496;
+  border-radius:18px;
+  padding:20px;
+}
+
+.modalBox h3{
+  font-size:22px;
+  margin-bottom:18px;
+}
+
+.formGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field label{
+  display:block;
+  color:#a9bdd4;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  background:#071a30;
+  color:#fff;
+  border:2px solid #285783;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.readonly{
+  opacity:.8;
+}
+
+.info{
+  background:#0a2038;
+  border:1px dashed #3970a2;
+  border-radius:10px;
+  padding:12px;
+  color:#b8cae0;
+}
+
+.modalActions{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+
+.modalActions>*{
+  flex:1;
+}
+
+.mobileBottom{
+  display:flex;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
+  background:#0b2441;
+  border-top:2px solid #17436f;
+  z-index:30;
+  justify-content:space-around;
+}
+
+.mobileBottom button{
+  background:none;
+  color:#b7cce4;
+  font-size:11px;
+  padding:6px;
+}
+
+.mobileBottom b{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+@media(min-width:801px){
+
+  .main{
+    padding:30px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .brand h1{
+    font-size:20px;
+  }
+
+  .brand p{
+    font-size:11px;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .formGrid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .modalBox{
+    padding:16px;
+  }
+
+}
 </style>
 </head>
+
 <body>
 
 <header class="header">
-  <div class="brand"><h1>RIDHROHAN NETWORK</h1><p>Network Management System</p></div>
+
+  <div class="brand">
+    <h1>RIDHROHAN NETWORK</h1>
+    <p>Network Management System</p>
+  </div>
+
   <button class="menuBtn" onclick="toggleMenu()">☰</button>
+
 </header>
 
-<aside id="side" class="side">
-  <button onclick="go('dashboard')">⌂ &nbsp; Dashboard</button>
-  <button onclick="go('ecash')">₱ &nbsp; ECash</button>
-  <button id="pppoeMenu" class="selected" onclick="togglePPPoE()">◉ &nbsp; PPPoE <span style="float:right">⌄</span></button>
-  <div id="pppoeSub" class="subMenu">
-    <button onclick="go('servers')">Servers</button>
-    <button onclick="go('plans')">Plans</button>
-    <button onclick="go('clients')">Clients</button>
-    <button onclick="go('transactions')">Transactions</button>
-    <button onclick="go('active')">Active Connections</button>
-    <button onclick="go('cron')">Cron Logs</button>
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<aside id="sidebar" class="sidebar">
+
+  <button class="navbtn" onclick="showPage('dashboard')">
+    ⌂ &nbsp; Dashboard
+  </button>
+
+  <button class="navbtn" onclick="showPage('ecash')">
+    ₱ &nbsp; ECash
+  </button>
+
+  <div class="navgroup">
+
+    <button class="navbtn" onclick="toggleGroup('pppoeGroup')">
+      ◉ &nbsp; PPPoE
+      <span style="float:right">⌄</span>
+    </button>
+
+    <div id="pppoeGroup">
+
+      <button class="subbtn" onclick="showPage('servers')">
+        Servers
+      </button>
+
+      <button class="subbtn" onclick="showPage('plans')">
+        Plans
+      </button>
+
+      <button class="subbtn" onclick="showPage('clients')">
+        Clients
+      </button>
+
+      <button class="subbtn" onclick="showPage('transactions')">
+        Transactions
+      </button>
+
+      <button class="subbtn" onclick="showPage('activeConnections')">
+        Active Connections
+      </button>
+
+      <button class="subbtn" onclick="showPage('cron')">
+        Cron Logs
+      </button>
+
+    </div>
+
   </div>
-  <button id="hotspotMenu" onclick="toggleHotspot()">◉ &nbsp; Hotspot <span style="float:right">⌄</span></button>
-  <div id="hotspotSub" class="subMenu" style="display:none">
-    <button onclick="go('hotspot')">Overview</button>
-    <button onclick="go('hotspotVouchers')">Vouchers</button>
-    <button onclick="go('hotspotActive')">Active Users</button>
-    <button onclick="go('hotspotSessions')">Sessions</button>
-    <button onclick="go('hotspotTransactions')">Transactions</button>
-    <button onclick="go('hotspotReports')">Reports</button>
+
+  <div class="navgroup">
+
+    <button class="navbtn" onclick="toggleGroup('hotspotGroup')">
+      ◉ &nbsp; Hotspot
+      <span style="float:right">⌄</span>
+    </button>
+
+    <div id="hotspotGroup">
+
+      <button class="subbtn" onclick="showPage('hotspotOverview')">
+        Overview
+      </button>
+
+      <button class="subbtn" onclick="showPage('vouchers')">
+        Vouchers
+      </button>
+
+      <button class="subbtn" onclick="showPage('activeUsers')">
+        Active Users
+      </button>
+
+      <button class="subbtn" onclick="showPage('sessions')">
+        Sessions
+      </button>
+
+      <button class="subbtn" onclick="showPage('hotspotTransactions')">
+        Transactions
+      </button>
+
+      <button class="subbtn" onclick="showPage('reports')">
+        Reports
+      </button>
+
+    </div>
+
   </div>
-  <button onclick="go('pppoev2')">◉ &nbsp; PPPoE V2</button>
-  <button onclick="go('ipoe')">◉ &nbsp; IPoE</button>
-  <button onclick="go('mikrotik')">⚙ &nbsp; Mikrotik</button>
-  <button onclick="go('payments')">₱ &nbsp; Payments</button>
-  <button onclick="go('support')">? &nbsp; Support Center</button>
-  <div class="sideTitle">Settings</div>
-  <button onclick="go('account')">Account</button>
-  <button onclick="go('disbursement')">Disbursement</button>
-  <button onclick="go('telegram')">Telegram Notification</button>
-  <button onclick="alert('Sign out will be added when secure login is enabled.')">Sign out</button>
+
+  <button class="navbtn" onclick="showPage('pppoeV2')">
+    ◉ &nbsp; PPPoE V2
+  </button>
+
+  <button class="navbtn" onclick="showPage('ipoe')">
+    ◉ &nbsp; IPoE
+  </button>
+
+  <button class="navbtn" onclick="showPage('mikrotik')">
+    ⚙ &nbsp; Mikrotik
+  </button>
+
+  <button class="navbtn" onclick="showPage('payments')">
+    ₱ &nbsp; Payments
+  </button>
+
+  <button class="navbtn" onclick="showPage('support')">
+    ? &nbsp; Support Center
+  </button>
+
+  <div class="sectionLabel">
+    Settings
+  </div>
+
+  <button class="navbtn" onclick="showPage('account')">
+    Account
+  </button>
+
+  <button class="navbtn" onclick="showPage('disbursement')">
+    Disbursement
+  </button>
+
+  <button class="navbtn" onclick="showPage('telegram')">
+    Telegram Notification
+  </button>
+
 </aside>
 
-<main id="app"></main>
+<main class="main">
 
-<nav class="bottom">
-  <button onclick="go('dashboard')"><b>⌂</b>Home</button>
-  <button onclick="go('clients')"><b>◉</b>Clients</button>
-  <button onclick="openClientModal()"><b>＋</b>Add</button>
-  <button onclick="go('payments')"><b>₱</b>Payments</button>
-  <button onclick="toggleMenu()"><b>☰</b>Menu</button>
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+  <h2>Dashboard</h2>
+
+  <p class="desc">
+    RIDHROHAN NETWORK overview
+  </p>
+
+  <div class="grid">
+
+    <div class="stat">
+      <small>PPPoE Clients</small>
+      <strong id="dashClients">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Active Clients</small>
+      <strong id="dashActive">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Hotspot Vouchers</small>
+      <strong id="dashVouchers">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Today's Sales</small>
+      <strong id="dashSales">₱0</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PPPoE SERVERS -->
+
+<section id="servers" class="page">
+
+  <h2>PPPoE Servers</h2>
+
+  <p class="desc">
+    Manage PPPoE server configuration
+  </p>
+
+  <div class="card">
+
+    <div class="toolbar">
+
+      <button class="btn primary"
+              onclick="openServerModal()">
+        ＋ Add Server
+      </button>
+
+    </div>
+
+    <div class="tableWrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>SERVER NAME</th>
+            <th>INTERFACE</th>
+            <th>SERVICE</th>
+            <th>LOCAL ADDRESS</th>
+            <th>REMOTE POOL</th>
+            <th>DNS</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="serverRows"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PPPoE PLANS -->
+
+<section id="plans" class="page">
+
+  <h2>PPPoE Plans</h2>
+
+  <p class="desc">
+    Manage internet packages and monthly pricing
+  </p>
+
+  <div class="card">
+
+    <div class="toolbar">
+
+      <button class="btn primary"
+              onclick="openPlanModal()">
+        ＋ Add Plan
+      </button>
+
+    </div>
+
+    <div class="tableWrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>PLAN NAME</th>
+            <th>SPEED</th>
+            <th>MONTHLY PRICE</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="planRows"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CLIENTS -->
+
+<section id="clients" class="page">
+
+  <h2>PPPoE Clients</h2>
+
+  <p class="desc">
+    Manage clients, plans and due dates
+  </p>
+
+  <div class="card">
+
+    <div class="toolbar">
+
+      <button class="btn primary"
+              onclick="openClientModal()">
+        ＋ Add Client
+      </button>
+
+      <input
+        id="clientSearch"
+        class="search"
+        placeholder="Search client..."
+        oninput="renderClients()"
+      >
+
+    </div>
+
+    <div class="tableWrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>NAME</th>
+            <th>USERNAME</th>
+            <th>PLAN</th>
+            <th>SPEED</th>
+            <th>FEE</th>
+            <th>DUE</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="clientRows"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- HOTSPOT OVERVIEW -->
+
+<section id="hotspotOverview" class="page">
+
+  <h2>Hotspot Overview</h2>
+
+  <p class="desc">
+    Mikhmon / Voucher monitoring
+  </p>
+
+  <div class="grid">
+
+    <div class="stat">
+      <small>Total Vouchers</small>
+      <strong id="hsTotal">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Active Users</small>
+      <strong id="hsActive">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Today's Sales</small>
+      <strong id="hsSales">₱0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Expired</small>
+      <strong id="hsExpired">0</strong>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 style="font-size:23px">
+      Voucher Control
+    </h2>
+
+    <p class="desc" style="margin-top:10px">
+      Manage Mikhmon-style vouchers,
+      monitor usage and record hotspot sales.
+    </p>
+
+    <button class="btn primary"
+            onclick="showPage('vouchers')">
+      Open Vouchers
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- VOUCHERS -->
+
+<section id="vouchers" class="page">
+
+  <h2>Vouchers</h2>
+
+  <p class="desc">
+    Mikhmon / Hotspot voucher management
+  </p>
+
+  <div class="card">
+
+    <div class="toolbar">
+
+      <button class="btn primary"
+              onclick="openVoucherModal()">
+        ＋ Add Voucher
+      </button>
+
+      <input
+        id="voucherSearch"
+        class="search"
+        placeholder="🔎 Search voucher..."
+        oninput="renderVouchers()"
+      >
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="stat">
+        <small>Total</small>
+        <strong id="vTotal">0</strong>
+      </div>
+
+      <div class="stat">
+        <small>Unused</small>
+        <strong id="vUnused">0</strong>
+      </div>
+
+      <div class="stat">
+        <small>Used</small>
+        <strong id="vUsed">0</strong>
+      </div>
+
+      <div class="stat">
+        <small>Expired</small>
+        <strong id="vExpired">0</strong>
+      </div>
+
+    </div>
+
+
+    <div class="tableWrap"
+         style="margin-top:25px">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>VOUCHER CODE</th>
+            <th>USERNAME</th>
+            <th>PASSWORD</th>
+            <th>PROFILE</th>
+            <th>PRICE</th>
+            <th>DURATION</th>
+            <th>STATUS</th>
+            <th>CREATED</th>
+            <th>USED DATE</th>
+            <th>ACTION</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="voucherRows"></tbody>
+
+      </table>
+
+    </div>
+
+
+    <div class="notice">
+
+      <b>Profiles:</b>
+
+      3 Hours = ₱10 ·
+      1 Day = ₱20 ·
+      2 Days = ₱30
+
+      <br><br>
+
+      Mikhmon compatible:
+      kapag blank ang Password,
+      automatic na gagamitin ang Voucher Code.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- OTHER MODULES -->
+
+<section id="transactions" class="page">
+<h2>PPPoE Transactions</h2>
+<p class="desc">Payment history</p>
+<div class="card" id="pppoeTransactions"></div>
+</section>
+
+<section id="activeConnections" class="page">
+<h2>Active Connections</h2>
+<p class="desc">PPPoE active connection monitor</p>
+<div class="card">
+<div class="empty">
+No live MikroTik connection yet.
+</div>
+</div>
+</section>
+
+<section id="cron" class="page">
+<h2>Cron Logs</h2>
+<p class="desc">Scheduled task logs</p>
+<div class="card">
+<div class="empty">
+No cron logs yet.
+</div>
+</div>
+</section>
+
+<section id="activeUsers" class="page">
+<h2>Active Users</h2>
+<p class="desc">Current hotspot users</p>
+<div class="card">
+<div class="empty">
+No live MikroTik data yet.
+</div>
+</div>
+</section>
+
+<section id="sessions" class="page">
+<h2>Sessions</h2>
+<p class="desc">Hotspot session history</p>
+<div class="card">
+<div class="empty">
+No session data yet.
+</div>
+</div>
+</section>
+
+<section id="hotspotTransactions" class="page">
+<h2>Hotspot Transactions</h2>
+<p class="desc">Voucher sales records</p>
+<div class="card" id="hotspotTxn"></div>
+</section>
+
+<section id="reports" class="page">
+<h2>Reports</h2>
+<p class="desc">Hotspot reports</p>
+<div class="card">
+<div class="empty">
+Reports will appear here.
+</div>
+</div>
+</section>
+
+<section id="ecash" class="page">
+<h2>ECash</h2>
+<p class="desc">Electronic cash management</p>
+<div class="card">
+<div class="empty">ECash module ready.</div>
+</div>
+</section>
+
+<section id="pppoeV2" class="page">
+<h2>PPPoE V2</h2>
+<p class="desc">PPPoE V2 management</p>
+<div class="card">
+<div class="empty">Module ready.</div>
+</div>
+</section>
+
+<section id="ipoe" class="page">
+<h2>IPoE</h2>
+<p class="desc">IPoE management</p>
+<div class="card">
+<div class="empty">Module ready.</div>
+</div>
+</section>
+
+<section id="mikrotik" class="page">
+<h2>Mikrotik</h2>
+<p class="desc">MikroTik connection</p>
+<div class="card">
+<div class="notice">
+GitHub Pages prototype muna.
+Direct MikroTik API connection will be added later through a secure backend.
+</div>
+</div>
+</section>
+
+<section id="payments" class="page">
+<h2>Payments</h2>
+<p class="desc">Payment records</p>
+<div class="card">
+<div class="empty">Payment module ready.</div>
+</div>
+</section>
+
+<section id="support" class="page">
+<h2>Support Center</h2>
+<p class="desc">Support tools</p>
+<div class="card">
+<div class="empty">Support center ready.</div>
+</div>
+</section>
+
+<section id="account" class="page">
+<h2>Account</h2>
+<p class="desc">Account settings</p>
+<div class="card">
+<div class="empty">Account settings ready.</div>
+</div>
+</section>
+
+<section id="disbursement" class="page">
+<h2>Disbursement</h2>
+<p class="desc">Disbursement settings</p>
+<div class="card">
+<div class="empty">Disbursement settings ready.</div>
+</div>
+</section>
+
+<section id="telegram" class="page">
+<h2>Telegram Notification</h2>
+<p class="desc">Notification settings</p>
+<div class="card">
+<div class="empty">Telegram notification setup will be added later.</div>
+</div>
+</section>
+
+</main>
+
+
+<!-- MOBILE BOTTOM -->
+
+<nav class="mobileBottom">
+
+<button onclick="showPage('dashboard')">
+<b>⌂</b>
+Home
+</button>
+
+<button onclick="showPage('clients')">
+<b>◉</b>
+Clients
+</button>
+
+<button onclick="openVoucherModal()">
+<b>＋</b>
+Add
+</button>
+
+<button onclick="showPage('payments')">
+<b>₱</b>
+Payments
+</button>
+
+<button onclick="toggleMenu()">
+<b>☰</b>
+Menu
+</button>
+
 </nav>
 
-<div id="modalBack" class="modalBack" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modal"></div>
+
+<!-- ADD VOUCHER MODAL -->
+
+<div id="voucherModal"
+     class="modal">
+
+<div class="modalBox">
+
+<h3>
+Add Voucher
+</h3>
+
+<div class="formGrid">
+
+<div class="field">
+
+<label>
+Voucher Code
+</label>
+
+<input
+id="vCode"
+placeholder="RWIFI1234"
+>
+
 </div>
 
+
+<div class="field">
+
+<label>
+Username
+</label>
+
+<input
+id="vUser"
+placeholder="Voucher username"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Password
+</label>
+
+<input
+id="vPass"
+placeholder="Blank = Voucher Code"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Profile
+</label>
+
+<select
+id="vProfile"
+onchange="updateVoucher()"
+>
+
+<option value="3 Hours">
+3 Hours — ₱10
+</option>
+
+<option value="1 Day">
+1 Day — ₱20
+</option>
+
+<option value="2 Days">
+2 Days — ₱30
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Price
+</label>
+
+<input
+id="vPrice"
+readonly
+class="readonly"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Duration
+</label>
+
+<input
+id="vDuration"
+readonly
+class="readonly"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Status
+</label>
+
+<input
+value="UNUSED"
+readonly
+class="readonly"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Created Date
+</label>
+
+<input
+id="vCreated"
+readonly
+class="readonly"
+>
+
+</div>
+
+
+<div class="field full">
+
+<div
+id="vPreview"
+class="info">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modalActions">
+
+<button
+class="btn gray"
+onclick="closeModal('voucherModal')">
+Cancel
+</button>
+
+<button
+class="btn primary"
+onclick="saveVoucher()">
+Save Voucher
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ADD CLIENT -->
+
+<div id="clientModal"
+     class="modal">
+
+<div class="modalBox">
+
+<h3>
+Add PPPoE Client
+</h3>
+
+<div class="formGrid">
+
+<div class="field">
+<label>Client Name</label>
+<input id="cName">
+</div>
+
+<div class="field">
+<label>Username</label>
+<input id="cUser">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input id="cPass">
+</div>
+
+<div class="field">
+<label>Plan</label>
+<select id="cPlan"
+onchange="updateClientPlan()">
+</select>
+</div>
+
+<div class="field">
+<label>Speed</label>
+<input id="cSpeed" readonly>
+</div>
+
+<div class="field">
+<label>Monthly Fee</label>
+<input id="cFee" readonly>
+</div>
+
+<div class="field full">
+<label>Due Date</label>
+<input id="cDue" type="date">
+</div>
+
+</div>
+
+<div class="modalActions">
+
+<button
+class="btn gray"
+onclick="closeModal('clientModal')">
+Cancel
+</button>
+
+<button
+class="btn primary"
+onclick="saveClient()">
+Save Client
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
-(function(){
+
 "use strict";
 
-const PLAN_DEFAULTS=[
-  {name:"10 Mbps",speed:"10M/10M",price:500,active:true},
-  {name:"15 Mbps",speed:"15M/15M",price:700,active:true},
-  {name:"25 Mbps",speed:"25M/25M",price:1000,active:true},
-  {name:"HEAVY",speed:"50M/50M",price:1500,active:true}
-];
 
-function load(key,fallback){
+/* STORAGE */
+
+function loadData(key,defaultValue){
+
   try{
-    const x=localStorage.getItem(key);
-    if(x===null)return fallback;
-    const v=JSON.parse(x);
-    return v;
-  }catch(e){return fallback}
+
+    var data=localStorage.getItem(key);
+
+    if(!data){
+      return defaultValue;
+    }
+
+    var parsed=JSON.parse(data);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : defaultValue;
+
+  }catch(error){
+
+    return defaultValue;
+
+  }
+
 }
-function save(key,value){
-  try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}
+
+
+function saveData(key,data){
+
+  try{
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(data)
+    );
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
 }
 
-let plans=load("RN_PLANS",PLAN_DEFAULTS);
-if(!Array.isArray(plans)||!plans.length){plans=PLAN_DEFAULTS.slice();save("RN_PLANS",plans)}
 
-let clients=load("RN_CLIENTS",[]);
-if(!Array.isArray(clients))clients=[];
+/* DEFAULT PLANS */
 
-let servers=load("RN_SERVERS",[]);
-if(!Array.isArray(servers))servers=[];
+var plans=loadData(
+  "RN_PLANS",
+  [
+    {
+      name:"10 Mbps",
+      speed:"10M/10M",
+      price:500,
+      active:true
+    },
+    {
+      name:"15 Mbps",
+      speed:"15M/15M",
+      price:700,
+      active:true
+    },
+    {
+      name:"25 Mbps",
+      speed:"25M/25M",
+      price:1000,
+      active:true
+    },
+    {
+      name:"HEAVY",
+      speed:"50M/50M",
+      price:1500,
+      active:true
+    }
+  ]
+);
 
-let payments=load("RN_PAYMENTS",[]);
-if(!Array.isArray(payments))payments=[];
 
-let hotspotVouchers=load("RN_HOTSPOT_VOUCHERS",[]);
-if(!Array.isArray(hotspotVouchers))hotspotVouchers=[];
+var clients=loadData(
+  "RN_CLIENTS",
+  []
+);
 
-let hotspotSales=load("RN_HOTSPOT_SALES",[]);
-if(!Array.isArray(hotspotSales))hotspotSales=[];
 
-let currentPage="dashboard";
+var vouchers=loadData(
+  "RN_VOUCHERS",
+  []
+);
 
-function money(n){return "₱"+Number(n||0).toLocaleString("en-PH")}
-function esc(s){
-  return String(s==null?"":s).replace(/[&<>"']/g,function(c){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
+
+var payments=loadData(
+  "RN_PAYMENTS",
+  []
+);
+
+
+var servers=loadData(
+  "RN_SERVERS",
+  []
+);
+
+
+saveData("RN_PLANS",plans);
+
+
+/* MENU */
+
+function toggleMenu(){
+
+  document
+  .getElementById("sidebar")
+  .classList
+  .toggle("open");
+
+  document
+  .getElementById("overlay")
+  .classList
+  .toggle("show");
+
+}
+
+
+function closeMenu(){
+
+  document
+  .getElementById("sidebar")
+  .classList
+  .remove("open");
+
+  document
+  .getElementById("overlay")
+  .classList
+  .remove("show");
+
+}
+
+
+function toggleGroup(id){
+
+  var box=document.getElementById(id);
+
+  if(box){
+
+    box.style.display =
+      box.style.display==="none"
+      ? "block"
+      : "none";
+
+  }
+
+}
+
+
+/* PAGE */
+
+function showPage(id){
+
+  var pages=
+    document.querySelectorAll(".page");
+
+  pages.forEach(function(page){
+
+    page.classList.remove("active");
+
   });
-}
-function today(){
-  const d=new Date();
-  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
-function addMonth(dateStr){
-  const d=new Date(dateStr+"T12:00:00");
-  if(isNaN(d.getTime())) return today();
-  d.setMonth(d.getMonth()+1);
-  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
-function clientStatus(c){
-  if(c.disabled)return "DISABLED";
-  if(!c.due)return "ACTIVE";
-  return c.due<today()?"EXPIRED":"ACTIVE";
-}
-function planByName(name){
-  return plans.find(function(p){return p.name===name}) || null;
-}
 
-window.toggleMenu=function(){
-  document.getElementById("side").classList.toggle("open");
-};
-window.togglePPPoE=function(){
-  const x=document.getElementById("pppoeSub");
-  x.style.display=x.style.display==="none"?"block":"block";
-};
-window.toggleHotspot=function(){
-  const x=document.getElementById("hotspotSub");
-  x.style.display=x.style.display==="none"?"block":"none";
-};
-function closeMenu(){document.getElementById("side").classList.remove("open")}
 
-window.go=function(page){
-  currentPage=page;
+  var selected=
+    document.getElementById(id);
+
+  if(selected){
+
+    selected.classList.add("active");
+
+  }
+
+
   closeMenu();
-  if(page==="dashboard")dashboardPage();
-  else if(page==="servers")serversPage();
-  else if(page==="plans")plansPage();
-  else if(page==="clients")clientsPage();
-  else if(page==="payments"||page==="transactions")paymentsPage(page);
-  else if(page==="hotspot")hotspotPage();
-  else if(page==="hotspotVouchers")hotspotVouchersPage();
-  else if(page==="hotspotActive")hotspotActivePage();
-  else if(page==="hotspotSessions")hotspotSessionsPage();
-  else if(page==="hotspotTransactions")hotspotTransactionsPage();
-  else if(page==="hotspotReports")hotspotReportsPage();
-  else simplePage(page);
-};
 
-function dashboardPage(){
-  const active=clients.filter(c=>clientStatus(c)==="ACTIVE").length;
-  const expired=clients.filter(c=>clientStatus(c)==="EXPIRED").length;
-  const collected=payments.reduce((a,p)=>a+Number(p.amount||0),0);
-  document.getElementById("app").innerHTML=
-  '<h2>Dashboard</h2><div class="sub">RIDHROHAN NETWORK overview</div>'+
-  '<div class="grid4">'+
-    '<div class="card stat"><div class="label">Clients</div><strong>'+clients.length+'</strong></div>'+
-    '<div class="card stat"><div class="label">Active</div><strong>'+active+'</strong></div>'+
-    '<div class="card stat"><div class="label">Expired</div><strong>'+expired+'</strong></div>'+
-    '<div class="card stat"><div class="label">Collected</div><strong>'+money(collected)+'</strong></div>'+
-  '</div>'+
-  '<div class="card"><h2 style="font-size:25px">Quick Actions</h2><div class="quick" style="margin-top:18px">'+
-    '<button class="btn green" onclick="openClientModal()">＋ Add PPPoE Client</button>'+
-    '<button class="btn blue" onclick="go(\'clients\')">View Clients</button>'+
-    '<button class="btn" onclick="go(\'plans\')">Manage Plans</button>'+
-    '<button class="btn" onclick="go(\'payments\')">Payment History</button>'+
-  '</div>'+
-  '<div class="card"><h2 style="font-size:25px">Hotspot Overview</h2>'+
-    '<div class="kpiRow" style="margin-top:14px">'+
-      '<div class="kpi"><span>Vouchers</span><strong>'+hotspotVouchers.length+'</strong></div>'+
-      '<div class="kpi"><span>Hotspot Sales</span><strong>'+money(hotspotSales.reduce((a,p)=>a+Number(p.amount||0),0))+'</strong></div>'+
-    '</div>'+
-    '<div class="quick" style="margin-top:15px">'+
-      '<button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Hotspot Voucher</button>'+
-      '<button class="btn blue" onclick="go(\'hotspotVouchers\')">Manage Vouchers</button>'+
-    '</div>'+
-  '</div>'+
-  '<div class="notice">Prototype mode. Client, payment and hotspot voucher records are saved in this browser. MikroTik/Mikhmon live synchronization will be added later through a secure backend/API.</div></div>';
+
+  if(id==="dashboard")
+    renderDashboard();
+
+  if(id==="vouchers")
+    renderVouchers();
+
+  if(id==="hotspotOverview")
+    renderHotspot();
+
+  if(id==="clients")
+    renderClients();
+
+  if(id==="plans")
+    renderPlans();
+
+  if(id==="servers")
+    renderServers();
+
 }
 
-function serversPage(){
-  let rows=servers.map(function(s,i){
-    return '<tr><td>'+esc(s.name)+'</td><td>'+esc(s.iface)+'</td><td>'+esc(s.service)+'</td><td>'+esc(s.local)+'</td><td>'+esc(s.pool)+'</td><td>'+esc(s.dns)+'</td><td><span class="badge active">ACTIVE</span></td><td><button class="btn small red" onclick="deleteServer('+i+')">Delete</button></td></tr>';
-  }).join("");
-  if(!rows)rows='<tr><td colspan="8" class="empty">No PPPoE servers yet. Add your first server.</td></tr>';
-  document.getElementById("app").innerHTML=
-    '<h2>PPPoE Servers</h2><div class="sub">Manage PPPoE server configuration</div>'+
-    '<div class="card"><button class="btn green" onclick="openServerModal()">＋ Add Server</button>'+
-    '<div class="tableWrap" style="margin-top:25px"><table class="table"><thead><tr><th>SERVER NAME</th><th>INTERFACE</th><th>SERVICE</th><th>LOCAL ADDRESS</th><th>REMOTE POOL</th><th>DNS</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
-    '<div class="notice">Prototype only: these settings are saved in this browser. They are not yet pushed to MikroTik.</div></div>';
-}
-window.deleteServer=function(i){if(confirm("Delete this PPPoE server?")){servers.splice(i,1);save("RN_SERVERS",servers);serversPage()}};
 
-window.openServerModal=function(){
-  document.getElementById("modal").innerHTML=
-  '<h3>Add PPPoE Server</h3><div class="formGrid">'+
-  '<div class="field"><label>Server Name</label><input id="sName" value="RIDHROHAN-PPPOE"></div>'+
-  '<div class="field"><label>Interface</label><input id="sIface" value="bridge-hs/pppoe"></div>'+
-  '<div class="field"><label>Service Name</label><input id="sService" value="RIDHROHAN-PPPOE"></div>'+
-  '<div class="field"><label>Local Address</label><input id="sLocal" value="192.168.100.1"></div>'+
-  '<div class="field"><label>Remote Address Pool</label><input id="sPool" value="PPPOE-POOL"></div>'+
-  '<div class="field"><label>DNS Server</label><input id="sDns" value="8.8.8.8"></div>'+
-  '</div><div class="modalBtns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn green" onclick="saveServer()">Save Server</button></div>';
-  document.getElementById("modalBack").classList.add("show");
-};
-window.saveServer=function(){
-  const s={name:val("sName"),iface:val("sIface"),service:val("sService"),local:val("sLocal"),pool:val("sPool"),dns:val("sDns")};
-  if(!s.name||!s.iface){alert("Server Name and Interface are required.");return}
-  servers.push(s);save("RN_SERVERS",servers);closeModal();serversPage();
-};
+/* HELPERS */
 
-function plansPage(){
-  let rows=plans.map(function(p,i){
-    return '<tr><td>'+esc(p.name)+'</td><td>'+esc(p.speed)+'</td><td>'+money(p.price)+'</td><td><span class="badge '+(p.active!==false?"active":"disabled")+'">'+(p.active!==false?"ACTIVE":"DISABLED")+'</span></td><td class="actions">'+
-      '<button class="btn small blue" onclick="editPlan('+i+')">Edit</button>'+
-      '<button class="btn small" onclick="togglePlan('+i+')">'+(p.active!==false?"Deactivate":"Activate")+'</button>'+
-      '<button class="btn small red" onclick="deletePlan('+i+')">Delete</button></td></tr>';
-  }).join("");
-  document.getElementById("app").innerHTML=
-  '<h2>PPPoE Plans</h2><div class="sub">Manage internet packages and monthly pricing</div>'+
-  '<div class="card"><button class="btn green" onclick="openPlanModal()">＋ Add Plan</button>'+
-  '<div class="tableWrap" style="margin-top:20px"><table class="table"><thead><tr><th>PLAN NAME</th><th>SPEED</th><th>MONTHLY PRICE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
-}
-window.togglePlan=function(i){plans[i].active=plans[i].active===false;save("RN_PLANS",plans);plansPage()};
-window.deletePlan=function(i){
-  if(confirm("Delete this plan?")){plans.splice(i,1);save("RN_PLANS",plans);plansPage()}
-};
-window.openPlanModal=function(i){
-  const p=i==null?{name:"",speed:"",price:""}:plans[i];
-  document.getElementById("modal").innerHTML=
-  '<h3>'+(i==null?"Add Plan":"Edit Plan")+'</h3><div class="formGrid">'+
-  '<div class="field"><label>Plan Name</label><input id="pName" value="'+esc(p.name)+'"></div>'+
-  '<div class="field"><label>Speed</label><input id="pSpeed" placeholder="50M/50M" value="'+esc(p.speed)+'"></div>'+
-  '<div class="field"><label>Monthly Price</label><input id="pPrice" type="number" value="'+Number(p.price||0)+'"></div>'+
-  '</div><div class="modalBtns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn green" onclick="savePlan('+(i==null?"null":i)+')">Save Plan</button></div>';
-  document.getElementById("modalBack").classList.add("show");
-};
-window.editPlan=function(i){openPlanModal(i)};
-window.savePlan=function(i){
-  const p={name:val("pName").trim(),speed:val("pSpeed").trim(),price:Number(val("pPrice")||0),active:true};
-  if(!p.name||!p.speed||p.price<=0){alert("Complete the plan details.");return}
-  if(i===null)plans.push(p);else plans[i]=Object.assign({},plans[i],p);
-  save("RN_PLANS",plans);closeModal();plansPage();
-};
+function today(){
 
-function clientsPage(){
-  const search=(window.clientSearch||"").toLowerCase();
-  const list=clients.map(function(c,i){return {c:c,i:i}}).filter(function(x){
-    return !search || (String(x.c.name)+" "+String(x.c.username)+" "+String(x.c.plan)).toLowerCase().includes(search)
-  });
-  let rows=list.map(function(x){
-    const c=x.c,i=x.i,s=clientStatus(c);
-    return '<tr><td>'+esc(c.name)+'</td><td>'+esc(c.username)+'</td><td>'+esc(c.plan)+'</td><td>'+esc(c.speed)+'</td><td>'+money(c.fee)+'</td><td>'+esc(c.due||"—")+'</td><td><span class="badge '+(s==="ACTIVE"?"active":s==="EXPIRED"?"expired":"disabled")+'">'+s+'</span></td><td class="actions">'+
-    '<button class="btn small green" onclick="payClient('+i+')">Paid</button>'+
-    '<button class="btn small" onclick="toggleClient('+i+')">'+(c.disabled?"Enable":"Disable")+'</button>'+
-    '<button class="btn small red" onclick="deleteClient('+i+')">Delete</button></td></tr>';
-  }).join("");
-  if(!rows)rows='<tr><td colspan="8" class="empty">No PPPoE clients found.</td></tr>';
-  document.getElementById("app").innerHTML=
-  '<h2>PPPoE Clients</h2><div class="sub">Manage clients, plans and due dates</div>'+
-  '<div class="card"><div class="quick"><button class="btn green" onclick="openClientModal()">＋ Add Client</button><input id="clientSearch" oninput="window.clientSearch=this.value;clientsPage()" placeholder="Search client..." value="'+esc(search)+'" style="background:#071a2f;color:white;border:2px solid #28517e;border-radius:10px;padding:10px;min-width:220px"></div>'+
-  '<div class="tableWrap" style="margin-top:25px"><table class="table"><thead><tr><th>NAME</th><th>USERNAME</th><th>PLAN</th><th>SPEED</th><th>FEE</th><th>DUE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  var d=new Date();
+
+  return d.toISOString().slice(0,10);
+
 }
-window.openClientModal=function(index){
-  const editing=index!=null;
-  const c=editing?clients[index]:{name:"",username:"",password:"",plan:plans.find(p=>p.active!==false)?.name||"",due:""};
-  const options=plans.filter(p=>p.active!==false).map(function(p){return '<option value="'+esc(p.name)+'" '+(p.name===c.plan?"selected":"")+'>'+esc(p.name)+' — '+esc(p.speed)+' — '+money(p.price)+'</option>'}).join("");
-  document.getElementById("modal").innerHTML=
-  '<h3>'+(editing?"Edit PPPoE Client":"Add PPPoE Client")+'</h3>'+
-  '<div class="formGrid">'+
-  '<div class="field"><label>Client Name</label><input id="cName" placeholder="Juan Dela Cruz" value="'+esc(c.name)+'"></div>'+
-  '<div class="field"><label>Username</label><input id="cUser" placeholder="juan12345" value="'+esc(c.username)+'"></div>'+
-  '<div class="field"><label>Password</label><input id="cPass" placeholder="PPPoE password" value="'+esc(c.password||"")+'"></div>'+
-  '<div class="field"><label>Plan</label><select id="cPlan" onchange="updatePlanPreview()">'+options+'</select></div>'+
-  '<div class="field"><label>Speed</label><input id="cSpeed" readonly></div>'+
-  '<div class="field"><label>Monthly Fee</label><input id="cFee" readonly></div>'+
-  '<div class="field full"><label>Due Date</label><input id="cDue" type="date" value="'+esc(c.due||today())+'"></div>'+
-  '</div><div id="planPreview" class="notice"></div>'+
-  '<div class="modalBtns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn green" onclick="saveClient('+(editing?index:"null")+')">'+(editing?"Save Changes":"Save Client")+'</button></div>';
-  document.getElementById("modalBack").classList.add("show");
-  updatePlanPreview();
-};
-window.updatePlanPreview=function(){
-  const p=planByName(val("cPlan"));
-  if(p){document.getElementById("cSpeed").value=p.speed;document.getElementById("cFee").value=money(p.price);document.getElementById("planPreview").innerHTML="<b>"+esc(p.name)+"</b> — "+esc(p.speed)+" — "+money(p.price)+" / month"}
-};
-window.saveClient=function(index){
-  const p=planByName(val("cPlan"));
-  const c={
-    name:val("cName").trim(),
-    username:val("cUser").trim(),
-    password:val("cPass"),
-    plan:p?p.name:"",
-    speed:p?p.speed:"",
-    fee:p?p.price:0,
-    due:val("cDue")||today(),
-    disabled:false
+
+
+function money(value){
+
+  return "₱"+
+    Number(value||0)
+    .toLocaleString("en-PH");
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value||"")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+/* MODAL */
+
+function closeModal(id){
+
+  document
+  .getElementById(id)
+  .classList
+  .remove("show");
+
+}
+
+
+/* =========================
+   VOUCHER
+========================= */
+
+function openVoucherModal(){
+
+  document.getElementById("vCode").value="";
+  document.getElementById("vUser").value="";
+  document.getElementById("vPass").value="";
+
+  document.getElementById("vProfile").value=
+    "3 Hours";
+
+  document.getElementById("vCreated").value=
+    today();
+
+  updateVoucher();
+
+  document
+  .getElementById("voucherModal")
+  .classList
+  .add("show");
+
+}
+
+
+function getVoucherPlan(){
+
+  var profile=
+    document.getElementById("vProfile").value;
+
+  if(profile==="1 Day"){
+
+    return {
+      price:20,
+      duration:"1 Day"
+    };
+
+  }
+
+  if(profile==="2 Days"){
+
+    return {
+      price:30,
+      duration:"2 Days"
+    };
+
+  }
+
+  return {
+    price:10,
+    duration:"3 Hours"
   };
-  if(!c.name||!c.username||!p){alert("Client Name, Username and Plan are required.");return}
-  if(index===null){
-    clients.push(c);
-  }else{
-    c.disabled=clients[index].disabled===true;
-    clients[index]=c;
+
+}
+
+
+function updateVoucher(){
+
+  var plan=getVoucherPlan();
+
+  document.getElementById("vPrice").value=
+    money(plan.price);
+
+  document.getElementById("vDuration").value=
+    plan.duration;
+
+  document.getElementById("vPreview").innerHTML=
+    "<b>"+
+    escapeHTML(
+      document.getElementById("vProfile").value
+    )+
+    "</b> — "+
+    escapeHTML(plan.duration)+
+    " — "+
+    money(plan.price)+
+    " / voucher";
+
+}
+
+
+function saveVoucher(){
+
+  var code=
+    document
+    .getElementById("vCode")
+    .value
+    .trim();
+
+
+  var username=
+    document
+    .getElementById("vUser")
+    .value
+    .trim();
+
+
+  var password=
+    document
+    .getElementById("vPass")
+    .value
+    .trim();
+
+
+  var profile=
+    document
+    .getElementById("vProfile")
+    .value;
+
+
+  if(!code){
+
+    alert("Ilagay ang Voucher Code.");
+
+    return;
+
   }
-  save("RN_CLIENTS",clients);closeModal();clientsPage();
-};
-window.toggleClient=function(i){
-  clients[i].disabled=!clients[i].disabled;
-  save("RN_CLIENTS",clients);clientsPage();
-};
-window.deleteClient=function(i){
-  if(confirm("Delete "+clients[i].name+"?")){clients.splice(i,1);save("RN_CLIENTS",clients);clientsPage()}
-};
-window.payClient=function(i){
-  const c=clients[i];
-  if(!c){alert("Client not found.");return}
-  const amount=Number(c.fee||0);
-  if(amount<=0){alert("Invalid payment amount.");return}
-  if(!confirm("Payment: "+money(amount)+"\nClient: "+c.name+"\n\nRecord payment and extend due date by 1 month?"))return;
-  const newDue=addMonth(c.due && c.due>=today()?c.due:today());
-  c.due=newDue;c.disabled=false;
-  payments.push({client:c.name,username:c.username,amount:amount,method:"Cash",date:today(),newDue:newDue});
-  save("RN_CLIENTS",clients);save("RN_PAYMENTS",payments);
-  alert("PAYMENT SUCCESSFUL!\n\nClient: "+c.name+"\nAmount: "+money(amount)+"\nNew Due Date: "+newDue);
-  clientsPage();
-};
 
-function paymentsPage(page){
-  const rows=payments.slice().reverse().map(function(p){
-    return '<tr><td>'+esc(p.date)+'</td><td>'+esc(p.client)+'</td><td>'+esc(p.username||"")+'</td><td>'+money(p.amount)+'</td><td>'+esc(p.method||"Cash")+'</td><td>'+esc(p.newDue||"")+'</td></tr>'
-  }).join("");
-  const total=payments.reduce((a,p)=>a+Number(p.amount||0),0);
-  document.getElementById("app").innerHTML=
-  '<h2>'+(page==="transactions"?"PPPoE Transactions":"Payments")+'</h2><div class="sub">Payment history and collected amounts</div>'+
-  '<div class="kpiRow"><div class="kpi"><span>Total Collected</span><strong>'+money(total)+'</strong></div><div class="kpi"><span>Transactions</span><strong>'+payments.length+'</strong></div></div>'+
-  '<div class="card" style="margin-top:18px"><div class="tableWrap"><table class="table"><thead><tr><th>DATE</th><th>CLIENT</th><th>USERNAME</th><th>AMOUNT</th><th>METHOD</th><th>NEW DUE</th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" class="empty">No payments yet.</td></tr>')+'</tbody></table></div></div>';
+
+  if(!username){
+
+    username=code;
+
+  }
+
+
+  if(!password){
+
+    password=code;
+
+  }
+
+
+  var exists=
+    vouchers.some(function(v){
+
+      return String(v.code)
+      .toLowerCase()
+      ===
+      code.toLowerCase();
+
+    });
+
+
+  if(exists){
+
+    alert(
+      "May existing Voucher Code na."
+    );
+
+    return;
+
+  }
+
+
+  var plan=getVoucherPlan();
+
+
+  var voucher={
+
+    id:Date.now(),
+
+    code:code,
+
+    username:username,
+
+    password:password,
+
+    profile:profile,
+
+    price:plan.price,
+
+    duration:plan.duration,
+
+    status:"UNUSED",
+
+    created:today(),
+
+    usedDate:""
+
+  };
+
+
+  vouchers.push(voucher);
+
+  saveData(
+    "RN_VOUCHERS",
+    vouchers
+  );
+
+
+  closeModal("voucherModal");
+
+  renderVouchers();
+
+  renderHotspot();
+
+  renderDashboard();
+
+
+  alert(
+    "Voucher saved: "+code
+  );
+
 }
 
 
-function voucherStatus(v){
-  if(v.status==="USED" || v.usedDate)return "USED";
-  if(v.expires && v.expires<today())return "EXPIRED";
-  return "UNUSED";
-}
-function voucherBadge(s){
-  return '<span class="badge '+(s==="UNUSED"?"active":s==="USED"?"disabled":s==="EXPIRED"?"expired":"disabled")+'">'+s+'</span>';
-}
-function hotspotTotalSales(){
-  return hotspotSales.reduce(function(a,p){return a+Number(p.amount||0)},0);
-}
-function hotspotPage(){
-  const active=hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length;
-  const used=hotspotVouchers.filter(v=>voucherStatus(v)==="USED").length;
-  const expired=hotspotVouchers.filter(v=>voucherStatus(v)==="EXPIRED").length;
-  const todaySales=hotspotSales.filter(function(p){return p.date===today()})
-    .reduce(function(a,p){return a+Number(p.amount||0)},0);
+function renderVouchers(){
 
-  const profileSales={};
-  hotspotSales.forEach(function(p){
-    const key=p.profile||"Unknown";
-    profileSales[key]=(profileSales[key]||0)+Number(p.amount||0);
+  var search=
+    document
+    .getElementById("voucherSearch");
+
+  var query=
+    search
+    ? search.value.toLowerCase()
+    : "";
+
+
+  var list=
+    vouchers.filter(function(v){
+
+      return (
+
+        String(v.code)
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        String(v.username)
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        String(v.profile)
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        String(v.status)
+        .toLowerCase()
+        .includes(query)
+
+      );
+
+    });
+
+
+  var total=vouchers.length;
+
+  var unused=
+    vouchers.filter(function(v){
+      return v.status==="UNUSED";
+    }).length;
+
+
+  var used=
+    vouchers.filter(function(v){
+      return v.status==="USED";
+    }).length;
+
+
+  var expired=
+    vouchers.filter(function(v){
+      return v.status==="EXPIRED";
+    }).length;
+
+
+  document.getElementById("vTotal")
+    .textContent=total;
+
+  document.getElementById("vUnused")
+    .textContent=unused;
+
+  document.getElementById("vUsed")
+    .textContent=used;
+
+  document.getElementById("vExpired")
+    .textContent=expired;
+
+
+  var rows=
+    document.getElementById("voucherRows");
+
+
+  if(!list.length){
+
+    rows.innerHTML=
+      '<tr>'+
+      '<td colspan="10" class="empty">'+
+      'No vouchers yet. Add your first voucher.'+
+      '</td>'+
+      '</tr>';
+
+    return;
+
+  }
+
+
+  rows.innerHTML=
+    list.map(function(v){
+
+      var status=
+        String(v.status||"UNUSED")
+        .toLowerCase();
+
+
+      return "<tr>"+
+
+        "<td><b>"+
+        escapeHTML(v.code)+
+        "</b></td>"+
+
+        "<td>"+
+        escapeHTML(v.username)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(v.password)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(v.profile)+
+        "</td>"+
+
+        "<td>"+
+        money(v.price)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(v.duration)+
+        "</td>"+
+
+        "<td>"+
+        "<span class='badge "+
+        status+
+        "'>"+
+        escapeHTML(v.status)+
+        "</span>"+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(v.created)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(
+          v.usedDate || "—"
+        )+
+        "</td>"+
+
+        "<td>"+
+        "<button class='btn red' "+
+        "onclick='deleteVoucher("+v.id+")'>"+
+        "Delete"+
+        "</button>"+
+        "</td>"+
+
+        "</tr>";
+
+    })
+    .join("");
+
+}
+
+
+function deleteVoucher(id){
+
+  if(!confirm(
+    "Delete this voucher?"
+  )){
+
+    return;
+
+  }
+
+
+  vouchers=
+    vouchers.filter(function(v){
+
+      return v.id!=id;
+
+    });
+
+
+  saveData(
+    "RN_VOUCHERS",
+    vouchers
+  );
+
+
+  renderVouchers();
+
+  renderHotspot();
+
+  renderDashboard();
+
+}
+
+
+/* =========================
+   HOTSPOT
+========================= */
+
+function renderHotspot(){
+
+  var total=vouchers.length;
+
+  var used=
+    vouchers.filter(function(v){
+      return v.status==="USED";
+    });
+
+
+  var expired=
+    vouchers.filter(function(v){
+      return v.status==="EXPIRED";
+    });
+
+
+  var sales=
+    used.reduce(function(sum,v){
+
+      return sum+
+        Number(v.price||0);
+
+    },0);
+
+
+  document.getElementById("hsTotal")
+    .textContent=total;
+
+  document.getElementById("hsActive")
+    .textContent=used.length;
+
+  document.getElementById("hsSales")
+    .textContent=money(sales);
+
+  document.getElementById("hsExpired")
+    .textContent=expired.length;
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function renderDashboard(){
+
+  document.getElementById("dashClients")
+    .textContent=clients.length;
+
+
+  document.getElementById("dashActive")
+    .textContent=
+      clients.filter(function(c){
+
+        return c.status==="ACTIVE";
+
+      }).length;
+
+
+  document.getElementById("dashVouchers")
+    .textContent=vouchers.length;
+
+
+  var sales=
+    vouchers
+    .filter(function(v){
+
+      return v.status==="USED";
+
+    })
+    .reduce(function(sum,v){
+
+      return sum+
+        Number(v.price||0);
+
+    },0);
+
+
+  document.getElementById("dashSales")
+    .textContent=money(sales);
+
+}
+
+
+/* =========================
+   PPPoE CLIENT
+========================= */
+
+function openClientModal(){
+
+  var select=
+    document.getElementById("cPlan");
+
+
+  select.innerHTML="";
+
+
+  plans
+  .filter(function(p){
+    return p.active!==false;
+  })
+  .forEach(function(p){
+
+    var option=
+      document.createElement("option");
+
+    option.value=p.name;
+
+    option.textContent=
+      p.name+
+      " — "+
+      p.speed+
+      " — "+
+      money(p.price);
+
+    select.appendChild(option);
+
   });
 
-  let recent=hotspotVouchers.slice().reverse().slice(0,8).map(function(v){
-    const st=voucherStatus(v);
-    return '<tr>'+
-      '<td>'+esc(v.code)+'</td>'+
-      '<td>'+esc(v.profile||"—")+'</td>'+
-      '<td>'+esc(v.uptime||"—")+'</td>'+
-      '<td>'+money(v.price)+'</td>'+
-      '<td>'+voucherBadge(st)+'</td>'+
-    '</tr>';
-  }).join("");
 
-  if(!recent){
-    recent='<tr><td colspan="5" class="empty">No voucher activity yet. Add your first Mikhmon voucher.</td></tr>';
-  }
+  document.getElementById("cName").value="";
+  document.getElementById("cUser").value="";
+  document.getElementById("cPass").value="";
+  document.getElementById("cDue").value=today();
 
-  let salesRows=Object.keys(profileSales).map(function(profile){
-    return '<tr><td>'+esc(profile)+'</td><td>'+money(profileSales[profile])+'</td></tr>';
-  }).join("");
 
-  if(!salesRows){
-    salesRows='<tr><td colspan="2" class="empty">No sales recorded yet.</td></tr>';
-  }
+  updateClientPlan();
 
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Overview</h2><div class="sub">Mikhmon / Voucher monitoring</div>'+
 
-    '<div class="grid4">'+
-      '<div class="card stat"><div class="label">Total Vouchers</div><strong>'+hotspotVouchers.length+'</strong></div>'+
-      '<div class="card stat"><div class="label">Unused Vouchers</div><strong>'+active+'</strong></div>'+
-      '<div class="card stat"><div class="label">Today\'s Sales</div><strong>'+money(todaySales)+'</strong></div>'+
-      '<div class="card stat"><div class="label">Expired</div><strong>'+expired+'</strong></div>'+
-    '</div>'+
+  document
+  .getElementById("clientModal")
+  .classList
+  .add("show");
 
-    '<div class="card">'+
-      '<h2 style="font-size:24px">Voucher Control</h2>'+
-      '<p style="color:var(--muted);line-height:1.6;margin-top:8px">'+
-      'Manage Mikhmon-style vouchers, monitor usage and record hotspot sales.'+
-      '</p>'+
-      '<div class="quick" style="margin-top:18px">'+
-        '<button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Voucher</button>'+
-        '<button class="btn blue" onclick="go(\'hotspotVouchers\')">View Vouchers</button>'+
-        '<button class="btn" onclick="go(\'hotspotActive\')">Active Users</button>'+
-        '<button class="btn" onclick="go(\'hotspotTransactions\')">Transactions</button>'+
-      '</div>'+
-    '</div>'+
-
-    '<div class="card">'+
-      '<h2 style="font-size:24px">Recent Voucher Activity</h2>'+
-      '<div class="tableWrap" style="margin-top:14px">'+
-        '<table class="table" style="min-width:620px">'+
-          '<thead><tr><th>VOUCHER</th><th>PROFILE</th><th>DURATION</th><th>PRICE</th><th>STATUS</th></tr></thead>'+
-          '<tbody>'+recent+'</tbody>'+
-        '</table>'+
-      '</div>'+
-    '</div>'+
-
-    '<div class="card">'+
-      '<h2 style="font-size:24px">Sales by Profile</h2>'+
-      '<div class="tableWrap" style="margin-top:14px">'+
-        '<table class="table" style="min-width:420px">'+
-          '<thead><tr><th>PROFILE</th><th>TOTAL SALES</th></tr></thead>'+
-          '<tbody>'+salesRows+'</tbody>'+
-        '</table>'+
-      '</div>'+
-    '</div>'+
-
-    '<div class="notice">'+
-      'Prototype mode: data is saved in this browser only. Live Mikhmon/MikroTik data will be connected later through a secure backend/API.'+
-    '</div>';
 }
-function hotspotVouchersPage(filterText){
-  const q=String(filterText||"").trim().toLowerCase();
-  const list=hotspotVouchers.filter(function(v){
-    return !q || [v.code,v.password,v.profile,v.duration,v.comment,v.created,v.usedDate].join(" ").toLowerCase().indexOf(q)!==-1;
+
+
+function updateClientPlan(){
+
+  var name=
+    document.getElementById("cPlan").value;
+
+
+  var plan=
+    plans.find(function(p){
+
+      return p.name===name;
+
+    });
+
+
+  if(!plan){
+
+    return;
+
+  }
+
+
+  document.getElementById("cSpeed")
+    .value=plan.speed;
+
+
+  document.getElementById("cFee")
+    .value=money(plan.price);
+
+}
+
+
+function saveClient(){
+
+  var name=
+    document.getElementById("cName")
+    .value.trim();
+
+
+  var username=
+    document.getElementById("cUser")
+    .value.trim();
+
+
+  var password=
+    document.getElementById("cPass")
+    .value.trim();
+
+
+  var planName=
+    document.getElementById("cPlan")
+    .value;
+
+
+  var due=
+    document.getElementById("cDue")
+    .value;
+
+
+  var plan=
+    plans.find(function(p){
+
+      return p.name===planName;
+
+    });
+
+
+  if(
+    !name ||
+    !username ||
+    !password ||
+    !due ||
+    !plan
+  ){
+
+    alert(
+      "Kumpletuhin ang client details."
+    );
+
+    return;
+
+  }
+
+
+  clients.push({
+
+    id:Date.now(),
+
+    name:name,
+
+    username:username,
+
+    password:password,
+
+    plan:plan.name,
+
+    speed:plan.speed,
+
+    fee:plan.price,
+
+    due:due,
+
+    status:"ACTIVE"
+
   });
-  let rows=list.map(function(v){
-    const i=hotspotVouchers.indexOf(v);
-    const st=voucherStatus(v);
-    return '<tr>'+
-      '<td><b>'+esc(v.code)+'</b></td>'+
-      '<td>'+esc(v.password||v.code)+'</td>'+
-      '<td>'+esc(v.profile)+'</td>'+
-      '<td>'+esc(v.duration||v.uptime||"—")+'</td>'+
-      '<td>'+money(v.price)+'</td>'+
-      '<td>'+esc(v.created||"—")+'</td>'+
-      '<td>'+esc(v.usedDate||"—")+'</td>'+
-      '<td>'+voucherBadge(st)+'</td>'+
-      '<td class="actions">'+
-        (st==="UNUSED"?'<button class="btn small green" onclick="useHotspotVoucher('+i+')">Mark Used</button>':'')+
-        '<button class="btn small red" onclick="deleteHotspotVoucher('+i+')">Delete</button>'+
-      '</td></tr>';
-  }).join("");
-  if(!rows)rows='<tr><td colspan="9" class="empty">No vouchers found.</td></tr>';
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Vouchers</h2><div class="sub">Mikhmon-compatible voucher management</div>'+
-    '<div class="card">'+
-      '<div class="quick">'+
-        '<button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Voucher</button>'+
-        '<input id="voucherSearch" oninput="hotspotVouchersPage(this.value)" placeholder="🔎 Search voucher..." value="'+esc(filterText||"")+'" style="flex:1;min-width:180px;background:#071a2f;color:white;border:2px solid #28517e;border-radius:10px;padding:11px">'+
-      '</div>'+
-      '<div class="kpiRow" style="margin-top:16px">'+
-        '<div class="kpi"><span>Total</span><strong>'+hotspotVouchers.length+'</strong></div>'+
-        '<div class="kpi"><span>Unused</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length+'</strong></div>'+
-        '<div class="kpi"><span>Used</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="USED").length+'</strong></div>'+
-        '<div class="kpi"><span>Expired</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="EXPIRED").length+'</strong></div>'+
-      '</div>'+
-      '<div class="tableWrap" style="margin-top:20px"><table class="table" style="min-width:1050px"><thead><tr>'+
-      '<th>VOUCHER CODE</th><th>PASSWORD</th><th>PROFILE</th><th>DURATION</th><th>PRICE</th><th>CREATED</th><th>USED DATE</th><th>STATUS</th><th>ACTION</th>'+
-      '</tr></thead><tbody>'+rows+'</tbody></table></div>'+
-      '<div class="notice">Profiles: <b>3 Hours = ₱10</b> · <b>1 Day = ₱20</b> · <b>2 Days = ₱30</b>. For username=password Mikhmon vouchers, the password defaults to the voucher code.</div>'+
-    '</div>';
+
+
+  saveData(
+    "RN_CLIENTS",
+    clients
+  );
+
+
+  closeModal(
+    "clientModal"
+  );
+
+
+  renderClients();
+
+  renderDashboard();
+
 }
-window.openHotspotVoucherModal=function(){
-  document.getElementById("modal").innerHTML=
-    '<h3>Add Hotspot Voucher</h3>'+
-    '<div class="formGrid">'+
-      '<div class="field"><label>Voucher Code</label><input id="hCode" placeholder="VC-123456"></div>'+
-      '<div class="field"><label>Password</label><input id="hPass" placeholder="Auto: same as code"></div>'+
-      '<div class="field"><label>Profile</label><select id="hProfile" onchange="syncVoucherPlan()">'+
-        '<option value="3 Hours" data-price="10" data-duration="3 Hours">3 Hours — ₱10</option>'+
-        '<option value="1 Day" data-price="20" data-duration="1 Day">1 Day — ₱20</option>'+
-        '<option value="2 Days" data-price="30" data-duration="2 Days">2 Days — ₱30</option>'+
-      '</select></div>'+
-      '<div class="field"><label>Price</label><input id="hPrice" type="number" value="10" readonly></div>'+
-      '<div class="field"><label>Duration</label><input id="hDuration" value="3 Hours" readonly></div>'+
-      '<div class="field"><label>Expires</label><input id="hExpires" type="date" value="'+today()+'"></div>'+
-      '<div class="field full"><label>Comment / Mikhmon Batch</label><input id="hComment" placeholder="e.g. vc-581-09.24.26-3hours"></div>'+
-    '</div>'+
-    '<div class="notice">Mikhmon mode: Password is optional. If left blank, the voucher code is used as the password (username=password).</div>'+
-    '<div class="modalBtns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn green" onclick="saveHotspotVoucher()">Save Voucher</button></div>';
-  document.getElementById("modalBack").classList.add("show");
-};
-window.syncVoucherPlan=function(){
-  const sel=document.getElementById("hProfile");
-  if(!sel)return;
-  const opt=sel.options[sel.selectedIndex];
-  document.getElementById("hPrice").value=opt.getAttribute("data-price")||"10";
-  document.getElementById("hDuration").value=opt.getAttribute("data-duration")||opt.value;
-};
-window.saveHotspotVoucher=function(){
-  const code=val("hCode").trim();
-  const pass=val("hPass").trim()||code;
-  const profile=val("hProfile").trim()||"3 Hours";
-  const price=Number(val("hPrice")||0);
-  const duration=val("hDuration").trim()||profile;
-  const expires=val("hExpires")||"";
-  const comment=val("hComment").trim();
-  if(!code){alert("Voucher Code is required.");return}
-  if(hotspotVouchers.some(function(v){return String(v.code).toLowerCase()===code.toLowerCase()})){alert("Voucher code already exists.");return}
-  hotspotVouchers.push({code:code,password:pass,profile:profile,duration:duration,uptime:duration,price:price,expires:expires,comment:comment,created:today(),usedDate:"",status:"UNUSED",disabled:false});
-  save("RN_HOTSPOT_VOUCHERS",hotspotVouchers);
-  closeModal();
-  hotspotVouchersPage();
-};
-window.useHotspotVoucher=function(i){
-  const v=hotspotVouchers[i];
-  if(!v)return;
-  if(!confirm("Mark voucher "+v.code+" as USED and record "+money(v.price)+" sale?"))return;
-  v.status="USED";
-  v.usedDate=today();
-  hotspotSales.push({code:v.code,profile:v.profile,amount:Number(v.price||0),date:today(),comment:v.comment||""});
-  save("RN_HOTSPOT_VOUCHERS",hotspotVouchers);
-  save("RN_HOTSPOT_SALES",hotspotSales);
-  hotspotVouchersPage();
-};
-window.deleteHotspotVoucher=function(i){
-  if(confirm("Delete voucher "+hotspotVouchers[i].code+"?")){
-    hotspotVouchers.splice(i,1);
-    save("RN_HOTSPOT_VOUCHERS",hotspotVouchers);
-    hotspotVouchersPage();
+
+
+function renderClients(){
+
+  var rows=
+    document.getElementById("clientRows");
+
+
+  if(!clients.length){
+
+    rows.innerHTML=
+      '<tr>'+
+      '<td colspan="8" class="empty">'+
+      'No clients yet.'+
+      '</td>'+
+      '</tr>';
+
+    return;
+
   }
-};
-function hotspotActivePage(){
-  const list=hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED");
-  let rows=list.map(function(v){
-    return '<tr><td>'+esc(v.code)+'</td><td>'+esc(v.profile)+'</td><td>'+esc(v.uptime)+'</td><td>'+esc(v.expires||"—")+'</td><td>'+money(v.price)+'</td><td>'+voucherBadge("ACTIVE")+'</td></tr>';
-  }).join("");
-  if(!rows)rows='<tr><td colspan="6" class="empty">No active voucher records.</td></tr>';
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Active Users</h2><div class="sub">Voucher records currently marked UNUSED</div>'+
-    '<div class="card"><div class="notice">Live connected-user data will come from MikroTik Hotspot when the secure API/backend is added. This page currently shows active voucher records only.</div>'+
-    '<div class="tableWrap" style="margin-top:20px"><table class="table"><thead><tr><th>USERNAME / CODE</th><th>PROFILE</th><th>UPTIME</th><th>EXPIRES</th><th>PRICE</th><th>STATUS</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
-}
-function hotspotSessionsPage(){
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Sessions</h2><div class="sub">Current MikroTik Hotspot session monitoring</div>'+
-    '<div class="card"><div class="notice">Live sessions are not connected yet. After secure MikroTik integration, this page will show username, IP address, MAC address, uptime, profile and session status.</div></div>';
-}
-function hotspotTransactionsPage(){
-  let rows=hotspotSales.slice().reverse().map(function(p){
-    return '<tr><td>'+esc(p.date)+'</td><td>'+esc(p.code)+'</td><td>'+esc(p.profile)+'</td><td>'+money(p.amount)+'</td><td>'+esc(p.comment||"")+'</td></tr>';
-  }).join("");
-  if(!rows)rows='<tr><td colspan="5" class="empty">No hotspot sales yet.</td></tr>';
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Transactions</h2><div class="sub">Voucher sales and payment history</div>'+
-    '<div class="kpiRow"><div class="kpi"><span>Total Sales</span><strong>'+money(hotspotTotalSales())+'</strong></div><div class="kpi"><span>Sold Vouchers</span><strong>'+hotspotSales.length+'</strong></div></div>'+
-    '<div class="card" style="margin-top:18px"><div class="tableWrap"><table class="table"><thead><tr><th>DATE</th><th>VOUCHER</th><th>PROFILE</th><th>AMOUNT</th><th>COMMENT</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
-}
-function hotspotReportsPage(){
-  const todaySales=hotspotSales.filter(function(p){return p.date===today()}).reduce(function(a,p){return a+Number(p.amount||0)},0);
-  const total=hotspotTotalSales();
-  const sold=hotspotSales.length;
-  document.getElementById("app").innerHTML=
-    '<h2>Hotspot Reports</h2><div class="sub">Voucher sales summary</div>'+
-    '<div class="grid4">'+
-      '<div class="card stat"><div class="label">Today</div><strong>'+money(todaySales)+'</strong></div>'+
-      '<div class="card stat"><div class="label">All Time Sales</div><strong>'+money(total)+'</strong></div>'+
-      '<div class="card stat"><div class="label">Sold Vouchers</div><strong>'+sold+'</strong></div>'+
-      '<div class="card stat"><div class="label">Available</div><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length+'</strong></div>'+
-    '</div>'+
-    '<div class="notice">Reports are based on voucher records saved in this browser. Live Mikhmon/MikroTik statistics will be connected later.</div>';
+
+
+  rows.innerHTML=
+    clients.map(function(c){
+
+      return "<tr>"+
+
+        "<td>"+
+        escapeHTML(c.name)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(c.username)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(c.plan)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(c.speed)+
+        "</td>"+
+
+        "<td>"+
+        money(c.fee)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(c.due)+
+        "</td>"+
+
+        "<td>"+
+        "<span class='badge active'>"+
+        escapeHTML(c.status)+
+        "</span>"+
+        "</td>"+
+
+        "<td>"+
+        "<button class='btn red' "+
+        "onclick='deleteClient("+c.id+")'>"+
+        "Delete"+
+        "</button>"+
+        "</td>"+
+
+        "</tr>";
+
+    })
+    .join("");
+
 }
 
-function simplePage(page){
-  const names={ecash:"ECash",active:"Active Connections",cron:"Cron Logs",pppoev2:"PPPoE V2",ipoe:"IPoE",mikrotik:"Mikrotik",support:"Support Center",account:"Account",disbursement:"Disbursement",telegram:"Telegram Notification"};
-  const title=names[page]||"Module";
-  document.getElementById("app").innerHTML='<h2>'+title+'</h2><div class="sub">RIDHROHAN NETWORK</div><div class="card"><h2 style="font-size:24px">'+title+'</h2><div class="notice">Module ready. Configuration can be added here next.</div></div>';
-}
-window.closeModal=function(){document.getElementById("modalBack").classList.remove("show")};
-function val(id){const e=document.getElementById(id);return e?e.value:""}
 
-window.addEventListener("load",function(){dashboardPage()});
-})();
+function deleteClient(id){
+
+  if(!confirm(
+    "Delete this client?"
+  )){
+
+    return;
+
+  }
+
+
+  clients=
+    clients.filter(function(c){
+
+      return c.id!=id;
+
+    });
+
+
+  saveData(
+    "RN_CLIENTS",
+    clients
+  );
+
+
+  renderClients();
+
+  renderDashboard();
+
+}
+
+
+/* =========================
+   PLANS
+========================= */
+
+function renderPlans(){
+
+  var rows=
+    document.getElementById("planRows");
+
+
+  rows.innerHTML=
+    plans.map(function(p,i){
+
+      return "<tr>"+
+
+        "<td>"+
+        escapeHTML(p.name)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(p.speed)+
+        "</td>"+
+
+        "<td>"+
+        money(p.price)+
+        "</td>"+
+
+        "<td>"+
+        "<span class='badge "+
+        (p.active===false
+          ?"disabled"
+          :"active")+
+        "'>"+
+        (p.active===false
+          ?"DISABLED"
+          :"ACTIVE")+
+        "</span>"+
+        "</td>"+
+
+        "<td>"+
+        "<button class='btn blue' "+
+        "onclick='togglePlan("+i+")'>"+
+        (p.active===false
+          ?"Activate"
+          :"Deactivate")+
+        "</button> "+
+
+        "<button class='btn red' "+
+        "onclick='deletePlan("+i+")'>"+
+        "Delete"+
+        "</button>"+
+
+        "</td>"+
+
+        "</tr>";
+
+    })
+    .join("");
+
+}
+
+
+function togglePlan(i){
+
+  plans[i].active=
+    plans[i].active===false;
+
+  saveData(
+    "RN_PLANS",
+    plans
+  );
+
+  renderPlans();
+
+}
+
+
+function deletePlan(i){
+
+  if(!confirm(
+    "Delete this plan?"
+  )){
+
+    return;
+
+  }
+
+
+  plans.splice(i,1);
+
+  saveData(
+    "RN_PLANS",
+    plans
+  );
+
+  renderPlans();
+
+}
+
+
+/* =========================
+   SERVER
+========================= */
+
+function openServerModal(){
+
+  alert(
+    "PPPoE Server form will be connected to MikroTik backend later."
+  );
+
+}
+
+
+function renderServers(){
+
+  var rows=
+    document.getElementById("serverRows");
+
+
+  if(!servers.length){
+
+    rows.innerHTML=
+      '<tr>'+
+      '<td colspan="8" class="empty">'+
+      'No PPPoE servers yet.'+
+      '</td>'+
+      '</tr>';
+
+    return;
+
+  }
+
+
+  rows.innerHTML=
+    servers.map(function(s){
+
+      return "<tr>"+
+
+        "<td>"+
+        escapeHTML(s.name)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(s.interface)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(s.service)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(s.local)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(s.pool)+
+        "</td>"+
+
+        "<td>"+
+        escapeHTML(s.dns)+
+        "</td>"+
+
+        "<td>"+
+        "<span class='badge active'>"+
+        "ACTIVE"+
+        "</span>"+
+        "</td>"+
+
+        "<td>—</td>"+
+
+        "</tr>";
+
+    })
+    .join("");
+
+}
+
+
+/* INITIALIZE */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    updateVoucher();
+
+    renderDashboard();
+
+    renderHotspot();
+
+    renderVouchers();
+
+    renderClients();
+
+    renderPlans();
+
+    renderServers();
+
+  }
+);
+
 </script>
+
 </body>
 </html>
