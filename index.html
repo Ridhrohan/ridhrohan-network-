@@ -398,22 +398,83 @@ function hotspotPage(){
   const active=hotspotVouchers.filter(v=>voucherStatus(v)==="ACTIVE").length;
   const used=hotspotVouchers.filter(v=>voucherStatus(v)==="USED").length;
   const expired=hotspotVouchers.filter(v=>voucherStatus(v)==="EXPIRED").length;
+  const todaySales=hotspotSales.filter(function(p){return p.date===today()})
+    .reduce(function(a,p){return a+Number(p.amount||0)},0);
+
+  const profileSales={};
+  hotspotSales.forEach(function(p){
+    const key=p.profile||"Unknown";
+    profileSales[key]=(profileSales[key]||0)+Number(p.amount||0);
+  });
+
+  let recent=hotspotVouchers.slice().reverse().slice(0,8).map(function(v){
+    const st=voucherStatus(v);
+    return '<tr>'+
+      '<td>'+esc(v.code)+'</td>'+
+      '<td>'+esc(v.profile||"—")+'</td>'+
+      '<td>'+esc(v.uptime||"—")+'</td>'+
+      '<td>'+money(v.price)+'</td>'+
+      '<td>'+voucherBadge(st)+'</td>'+
+    '</tr>';
+  }).join("");
+
+  if(!recent){
+    recent='<tr><td colspan="5" class="empty">No voucher activity yet. Add your first Mikhmon voucher.</td></tr>';
+  }
+
+  let salesRows=Object.keys(profileSales).map(function(profile){
+    return '<tr><td>'+esc(profile)+'</td><td>'+money(profileSales[profile])+'</td></tr>';
+  }).join("");
+
+  if(!salesRows){
+    salesRows='<tr><td colspan="2" class="empty">No sales recorded yet.</td></tr>';
+  }
+
   document.getElementById("app").innerHTML=
-    '<h2>Hotspot</h2><div class="sub">Mikhmon / Voucher monitoring</div>'+
+    '<h2>Hotspot Overview</h2><div class="sub">Mikhmon / Voucher monitoring</div>'+
+
     '<div class="grid4">'+
       '<div class="card stat"><div class="label">Total Vouchers</div><strong>'+hotspotVouchers.length+'</strong></div>'+
-      '<div class="card stat"><div class="label">Active</div><strong>'+active+'</strong></div>'+
-      '<div class="card stat"><div class="label">Used</div><strong>'+used+'</strong></div>'+
-      '<div class="card stat"><div class="label">Sales</div><strong>'+money(hotspotTotalSales())+'</strong></div>'+
+      '<div class="card stat"><div class="label">Active Users</div><strong>'+active+'</strong></div>'+
+      '<div class="card stat"><div class="label">Today\'s Sales</div><strong>'+money(todaySales)+'</strong></div>'+
+      '<div class="card stat"><div class="label">Expired</div><strong>'+expired+'</strong></div>'+
     '</div>'+
-    '<div class="card"><h2 style="font-size:24px">Hotspot Voucher System</h2>'+
-      '<p style="color:var(--muted);line-height:1.6;margin-top:8px">Voucher records use fields commonly used by Mikhmon: username/code, password, profile, uptime, price, comment and expiry.</p>'+
+
+    '<div class="card">'+
+      '<h2 style="font-size:24px">Voucher Control</h2>'+
+      '<p style="color:var(--muted);line-height:1.6;margin-top:8px">'+
+      'Manage Mikhmon-style vouchers, monitor usage and record hotspot sales.'+
+      '</p>'+
       '<div class="quick" style="margin-top:18px">'+
         '<button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Voucher</button>'+
         '<button class="btn blue" onclick="go(\'hotspotVouchers\')">View Vouchers</button>'+
-        '<button class="btn" onclick="go(\'hotspotTransactions\')">Sales / Transactions</button>'+
+        '<button class="btn" onclick="go(\'hotspotActive\')">Active Users</button>'+
+        '<button class="btn" onclick="go(\'hotspotTransactions\')">Transactions</button>'+
       '</div>'+
-      '<div class="notice">This is currently a browser prototype. It does not yet read or change Mikhmon/MikroTik data.</div>'+
+    '</div>'+
+
+    '<div class="card">'+
+      '<h2 style="font-size:24px">Recent Voucher Activity</h2>'+
+      '<div class="tableWrap" style="margin-top:14px">'+
+        '<table class="table" style="min-width:620px">'+
+          '<thead><tr><th>VOUCHER</th><th>PROFILE</th><th>DURATION</th><th>PRICE</th><th>STATUS</th></tr></thead>'+
+          '<tbody>'+recent+'</tbody>'+
+        '</table>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="card">'+
+      '<h2 style="font-size:24px">Sales by Profile</h2>'+
+      '<div class="tableWrap" style="margin-top:14px">'+
+        '<table class="table" style="min-width:420px">'+
+          '<thead><tr><th>PROFILE</th><th>TOTAL SALES</th></tr></thead>'+
+          '<tbody>'+salesRows+'</tbody>'+
+        '</table>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="notice">'+
+      'Prototype mode: data is saved in this browser only. Live Mikhmon/MikroTik data will be connected later through a secure backend/API.'+
     '</div>';
 }
 function hotspotVouchersPage(){
