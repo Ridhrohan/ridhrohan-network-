@@ -383,19 +383,18 @@ function paymentsPage(page){
 
 
 function voucherStatus(v){
-  if(v.disabled)return "DISABLED";
-  if(v.status==="USED")return "USED";
+  if(v.status==="USED" || v.usedDate)return "USED";
   if(v.expires && v.expires<today())return "EXPIRED";
-  return "ACTIVE";
+  return "UNUSED";
 }
 function voucherBadge(s){
-  return '<span class="badge '+(s==="ACTIVE"?"active":s==="USED"?"disabled":s==="EXPIRED"?"expired":"disabled")+'">'+s+'</span>';
+  return '<span class="badge '+(s==="UNUSED"?"active":s==="USED"?"disabled":s==="EXPIRED"?"expired":"disabled")+'">'+s+'</span>';
 }
 function hotspotTotalSales(){
   return hotspotSales.reduce(function(a,p){return a+Number(p.amount||0)},0);
 }
 function hotspotPage(){
-  const active=hotspotVouchers.filter(v=>voucherStatus(v)==="ACTIVE").length;
+  const active=hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length;
   const used=hotspotVouchers.filter(v=>voucherStatus(v)==="USED").length;
   const expired=hotspotVouchers.filter(v=>voucherStatus(v)==="EXPIRED").length;
   const todaySales=hotspotSales.filter(function(p){return p.date===today()})
@@ -435,7 +434,7 @@ function hotspotPage(){
 
     '<div class="grid4">'+
       '<div class="card stat"><div class="label">Total Vouchers</div><strong>'+hotspotVouchers.length+'</strong></div>'+
-      '<div class="card stat"><div class="label">Active Users</div><strong>'+active+'</strong></div>'+
+      '<div class="card stat"><div class="label">Unused Vouchers</div><strong>'+active+'</strong></div>'+
       '<div class="card stat"><div class="label">Today\'s Sales</div><strong>'+money(todaySales)+'</strong></div>'+
       '<div class="card stat"><div class="label">Expired</div><strong>'+expired+'</strong></div>'+
     '</div>'+
@@ -477,62 +476,86 @@ function hotspotPage(){
       'Prototype mode: data is saved in this browser only. Live Mikhmon/MikroTik data will be connected later through a secure backend/API.'+
     '</div>';
 }
-function hotspotVouchersPage(){
-  let rows=hotspotVouchers.map(function(v,i){
-    const s=voucherStatus(v);
+function hotspotVouchersPage(filterText){
+  const q=String(filterText||"").trim().toLowerCase();
+  const list=hotspotVouchers.filter(function(v){
+    return !q || [v.code,v.password,v.profile,v.duration,v.comment,v.created,v.usedDate].join(" ").toLowerCase().indexOf(q)!==-1;
+  });
+  let rows=list.map(function(v){
+    const i=hotspotVouchers.indexOf(v);
+    const st=voucherStatus(v);
     return '<tr>'+
-      '<td>'+esc(v.code)+'</td>'+
+      '<td><b>'+esc(v.code)+'</b></td>'+
       '<td>'+esc(v.password||v.code)+'</td>'+
       '<td>'+esc(v.profile)+'</td>'+
-      '<td>'+esc(v.uptime)+'</td>'+
+      '<td>'+esc(v.duration||v.uptime||"—")+'</td>'+
       '<td>'+money(v.price)+'</td>'+
-      '<td>'+esc(v.expires||"—")+'</td>'+
-      '<td>'+voucherBadge(s)+'</td>'+
+      '<td>'+esc(v.created||"—")+'</td>'+
+      '<td>'+esc(v.usedDate||"—")+'</td>'+
+      '<td>'+voucherBadge(st)+'</td>'+
       '<td class="actions">'+
-        (s==="ACTIVE"?'<button class="btn small green" onclick="useHotspotVoucher('+i+')">Mark Used</button>':'')+
+        (st==="UNUSED"?'<button class="btn small green" onclick="useHotspotVoucher('+i+')">Mark Used</button>':'')+
         '<button class="btn small red" onclick="deleteHotspotVoucher('+i+')">Delete</button>'+
       '</td></tr>';
   }).join("");
-  if(!rows)rows='<tr><td colspan="8" class="empty">No hotspot vouchers yet. Add your first voucher.</td></tr>';
+  if(!rows)rows='<tr><td colspan="9" class="empty">No vouchers found.</td></tr>';
   document.getElementById("app").innerHTML=
-    '<h2>Hotspot Vouchers</h2><div class="sub">Mikhmon-compatible voucher records</div>'+
+    '<h2>Hotspot Vouchers</h2><div class="sub">Mikhmon-compatible voucher management</div>'+
     '<div class="card">'+
-      '<div class="quick"><button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Voucher</button></div>'+
-      '<div class="tableWrap" style="margin-top:20px"><table class="table"><thead><tr>'+
-      '<th>USERNAME / CODE</th><th>PASSWORD</th><th>PROFILE</th><th>UPTIME</th><th>PRICE</th><th>EXPIRES</th><th>STATUS</th><th>ACTION</th>'+
+      '<div class="quick">'+
+        '<button class="btn green" onclick="openHotspotVoucherModal()">＋ Add Voucher</button>'+
+        '<input id="voucherSearch" oninput="hotspotVouchersPage(this.value)" placeholder="🔎 Search voucher..." value="'+esc(filterText||"")+'" style="flex:1;min-width:180px;background:#071a2f;color:white;border:2px solid #28517e;border-radius:10px;padding:11px">'+
+      '</div>'+
+      '<div class="kpiRow" style="margin-top:16px">'+
+        '<div class="kpi"><span>Total</span><strong>'+hotspotVouchers.length+'</strong></div>'+
+        '<div class="kpi"><span>Unused</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length+'</strong></div>'+
+        '<div class="kpi"><span>Used</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="USED").length+'</strong></div>'+
+        '<div class="kpi"><span>Expired</span><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="EXPIRED").length+'</strong></div>'+
+      '</div>'+
+      '<div class="tableWrap" style="margin-top:20px"><table class="table" style="min-width:1050px"><thead><tr>'+
+      '<th>VOUCHER CODE</th><th>PASSWORD</th><th>PROFILE</th><th>DURATION</th><th>PRICE</th><th>CREATED</th><th>USED DATE</th><th>STATUS</th><th>ACTION</th>'+
       '</tr></thead><tbody>'+rows+'</tbody></table></div>'+
-      '<div class="notice">For the Mikhmon setup you described, a voucher can use the same value for username and password. If Mikhmon uses a different password, enter it separately here.</div>'+
+      '<div class="notice">Profiles: <b>3 Hours = ₱10</b> · <b>1 Day = ₱20</b> · <b>2 Days = ₱30</b>. For username=password Mikhmon vouchers, the password defaults to the voucher code.</div>'+
     '</div>';
 }
 window.openHotspotVoucherModal=function(){
   document.getElementById("modal").innerHTML=
     '<h3>Add Hotspot Voucher</h3>'+
     '<div class="formGrid">'+
-      '<div class="field"><label>Username / Voucher Code</label><input id="hCode" placeholder="VC-123456"></div>'+
-      '<div class="field"><label>Password</label><input id="hPass" placeholder="Same as code if using username=password"></div>'+
-      '<div class="field"><label>Profile</label><input id="hProfile" value="3H"></div>'+
-      '<div class="field"><label>Uptime / Duration</label><input id="hUptime" placeholder="3h, 1d, 2d"></div>'+
-      '<div class="field"><label>Price</label><input id="hPrice" type="number" placeholder="10"></div>'+
+      '<div class="field"><label>Voucher Code</label><input id="hCode" placeholder="VC-123456"></div>'+
+      '<div class="field"><label>Password</label><input id="hPass" placeholder="Auto: same as code"></div>'+
+      '<div class="field"><label>Profile</label><select id="hProfile" onchange="syncVoucherPlan()">'+
+        '<option value="3 Hours" data-price="10" data-duration="3 Hours">3 Hours — ₱10</option>'+
+        '<option value="1 Day" data-price="20" data-duration="1 Day">1 Day — ₱20</option>'+
+        '<option value="2 Days" data-price="30" data-duration="2 Days">2 Days — ₱30</option>'+
+      '</select></div>'+
+      '<div class="field"><label>Price</label><input id="hPrice" type="number" value="10" readonly></div>'+
+      '<div class="field"><label>Duration</label><input id="hDuration" value="3 Hours" readonly></div>'+
       '<div class="field"><label>Expires</label><input id="hExpires" type="date" value="'+today()+'"></div>'+
-      '<div class="field full"><label>Comment</label><input id="hComment" placeholder="Mikhmon batch/comment"></div>'+
+      '<div class="field full"><label>Comment / Mikhmon Batch</label><input id="hComment" placeholder="e.g. vc-581-09.24.26-3hours"></div>'+
     '</div>'+
-    '<div class="notice">Voucher data is saved only in this browser until we add the secure MikroTik/Mikhmon connection.</div>'+
+    '<div class="notice">Mikhmon mode: Password is optional. If left blank, the voucher code is used as the password (username=password).</div>'+
     '<div class="modalBtns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn green" onclick="saveHotspotVoucher()">Save Voucher</button></div>';
   document.getElementById("modalBack").classList.add("show");
+};
+window.syncVoucherPlan=function(){
+  const sel=document.getElementById("hProfile");
+  if(!sel)return;
+  const opt=sel.options[sel.selectedIndex];
+  document.getElementById("hPrice").value=opt.getAttribute("data-price")||"10";
+  document.getElementById("hDuration").value=opt.getAttribute("data-duration")||opt.value;
 };
 window.saveHotspotVoucher=function(){
   const code=val("hCode").trim();
   const pass=val("hPass").trim()||code;
-  const profile=val("hProfile").trim()||"default";
-  const uptime=val("hUptime").trim()||"";
+  const profile=val("hProfile").trim()||"3 Hours";
   const price=Number(val("hPrice")||0);
+  const duration=val("hDuration").trim()||profile;
   const expires=val("hExpires")||"";
   const comment=val("hComment").trim();
-  if(!code||!profile||price<=0){alert("Voucher Code, Profile and Price are required.");return}
-  hotspotVouchers.push({
-    code:code,password:pass,profile:profile,uptime:uptime,price:price,
-    expires:expires,comment:comment,created:today(),status:"ACTIVE",disabled:false
-  });
+  if(!code){alert("Voucher Code is required.");return}
+  if(hotspotVouchers.some(function(v){return String(v.code).toLowerCase()===code.toLowerCase()})){alert("Voucher code already exists.");return}
+  hotspotVouchers.push({code:code,password:pass,profile:profile,duration:duration,uptime:duration,price:price,expires:expires,comment:comment,created:today(),usedDate:"",status:"UNUSED",disabled:false});
   save("RN_HOTSPOT_VOUCHERS",hotspotVouchers);
   closeModal();
   hotspotVouchersPage();
@@ -542,6 +565,7 @@ window.useHotspotVoucher=function(i){
   if(!v)return;
   if(!confirm("Mark voucher "+v.code+" as USED and record "+money(v.price)+" sale?"))return;
   v.status="USED";
+  v.usedDate=today();
   hotspotSales.push({code:v.code,profile:v.profile,amount:Number(v.price||0),date:today(),comment:v.comment||""});
   save("RN_HOTSPOT_VOUCHERS",hotspotVouchers);
   save("RN_HOTSPOT_SALES",hotspotSales);
@@ -555,13 +579,13 @@ window.deleteHotspotVoucher=function(i){
   }
 };
 function hotspotActivePage(){
-  const list=hotspotVouchers.filter(v=>voucherStatus(v)==="ACTIVE");
+  const list=hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED");
   let rows=list.map(function(v){
     return '<tr><td>'+esc(v.code)+'</td><td>'+esc(v.profile)+'</td><td>'+esc(v.uptime)+'</td><td>'+esc(v.expires||"—")+'</td><td>'+money(v.price)+'</td><td>'+voucherBadge("ACTIVE")+'</td></tr>';
   }).join("");
   if(!rows)rows='<tr><td colspan="6" class="empty">No active voucher records.</td></tr>';
   document.getElementById("app").innerHTML=
-    '<h2>Hotspot Active Users</h2><div class="sub">Voucher records currently marked ACTIVE</div>'+
+    '<h2>Hotspot Active Users</h2><div class="sub">Voucher records currently marked UNUSED</div>'+
     '<div class="card"><div class="notice">Live connected-user data will come from MikroTik Hotspot when the secure API/backend is added. This page currently shows active voucher records only.</div>'+
     '<div class="tableWrap" style="margin-top:20px"><table class="table"><thead><tr><th>USERNAME / CODE</th><th>PROFILE</th><th>UPTIME</th><th>EXPIRES</th><th>PRICE</th><th>STATUS</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
@@ -590,7 +614,7 @@ function hotspotReportsPage(){
       '<div class="card stat"><div class="label">Today</div><strong>'+money(todaySales)+'</strong></div>'+
       '<div class="card stat"><div class="label">All Time Sales</div><strong>'+money(total)+'</strong></div>'+
       '<div class="card stat"><div class="label">Sold Vouchers</div><strong>'+sold+'</strong></div>'+
-      '<div class="card stat"><div class="label">Available</div><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="ACTIVE").length+'</strong></div>'+
+      '<div class="card stat"><div class="label">Available</div><strong>'+hotspotVouchers.filter(v=>voucherStatus(v)==="UNUSED").length+'</strong></div>'+
     '</div>'+
     '<div class="notice">Reports are based on voucher records saved in this browser. Live Mikhmon/MikroTik statistics will be connected later.</div>';
 }
