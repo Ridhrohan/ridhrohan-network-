@@ -423,6 +423,19 @@ th{
   }
 
 }
+
+/* HOTSPOT TRANSACTIONS / REPORTS */
+.reportGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px}
+.reportBox{background:#0b2340;border:2px solid #174a7d;border-radius:17px;padding:18px}
+.reportBox h3{font-size:16px;margin-bottom:12px}
+.reportRow{display:flex;justify-content:space-between;gap:15px;padding:11px 0;border-bottom:1px solid #1b3d62}
+.reportRow:last-child{border-bottom:0}
+.reportRow span:first-child{color:#9eb5d0}
+.reportRow strong{color:#fff}
+.filterSelect{background:#071a30;border:2px solid #245789;color:#fff;border-radius:10px;padding:11px 14px;min-width:150px;outline:none}
+.salesHighlight{border-color:#08ad87;background:#0b2b42}
+@media(max-width:600px){.reportGrid{grid-template-columns:1fr}.filterSelect{width:100%}}
+
 </style>
 </head>
 
@@ -988,16 +1001,60 @@ No session data yet.
 <section id="hotspotTransactions" class="page">
 <h2>Hotspot Transactions</h2>
 <p class="desc">Voucher sales records</p>
-<div class="card" id="hotspotTxn"></div>
+
+<div class="reportGrid">
+  <div class="stat"><small>Total Transactions</small><strong id="txnCount">0</strong></div>
+  <div class="stat salesHighlight"><small>Sales Total</small><strong id="txnSales">₱0</strong></div>
+</div>
+
+<div class="card">
+  <div class="toolbar">
+    <input id="txnSearch" class="search" placeholder="🔎 Search transaction..." oninput="renderHotspotTransactions()">
+    <select id="txnPeriod" class="filterSelect" onchange="renderHotspotTransactions()">
+      <option value="all">All Time</option>
+      <option value="today">Today</option>
+      <option value="7">Last 7 Days</option>
+      <option value="30">Last 30 Days</option>
+    </select>
+  </div>
+  <div class="tableWrap">
+    <table>
+      <thead><tr>
+        <th>DATE</th><th>VOUCHER CODE</th><th>USERNAME</th><th>PROFILE</th><th>PRICE</th><th>STATUS</th>
+      </tr></thead>
+      <tbody id="hotspotTxnRows"></tbody>
+    </table>
+  </div>
+</div>
 </section>
 
 <section id="reports" class="page">
-<h2>Reports</h2>
-<p class="desc">Hotspot reports</p>
-<div class="card">
-<div class="empty">
-Reports will appear here.
+<h2>Hotspot Reports</h2>
+<p class="desc">Sales, voucher status and profile summary</p>
+
+<div class="grid">
+  <div class="stat"><small>Total Vouchers</small><strong id="repTotal">0</strong></div>
+  <div class="stat"><small>Used</small><strong id="repUsed">0</strong></div>
+  <div class="stat"><small>Unused</small><strong id="repUnused">0</strong></div>
+  <div class="stat"><small>Expired</small><strong id="repExpired">0</strong></div>
 </div>
+
+<div class="reportGrid" style="margin-top:18px">
+  <div class="reportBox salesHighlight">
+    <h3>💰 Sales Summary</h3>
+    <div class="reportRow"><span>All Sales</span><strong id="repSales">₱0</strong></div>
+    <div class="reportRow"><span>Today's Sales</span><strong id="repTodaySales">₱0</strong></div>
+    <div class="reportRow"><span>Transactions</span><strong id="repTransactions">0</strong></div>
+  </div>
+  <div class="reportBox">
+    <h3>📦 Profile Sales</h3>
+    <div id="profileReport"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:12px">📅 Last 7 Days Sales</h3>
+  <div id="dailyReport"></div>
 </div>
 </section>
 
@@ -1562,6 +1619,12 @@ function showPage(id){
 
   if(id==="servers")
     renderServers();
+
+  if(id==="hotspotTransactions")
+    renderHotspotTransactions();
+
+  if(id==="reports")
+    renderHotspotReports();
 
 }
 
@@ -2277,6 +2340,124 @@ function deleteVoucher(id){
 
 
 /* =========================
+   HOTSPOT TRANSACTIONS
+========================= */
+
+function getUsedVouchers(){
+  updateExpiredVouchers();
+  return vouchers.filter(function(v){
+    return v.status==="USED";
+  });
+}
+
+function transactionDate(v){
+  return v.usedAt ? new Date(v.usedAt) : null;
+}
+
+function sameDate(d1,d2){
+  if(!d1 || !d2) return false;
+  return d1.toISOString().slice(0,10)===d2.toISOString().slice(0,10);
+}
+
+function transactionInPeriod(v,period){
+  var d=transactionDate(v);
+  if(!d) return false;
+  var now=new Date();
+  if(period==="all") return true;
+  if(period==="today") return sameDate(d,now);
+  var days=Number(period);
+  var start=new Date(now.getTime()-((days-1)*86400000));
+  start.setHours(0,0,0,0);
+  return d>=start;
+}
+
+function renderHotspotTransactions(){
+  var used=getUsedVouchers();
+  var searchEl=document.getElementById("txnSearch");
+  var periodEl=document.getElementById("txnPeriod");
+  var query=searchEl ? searchEl.value.trim().toLowerCase() : "";
+  var period=periodEl ? periodEl.value : "all";
+
+  var list=used.filter(function(v){
+    var text=(String(v.code||"")+" "+String(v.username||"")+" "+String(v.profile||"")).toLowerCase();
+    return text.includes(query) && transactionInPeriod(v,period);
+  }).sort(function(a,b){
+    return Number(b.usedAt||0)-Number(a.usedAt||0);
+  });
+
+  var sales=list.reduce(function(sum,v){return sum+Number(v.price||0);},0);
+  document.getElementById("txnCount").textContent=list.length;
+  document.getElementById("txnSales").textContent=money(sales);
+
+  var rows=document.getElementById("hotspotTxnRows");
+  if(!list.length){
+    rows.innerHTML='<tr><td colspan="6" class="empty">No hotspot transactions found.</td></tr>';
+    return;
+  }
+
+  rows.innerHTML=list.map(function(v){
+    return '<tr>'+
+      '<td>'+escapeHTML(v.usedDate||"—")+'</td>'+
+      '<td><b>'+escapeHTML(v.code)+'</b></td>'+
+      '<td>'+escapeHTML(v.username)+'</td>'+
+      '<td>'+escapeHTML(v.profile)+'</td>'+
+      '<td>'+money(v.price)+'</td>'+
+      '<td><span class="badge used">USED</span></td>'+
+      '</tr>';
+  }).join("");
+}
+
+function renderHotspotReports(){
+  updateExpiredVouchers();
+  var used=getUsedVouchers();
+  var unused=vouchers.filter(function(v){return v.status==="UNUSED";}).length;
+  var expired=vouchers.filter(function(v){return v.status==="EXPIRED";}).length;
+  var sales=used.reduce(function(sum,v){return sum+Number(v.price||0);},0);
+  var now=new Date();
+  var todaySales=used.filter(function(v){return transactionDate(v)&&sameDate(transactionDate(v),now);})
+    .reduce(function(sum,v){return sum+Number(v.price||0);},0);
+
+  document.getElementById("repTotal").textContent=vouchers.length;
+  document.getElementById("repUsed").textContent=used.length;
+  document.getElementById("repUnused").textContent=unused;
+  document.getElementById("repExpired").textContent=expired;
+  document.getElementById("repSales").textContent=money(sales);
+  document.getElementById("repTodaySales").textContent=money(todaySales);
+  document.getElementById("repTransactions").textContent=used.length;
+
+  var profileBox=document.getElementById("profileReport");
+  var profiles={};
+  used.forEach(function(v){
+    var key=v.profile||"Unknown";
+    if(!profiles[key]) profiles[key]={count:0,sales:0};
+    profiles[key].count++;
+    profiles[key].sales+=Number(v.price||0);
+  });
+  var profileNames=Object.keys(profiles);
+  if(!profileNames.length){
+    profileBox.innerHTML='<div class="empty">No sales yet.</div>';
+  }else{
+    profileBox.innerHTML=profileNames.map(function(name){
+      return '<div class="reportRow"><span>'+escapeHTML(name)+' ('+profiles[name].count+')</span><strong>'+money(profiles[name].sales)+'</strong></div>';
+    }).join("");
+  }
+
+  var dailyBox=document.getElementById("dailyReport");
+  var daily=[];
+  for(var i=6;i>=0;i--){
+    var d=new Date();
+    d.setHours(0,0,0,0);
+    d.setDate(d.getDate()-i);
+    var total=used.filter(function(v){return transactionDate(v)&&sameDate(transactionDate(v),d);})
+      .reduce(function(sum,v){return sum+Number(v.price||0);},0);
+    daily.push({date:d.toISOString().slice(0,10),sales:total});
+  }
+  dailyBox.innerHTML=daily.map(function(item){
+    return '<div class="reportRow"><span>'+escapeHTML(item.date)+'</span><strong>'+money(item.sales)+'</strong></div>';
+  }).join("");
+}
+
+/* =========================
    HOTSPOT
 ========================= */
 
@@ -2862,6 +3043,9 @@ window.addEventListener(
     renderPlans();
 
     renderServers();
+
+    renderHotspotTransactions();
+    renderHotspotReports();
 
   }
 );
