@@ -865,6 +865,11 @@ th{
         <strong id="vExpired">0</strong>
       </div>
 
+      <div class="stat">
+        <small>Sales Total</small>
+        <strong id="vSales">₱0</strong>
+      </div>
+
     </div>
 
 
@@ -885,6 +890,7 @@ th{
             <th>STATUS</th>
             <th>CREATED</th>
             <th>USED DATE</th>
+            <th>EXPIRES</th>
             <th>ACTION</th>
           </tr>
 
@@ -910,6 +916,19 @@ th{
       Mikhmon compatible:
       kapag blank ang Password,
       automatic na gagamitin ang Voucher Code.
+
+      <br><br>
+
+      <b>Voucher Control:</b>
+      Mark as Used adds the price to Sales Total.
+      UNUSED vouchers automatically become EXPIRED
+      when their duration is reached.
+
+      <br><br>
+
+      <b>Note:</b>
+      Prototype muna ito sa browser/localStorage.
+      Hindi pa ito direktang kumokonekta sa Mikhmon o MikroTik.
 
     </div>
 
@@ -1605,7 +1624,7 @@ function openVoucherModal(){
     "3 Hours";
 
   document.getElementById("vCreated").value=
-    today();
+    formatDateTime(new Date());
 
   updateVoucher();
 
@@ -1626,7 +1645,8 @@ function getVoucherPlan(){
 
     return {
       price:20,
-      duration:"1 Day"
+      duration:"1 Day",
+      durationMs:24*60*60*1000
     };
 
   }
@@ -1635,14 +1655,16 @@ function getVoucherPlan(){
 
     return {
       price:30,
-      duration:"2 Days"
+      duration:"2 Days",
+      durationMs:48*60*60*1000
     };
 
   }
 
   return {
     price:10,
-    duration:"3 Hours"
+    duration:"3 Hours",
+    durationMs:3*60*60*1000
   };
 
 }
@@ -1668,6 +1690,129 @@ function updateVoucher(){
     " — "+
     money(plan.price)+
     " / voucher";
+
+}
+
+
+function formatDateTime(value){
+
+  var d =
+    value instanceof Date
+      ? value
+      : new Date(value);
+
+  if(isNaN(d.getTime())){
+    return "—";
+  }
+
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,"0");
+  var day=String(d.getDate()).padStart(2,"0");
+  var h=String(d.getHours()).padStart(2,"0");
+  var min=String(d.getMinutes()).padStart(2,"0");
+
+  return y+"-"+m+"-"+day+" "+h+":"+min;
+
+}
+
+
+function voucherDurationMs(v){
+
+  if(v.profile==="1 Day" || v.duration==="1 Day"){
+    return 24*60*60*1000;
+  }
+
+  if(v.profile==="2 Days" || v.duration==="2 Days"){
+    return 48*60*60*1000;
+  }
+
+  return 3*60*60*1000;
+
+}
+
+
+function normalizeVoucher(v){
+
+  if(!v.id){
+    v.id=Date.now()+Math.floor(Math.random()*1000);
+  }
+
+  if(!v.status){
+    v.status="UNUSED";
+  }
+
+  if(!v.username){
+    v.username=v.code||"";
+  }
+
+  if(!v.password){
+    v.password=v.code||"";
+  }
+
+  /*
+    Old vouchers only had YYYY-MM-DD.
+    For an existing voucher created today, use the current time
+    so it is not immediately expired after this update.
+    Older records use 12:00 local time as a safe migration point.
+  */
+  if(!v.createdAt){
+
+    var dateOnly=String(v.created||"").slice(0,10);
+    var base;
+
+    if(dateOnly===today()){
+      base=new Date();
+    }else if(/^\d{4}-\d{2}-\d{2}$/.test(dateOnly)){
+      base=new Date(dateOnly+"T12:00:00");
+    }else{
+      base=new Date();
+    }
+
+    v.createdAt=base.getTime();
+
+  }
+
+  if(!v.created){
+    v.created=formatDateTime(v.createdAt);
+  }
+
+  if(!v.expiresAt){
+    v.expiresAt=
+      Number(v.createdAt)+voucherDurationMs(v);
+  }
+
+  return v;
+
+}
+
+
+function updateExpiredVouchers(){
+
+  var changed=false;
+  var now=Date.now();
+
+  vouchers.forEach(function(v){
+
+    normalizeVoucher(v);
+
+    if(
+      v.status==="UNUSED" &&
+      Number(v.expiresAt)<=now
+    ){
+
+      v.status="EXPIRED";
+      v.expiredDate=formatDateTime(now);
+      changed=true;
+
+    }
+
+  });
+
+  if(changed){
+    saveData("RN_VOUCHERS",vouchers);
+  }
+
+  return changed;
 
 }
 
@@ -1747,6 +1892,7 @@ function saveVoucher(){
 
 
   var plan=getVoucherPlan();
+  var createdAt=Date.now();
 
 
   var voucher={
@@ -1767,9 +1913,15 @@ function saveVoucher(){
 
     status:"UNUSED",
 
-    created:today(),
+    created:formatDateTime(createdAt),
 
-    usedDate:""
+    createdAt:createdAt,
+
+    expiresAt:createdAt+plan.durationMs,
+
+    usedDate:"",
+
+    expiredDate:""
 
   };
 
@@ -1792,7 +1944,66 @@ function saveVoucher(){
 
 
   alert(
-    "Voucher saved: "+code
+    "Voucher saved: "+code+
+    "\nUsername: "+username+
+    "\nPassword: "+password+
+    "\nStatus: UNUSED"
+  );
+
+}
+
+
+function markVoucherUsed(id){
+
+  updateExpiredVouchers();
+
+  var voucher=
+    vouchers.find(function(v){
+      return v.id==id;
+    });
+
+
+  if(!voucher){
+    return;
+  }
+
+
+  if(voucher.status==="EXPIRED"){
+
+    alert("Hindi na puwedeng gamitin. EXPIRED na ang voucher.");
+
+    renderVouchers();
+    return;
+
+  }
+
+
+  if(voucher.status==="USED"){
+
+    alert("USED na ang voucher na ito.");
+    return;
+
+  }
+
+
+  voucher.status="USED";
+  voucher.usedDate=formatDateTime(new Date());
+  voucher.usedAt=Date.now();
+
+  saveData(
+    "RN_VOUCHERS",
+    vouchers
+  );
+
+
+  renderVouchers();
+  renderHotspot();
+  renderDashboard();
+
+
+  alert(
+    "Voucher marked as USED: "+voucher.code+
+    "\nSales: "+money(voucher.price)
   );
 
 }
@@ -1800,13 +2011,15 @@ function saveVoucher(){
 
 function renderVouchers(){
 
+  updateExpiredVouchers();
+
   var search=
     document
     .getElementById("voucherSearch");
 
   var query=
     search
-    ? search.value.toLowerCase()
+    ? search.value.trim().toLowerCase()
     : "";
 
 
@@ -1815,25 +2028,31 @@ function renderVouchers(){
 
       return (
 
-        String(v.code)
+        String(v.code||"")
         .toLowerCase()
         .includes(query)
 
         ||
 
-        String(v.username)
+        String(v.username||"")
         .toLowerCase()
         .includes(query)
 
         ||
 
-        String(v.profile)
+        String(v.password||"")
         .toLowerCase()
         .includes(query)
 
         ||
 
-        String(v.status)
+        String(v.profile||"")
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        String(v.status||"")
         .toLowerCase()
         .includes(query)
 
@@ -1850,16 +2069,24 @@ function renderVouchers(){
     }).length;
 
 
-  var used=
+  var usedList=
     vouchers.filter(function(v){
       return v.status==="USED";
-    }).length;
+    });
+
+  var used=usedList.length;
 
 
   var expired=
     vouchers.filter(function(v){
       return v.status==="EXPIRED";
     }).length;
+
+
+  var sales=
+    usedList.reduce(function(sum,v){
+      return sum+Number(v.price||0);
+    },0);
 
 
   document.getElementById("vTotal")
@@ -1874,6 +2101,9 @@ function renderVouchers(){
   document.getElementById("vExpired")
     .textContent=expired;
 
+  document.getElementById("vSales")
+    .textContent=money(sales);
+
 
   var rows=
     document.getElementById("voucherRows");
@@ -1883,8 +2113,8 @@ function renderVouchers(){
 
     rows.innerHTML=
       '<tr>'+
-      '<td colspan="10" class="empty">'+
-      'No vouchers yet. Add your first voucher.'+
+      '<td colspan="11" class="empty">'+
+      'No vouchers found.'+
       '</td>'+
       '</tr>';
 
@@ -1896,9 +2126,37 @@ function renderVouchers(){
   rows.innerHTML=
     list.map(function(v){
 
+      normalizeVoucher(v);
+
       var status=
         String(v.status||"UNUSED")
         .toLowerCase();
+
+      var action="";
+
+      if(v.status==="UNUSED"){
+
+        action=
+          "<button class='btn blue' "+
+          "onclick='markVoucherUsed("+v.id+")'>"+
+          "Mark Used"+
+          "</button> ";
+
+      }else if(v.status==="USED"){
+
+        action=
+          "<span style='color:#8fb1d1;margin-right:8px'>"+
+          "USED"+
+          "</span>";
+
+      }else{
+
+        action=
+          "<span style='color:#e58b9b;margin-right:8px'>"+
+          "EXPIRED"+
+          "</span>";
+
+      }
 
 
       return "<tr>"+
@@ -1936,7 +2194,9 @@ function renderVouchers(){
         "</td>"+
 
         "<td>"+
-        escapeHTML(v.created)+
+        escapeHTML(
+          v.created || formatDateTime(v.createdAt)
+        )+
         "</td>"+
 
         "<td>"+
@@ -1946,6 +2206,15 @@ function renderVouchers(){
         "</td>"+
 
         "<td>"+
+        escapeHTML(
+          v.expiresAt
+            ? formatDateTime(v.expiresAt)
+            : "—"
+        )+
+        "</td>"+
+
+        "<td>"+
+        action+
         "<button class='btn red' "+
         "onclick='deleteVoucher("+v.id+")'>"+
         "Delete"+
@@ -1957,13 +2226,26 @@ function renderVouchers(){
     })
     .join("");
 
+
+  saveData("RN_VOUCHERS",vouchers);
+
 }
 
 
 function deleteVoucher(id){
 
+  var voucher=
+    vouchers.find(function(v){
+      return v.id==id;
+    });
+
+  if(!voucher){
+    return;
+  }
+
+
   if(!confirm(
-    "Delete this voucher?"
+    "Delete voucher "+voucher.code+"?"
   )){
 
     return;
@@ -1999,6 +2281,8 @@ function deleteVoucher(id){
 ========================= */
 
 function renderHotspot(){
+
+  updateExpiredVouchers();
 
   var total=vouchers.length;
 
@@ -2043,6 +2327,8 @@ function renderHotspot(){
 ========================= */
 
 function renderDashboard(){
+
+  updateExpiredVouchers();
 
   document.getElementById("dashClients")
     .textContent=clients.length;
@@ -2539,12 +2825,30 @@ function renderServers(){
 }
 
 
+/* AUTOMATIC VOUCHER EXPIRATION */
+
+setInterval(function(){
+
+  var changed=updateExpiredVouchers();
+
+  if(changed){
+
+    renderVouchers();
+    renderHotspot();
+    renderDashboard();
+
+  }
+
+},30000);
+
+
 /* INITIALIZE */
 
 window.addEventListener(
   "load",
   function(){
 
+    updateExpiredVouchers();
     updateVoucher();
 
     renderDashboard();
