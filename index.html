@@ -1042,12 +1042,14 @@ No session data yet.
 <div class="reportGrid" style="margin-top:18px">
   <div class="reportBox salesHighlight">
     <h3>💰 Sales Summary</h3>
-    <div class="reportRow"><span>All Sales</span><strong id="repSales">₱0</strong></div>
-    <div class="reportRow"><span>Today's Sales</span><strong id="repTodaySales">₱0</strong></div>
-    <div class="reportRow"><span>Transactions</span><strong id="repTransactions">0</strong></div>
+    <div class="reportRow"><span>Today</span><strong id="repTodaySales">₱0</strong></div>
+    <div class="reportRow"><span>Last 7 Days</span><strong id="rep7Sales">₱0</strong></div>
+    <div class="reportRow"><span>Last 30 Days</span><strong id="rep30Sales">₱0</strong></div>
+    <div class="reportRow"><span>All Time</span><strong id="repSales">₱0</strong></div>
+    <div class="reportRow"><span>Total Transactions</span><strong id="repTransactions">0</strong></div>
   </div>
   <div class="reportBox">
-    <h3>📦 Profile Sales</h3>
+    <h3>📦 Sales by Profile</h3>
     <div id="profileReport"></div>
   </div>
 </div>
@@ -2354,11 +2356,6 @@ function transactionDate(v){
   return v.usedAt ? new Date(v.usedAt) : null;
 }
 
-function sameDate(d1,d2){
-  if(!d1 || !d2) return false;
-  return d1.toISOString().slice(0,10)===d2.toISOString().slice(0,10);
-}
-
 function transactionInPeriod(v,period){
   var d=transactionDate(v);
   if(!d) return false;
@@ -2407,15 +2404,41 @@ function renderHotspotTransactions(){
   }).join("");
 }
 
+function localDateKey(d){
+  if(!d) return "";
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,"0");
+  var day=String(d.getDate()).padStart(2,"0");
+  return y+"-"+m+"-"+day;
+}
+
+function sameDate(d1,d2){
+  if(!d1 || !d2) return false;
+  return localDateKey(d1)===localDateKey(d2);
+}
+
+function salesSince(used,days){
+  var now=new Date();
+  var start=new Date(now);
+  start.setHours(0,0,0,0);
+  start.setDate(start.getDate()-(days-1));
+  return used.filter(function(v){
+    var d=transactionDate(v);
+    return d && d>=start && d<=now;
+  }).reduce(function(sum,v){
+    return sum+Number(v.price||0);
+  },0);
+}
+
 function renderHotspotReports(){
   updateExpiredVouchers();
   var used=getUsedVouchers();
   var unused=vouchers.filter(function(v){return v.status==="UNUSED";}).length;
   var expired=vouchers.filter(function(v){return v.status==="EXPIRED";}).length;
   var sales=used.reduce(function(sum,v){return sum+Number(v.price||0);},0);
-  var now=new Date();
-  var todaySales=used.filter(function(v){return transactionDate(v)&&sameDate(transactionDate(v),now);})
-    .reduce(function(sum,v){return sum+Number(v.price||0);},0);
+  var todaySales=salesSince(used,1);
+  var sevenSales=salesSince(used,7);
+  var thirtySales=salesSince(used,30);
 
   document.getElementById("repTotal").textContent=vouchers.length;
   document.getElementById("repUsed").textContent=used.length;
@@ -2423,24 +2446,23 @@ function renderHotspotReports(){
   document.getElementById("repExpired").textContent=expired;
   document.getElementById("repSales").textContent=money(sales);
   document.getElementById("repTodaySales").textContent=money(todaySales);
+  document.getElementById("rep7Sales").textContent=money(sevenSales);
+  document.getElementById("rep30Sales").textContent=money(thirtySales);
   document.getElementById("repTransactions").textContent=used.length;
 
   var profileBox=document.getElementById("profileReport");
+  var profileNames=["3 Hours","1 Day","2 Days"];
   var profiles={};
+  profileNames.forEach(function(name){profiles[name]={count:0,sales:0};});
   used.forEach(function(v){
     var key=v.profile||"Unknown";
     if(!profiles[key]) profiles[key]={count:0,sales:0};
     profiles[key].count++;
     profiles[key].sales+=Number(v.price||0);
   });
-  var profileNames=Object.keys(profiles);
-  if(!profileNames.length){
-    profileBox.innerHTML='<div class="empty">No sales yet.</div>';
-  }else{
-    profileBox.innerHTML=profileNames.map(function(name){
-      return '<div class="reportRow"><span>'+escapeHTML(name)+' ('+profiles[name].count+')</span><strong>'+money(profiles[name].sales)+'</strong></div>';
-    }).join("");
-  }
+  profileBox.innerHTML=Object.keys(profiles).map(function(name){
+    return '<div class="reportRow"><span>'+escapeHTML(name)+' ('+profiles[name].count+')</span><strong>'+money(profiles[name].sales)+'</strong></div>';
+  }).join("");
 
   var dailyBox=document.getElementById("dailyReport");
   var daily=[];
@@ -2450,7 +2472,7 @@ function renderHotspotReports(){
     d.setDate(d.getDate()-i);
     var total=used.filter(function(v){return transactionDate(v)&&sameDate(transactionDate(v),d);})
       .reduce(function(sum,v){return sum+Number(v.price||0);},0);
-    daily.push({date:d.toISOString().slice(0,10),sales:total});
+    daily.push({date:localDateKey(d),sales:total});
   }
   dailyBox.innerHTML=daily.map(function(item){
     return '<div class="reportRow"><span>'+escapeHTML(item.date)+'</span><strong>'+money(item.sales)+'</strong></div>';
