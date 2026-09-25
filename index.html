@@ -435,6 +435,7 @@ th{
 .filterSelect{background:#071a30;border:2px solid #245789;color:#fff;border-radius:10px;padding:11px 14px;min-width:150px;outline:none}
 .salesHighlight{border-color:#08ad87;background:#0b2b42}
 @media(max-width:600px){.reportGrid{grid-template-columns:1fr}.filterSelect{width:100%}}
+.statusOnline{background:#079c78}.statusOffline{background:#304c6c}.uptime{font-variant-numeric:tabular-nums;color:#d9ebff}.smallNote{color:#8fa9c4;font-size:12px;margin-top:10px}
 
 </style>
 </head>
@@ -981,20 +982,39 @@ No cron logs yet.
 <section id="activeUsers" class="page">
 <h2>Active Users</h2>
 <p class="desc">Current hotspot users</p>
-<div class="card">
-<div class="empty">
-No live MikroTik data yet.
+<div class="reportGrid">
+<div class="stat"><small>Active Users</small><strong id="activeUserCount">0</strong></div>
+<div class="stat"><small>Connected Now</small><strong id="activeConnectedCount">0</strong></div>
 </div>
+<div class="card">
+<div class="toolbar">
+<button class="btn primary" onclick="openActiveUserModal()">＋ Add Active User</button>
+<button class="btn blue" onclick="renderActiveUsers()">↻ Refresh</button>
+<input id="activeUserSearch" class="search" placeholder="🔎 Search user..." oninput="renderActiveUsers()">
+</div>
+<div class="tableWrap"><table><thead><tr>
+<th>USERNAME</th><th>IP ADDRESS</th><th>MAC ADDRESS</th><th>PROFILE</th><th>UPTIME</th><th>STATUS</th><th>ACTION</th>
+</tr></thead><tbody id="activeUserRows"></tbody></table></div>
+<div class="smallNote">Prototype muna: live MikroTik Hotspot data will be connected later through the secure backend.</div>
 </div>
 </section>
 
 <section id="sessions" class="page">
 <h2>Sessions</h2>
 <p class="desc">Hotspot session history</p>
-<div class="card">
-<div class="empty">
-No session data yet.
+<div class="reportGrid">
+<div class="stat"><small>Total Sessions</small><strong id="sessionCount">0</strong></div>
+<div class="stat salesHighlight"><small>Session Sales</small><strong id="sessionSales">₱0</strong></div>
 </div>
+<div class="card">
+<div class="toolbar">
+<input id="sessionSearch" class="search" placeholder="🔎 Search session..." oninput="renderSessions()">
+<select id="sessionPeriod" class="filterSelect" onchange="renderSessions()"><option value="all">All Time</option><option value="today">Today</option><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option></select>
+</div>
+<div class="tableWrap"><table><thead><tr>
+<th>USERNAME</th><th>VOUCHER</th><th>PROFILE</th><th>IP ADDRESS</th><th>MAC ADDRESS</th><th>START</th><th>END</th><th>DURATION</th><th>STATUS</th>
+</tr></thead><tbody id="sessionRows"></tbody></table></div>
+<div class="smallNote">Sessions are stored locally in this prototype. Actual MikroTik session history will be connected later.</div>
 </div>
 </section>
 
@@ -1346,6 +1366,21 @@ Save Voucher
 </div>
 
 
+<!-- ADD ACTIVE USER -->
+<div id="activeUserModal" class="modal"><div class="modalBox">
+<h3>Add Active Hotspot User</h3>
+<div class="formGrid">
+<div class="field"><label>Username</label><input id="auUser" placeholder="RWIFI001"></div>
+<div class="field"><label>Voucher Code</label><input id="auVoucher" placeholder="RWIFI001"></div>
+<div class="field"><label>IP Address</label><input id="auIP" placeholder="10.0.0.10"></div>
+<div class="field"><label>MAC Address</label><input id="auMAC" placeholder="AA:BB:CC:DD:EE:FF"></div>
+<div class="field"><label>Profile</label><select id="auProfile"><option>3 Hours</option><option>1 Day</option><option>2 Days</option></select></div>
+<div class="field"><label>Initial Uptime</label><input id="auUptime" placeholder="00:05:00" value="00:00:00"></div>
+<div class="field full"><div class="info">Testing mode only. This does not create a real MikroTik Hotspot connection.</div></div>
+</div>
+<div class="modalActions"><button class="btn gray" onclick="closeModal('activeUserModal')">Cancel</button><button class="btn primary" onclick="saveActiveUser()">Add User</button></div>
+</div></div>
+
 <!-- ADD CLIENT -->
 
 <div id="clientModal"
@@ -1525,6 +1560,9 @@ var servers=loadData(
   []
 );
 
+var activeUsers=loadData("RN_ACTIVE_USERS",[]);
+var hotspotSessions=loadData("RN_HOTSPOT_SESSIONS",[]);
+
 
 saveData("RN_PLANS",plans);
 
@@ -1627,6 +1665,12 @@ function showPage(id){
 
   if(id==="reports")
     renderHotspotReports();
+
+  if(id==="activeUsers")
+    renderActiveUsers();
+
+  if(id==="sessions")
+    renderSessions();
 
 }
 
@@ -2340,6 +2384,74 @@ function deleteVoucher(id){
 
 }
 
+
+/* =========================
+   HOTSPOT ACTIVE USERS / SESSIONS
+========================= */
+function formatDuration(seconds){
+  seconds=Math.max(0,Math.floor(Number(seconds)||0));
+  var h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+  return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function parseDuration(text){
+  var parts=String(text||"00:00:00").split(":").map(Number);
+  if(parts.length!==3 || parts.some(function(n){return !Number.isFinite(n);})){return 0;}
+  return Math.max(0,parts[0]*3600+parts[1]*60+parts[2]);
+}
+function openActiveUserModal(){
+  ["auUser","auVoucher","auIP","auMAC"].forEach(function(id){document.getElementById(id).value="";});
+  document.getElementById("auProfile").value="3 Hours";
+  document.getElementById("auUptime").value="00:00:00";
+  document.getElementById("activeUserModal").classList.add("show");
+}
+function saveActiveUser(){
+  var username=document.getElementById("auUser").value.trim();
+  var voucher=document.getElementById("auVoucher").value.trim();
+  var ip=document.getElementById("auIP").value.trim();
+  var mac=document.getElementById("auMAC").value.trim();
+  var profile=document.getElementById("auProfile").value;
+  var uptime=parseDuration(document.getElementById("auUptime").value.trim());
+  if(!username||!ip||!mac){alert("Ilagay ang Username, IP Address at MAC Address.");return;}
+  var now=Date.now();
+  activeUsers.push({id:now,username:username,voucher:voucher,ip:ip,mac:mac,profile:profile,startedAt:now-(uptime*1000),status:"ONLINE"});
+  saveData("RN_ACTIVE_USERS",activeUsers); closeModal("activeUserModal"); renderActiveUsers();
+}
+function disconnectActiveUser(id){
+  var user=activeUsers.find(function(u){return u.id==id;}); if(!user)return;
+  if(!confirm("Disconnect "+user.username+"?"))return;
+  var end=Date.now(), start=Number(user.startedAt||end), duration=Math.max(0,Math.floor((end-start)/1000));
+  hotspotSessions.push({id:end+Math.floor(Math.random()*1000),username:user.username,voucher:user.voucher||"",profile:user.profile||"",ip:user.ip||"",mac:user.mac||"",startAt:start,endAt:end,duration:duration,status:"DISCONNECTED",price:0});
+  activeUsers=activeUsers.filter(function(u){return u.id!=id;});
+  saveData("RN_ACTIVE_USERS",activeUsers); saveData("RN_HOTSPOT_SESSIONS",hotspotSessions);
+  renderActiveUsers(); renderSessions();
+}
+function renderActiveUsers(){
+  var el=document.getElementById("activeUserSearch"), query=el?el.value.trim().toLowerCase():"";
+  var list=activeUsers.filter(function(u){return (String(u.username||"")+" "+String(u.voucher||"")+" "+String(u.ip||"")+" "+String(u.mac||"")+" "+String(u.profile||"")).toLowerCase().includes(query);});
+  document.getElementById("activeUserCount").textContent=activeUsers.length;
+  document.getElementById("activeConnectedCount").textContent=activeUsers.filter(function(u){return u.status==="ONLINE";}).length;
+  var rows=document.getElementById("activeUserRows");
+  if(!list.length){rows.innerHTML='<tr><td colspan="7" class="empty">No active hotspot users.</td></tr>';return;}
+  rows.innerHTML=list.map(function(u){
+    var seconds=Math.floor((Date.now()-Number(u.startedAt||Date.now()))/1000);
+    return '<tr><td><b>'+escapeHTML(u.username)+'</b></td><td>'+escapeHTML(u.ip)+'</td><td>'+escapeHTML(u.mac)+'</td><td>'+escapeHTML(u.profile)+'</td><td class="uptime" data-start="'+Number(u.startedAt||Date.now())+'">'+formatDuration(seconds)+'</td><td><span class="badge statusOnline">ONLINE</span></td><td><button class="btn red" onclick="disconnectActiveUser('+u.id+')">Disconnect</button></td></tr>';
+  }).join("");
+}
+function sessionInPeriod(s,period){
+  var d=new Date(Number(s.endAt||s.startAt||0)); if(!Number.isFinite(d.getTime()))return false;
+  var now=new Date(); if(period==="all")return true; if(period==="today")return sameDate(d,now);
+  var days=Number(period), start=new Date(now); start.setHours(0,0,0,0); start.setDate(start.getDate()-(days-1)); return d>=start;
+}
+function renderSessions(){
+  var se=document.getElementById("sessionSearch"), pe=document.getElementById("sessionPeriod"), query=se?se.value.trim().toLowerCase():"", period=pe?pe.value:"all";
+  var list=hotspotSessions.filter(function(s){var text=(String(s.username||"")+" "+String(s.voucher||"")+" "+String(s.profile||"")+" "+String(s.ip||"")+" "+String(s.mac||"")).toLowerCase();return text.includes(query)&&sessionInPeriod(s,period);}).sort(function(a,b){return Number(b.endAt||0)-Number(a.endAt||0);});
+  document.getElementById("sessionCount").textContent=list.length;
+  document.getElementById("sessionSales").textContent=money(list.reduce(function(sum,s){return sum+Number(s.price||0);},0));
+  var rows=document.getElementById("sessionRows");
+  if(!list.length){rows.innerHTML='<tr><td colspan="9" class="empty">No hotspot sessions found.</td></tr>';return;}
+  rows.innerHTML=list.map(function(s){return '<tr><td><b>'+escapeHTML(s.username)+'</b></td><td>'+escapeHTML(s.voucher||"—")+'</td><td>'+escapeHTML(s.profile||"—")+'</td><td>'+escapeHTML(s.ip||"—")+'</td><td>'+escapeHTML(s.mac||"—")+'</td><td>'+escapeHTML(s.startAt?formatDateTime(s.startAt):"—")+'</td><td>'+escapeHTML(s.endAt?formatDateTime(s.endAt):"—")+'</td><td class="uptime">'+formatDuration(s.duration)+'</td><td><span class="badge statusOffline">'+escapeHTML(s.status||"DISCONNECTED")+'</span></td></tr>';}).join("");
+}
+setInterval(function(){document.querySelectorAll(".uptime[data-start]").forEach(function(cell){var start=Number(cell.getAttribute("data-start"));cell.textContent=formatDuration(Math.floor((Date.now()-start)/1000));});},1000);
 
 /* =========================
    HOTSPOT TRANSACTIONS
@@ -3068,6 +3180,8 @@ window.addEventListener(
 
     renderHotspotTransactions();
     renderHotspotReports();
+    renderActiveUsers();
+    renderSessions();
 
   }
 );
